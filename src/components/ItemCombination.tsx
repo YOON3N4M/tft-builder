@@ -17,7 +17,7 @@ import { ITEM_ICON_URL } from "@/constants/url";
 import { calculateAllCombinationCase } from "@/utils";
 import Image from "next/image";
 
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 
 interface ItemCombinationProps {}
 
@@ -38,10 +38,26 @@ function ItemCombination(props: ItemCombinationProps) {
 
   const {} = props;
 
-  function addItem(itemName: string) {
+  function increaseItem(itemName: string) {
     setInventory((prev) => ({
       ...prev,
       [itemName]: prev[itemName] + 1,
+    }));
+  }
+
+  function onRightClickItemIcon(
+    e: MouseEvent<HTMLButtonElement>,
+    itmeName: string
+  ) {
+    e.preventDefault();
+    if (inventory[itmeName] < 1) return;
+    decreaseItem(itmeName);
+  }
+
+  function decreaseItem(itemName: string) {
+    setInventory((prev) => ({
+      ...prev,
+      [itemName]: prev[itemName] - 1,
     }));
   }
 
@@ -58,7 +74,10 @@ function ItemCombination(props: ItemCombinationProps) {
       <div className="flex flex-wrap gap-[8px] max-w-[200px] mx-auto">
         {COMBINATION_ITEM_LIST.map((item) => (
           <div key={item.name} className="flex flex-col items-center">
-            <button onClick={() => addItem(item.name)}>
+            <button
+              onClick={() => increaseItem(item.name)}
+              onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
+            >
               <ItemIcon src={item.src} alt={item.name} />
             </button>
             <span>{inventory[item.name]}</span>
