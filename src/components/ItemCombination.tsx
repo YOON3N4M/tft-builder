@@ -120,12 +120,15 @@ function ItemCombination(props: ItemCombinationProps) {
       {/* case list */}
       <div
         className={cn(
-          "flex flex-col gap-[10px] max-h-[50vh] overflow-y-auto px-[16px] pb-[16px] mt-lg",
+          "flex flex-col gap-[10px] max-h-[50vh] overflow-y-auto px-[16px] pb-[16px] mt-lg ",
           foldCase && "h-0 !p-0"
         )}
       >
         {combinationCase.map((c, idx) => (
-          <div key={idx} className="flex gap-[10px]">
+          <div
+            key={idx}
+            className="flex gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]"
+          >
             {c.map((i, idx) => (
               <span key={idx}>
                 {" "}
