@@ -13,7 +13,9 @@ import {
   SPATULA,
   TEAR_OF_THE_GADDESS,
 } from "@/constants/item";
+import { ITEM_ICON_URL } from "@/constants/url";
 import { calculateAllCombinationCase } from "@/utils";
+import Image from "next/image";
 
 import { useEffect, useState } from "react";
 
@@ -51,21 +53,28 @@ function ItemCombination(props: ItemCombinationProps) {
   }, [inventory]);
 
   return (
-    <div>
-      <div className="flex gap-[10px]">
+    <div className="min-w-[200px] flex flex-col border p-[16px]">
+      {/* inventory */}
+      <div className="flex flex-wrap gap-[8px] max-w-[200px] mx-auto">
         {COMBINATION_ITEM_LIST.map((item) => (
           <div key={item.name} className="flex flex-col items-center">
-            <button onClick={() => addItem(item.name)}>{item.name}</button>
+            <button onClick={() => addItem(item.name)}>
+              <ItemIcon src={item.src} alt={item.name} />
+            </button>
             <span>{inventory[item.name]}</span>
           </div>
         ))}
       </div>
-      <div className="flex flex-col gap-[10px] mt-[30px]">
-        결과
+      <div className="my-[30px] w-full border-t border-t-gray-500" />
+      {/* case list */}
+      <div className="flex flex-col gap-[10px]">
         {combinationCase.map((c, idx) => (
           <div key={idx} className="flex gap-[10px]">
             {c.map((i, idx) => (
-              <span key={idx}>{i.name}</span>
+              <span key={idx}>
+                {" "}
+                <ItemIcon src={i.src} alt={i.name} />
+              </span>
             ))}
           </div>
         ))}
@@ -75,3 +84,22 @@ function ItemCombination(props: ItemCombinationProps) {
 }
 
 export default ItemCombination;
+
+interface ItemIconProps {
+  src: string;
+  alt: string;
+}
+
+function ItemIcon(props: ItemIconProps) {
+  const { src, alt } = props;
+
+  return (
+    <Image
+      className="rounded-[4px]"
+      src={ITEM_ICON_URL(src)}
+      width={30}
+      height={30}
+      alt={alt}
+    />
+  );
+}
