@@ -18,6 +18,7 @@ import { calculateAllCombinationCase } from "@/utils";
 import Image from "next/image";
 
 import { MouseEvent, useEffect, useState } from "react";
+import { useDrag } from "react-use-gesture";
 
 interface ItemCombinationProps {}
 
@@ -37,6 +38,14 @@ function ItemCombination(props: ItemCombinationProps) {
   const [combinationCase, setCombinationCase] = useState<CoreItem[][]>([]);
 
   const {} = props;
+
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const bindPos = useDrag((params) => {
+    setPos({
+      x: params.offset[0],
+      y: params.offset[1],
+    });
+  });
 
   function increaseItem(itemName: string) {
     setInventory((prev) => ({
@@ -69,7 +78,11 @@ function ItemCombination(props: ItemCombinationProps) {
   }, [inventory]);
 
   return (
-    <div className="min-w-[200px] flex flex-col border p-[16px]">
+    <div
+      {...bindPos()}
+      style={{ top: pos.y, left: pos.x }}
+      className="cursor-pointer relative min-w-[200px] flex flex-col border p-[16px]"
+    >
       {/* inventory */}
       <div className="flex flex-wrap gap-[8px] max-w-[200px] mx-auto">
         {COMBINATION_ITEM_LIST.map((item) => (
