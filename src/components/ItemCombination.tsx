@@ -97,7 +97,7 @@ function ItemCombination(props: ItemCombinationProps) {
     >
       <div className="pt-md px-md flex justify-end gap-sm text-sm">
         <button onClick={resetInventory}>초기화</button>
-        <button onClick={handleCaseFold}>접기</button>
+        <button onClick={handleCaseFold}>{foldCase ? "펼치기" : "접기"}</button>
         {/* 팁 호버 버튼 같은거 추가해서 도움말을 넣으면 좋을듯 */}
       </div>
       {/* inventory */}
