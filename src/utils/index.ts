@@ -27,9 +27,12 @@ export function calculateAllCombinationCase(inventory: Inventory) {
     calculateOneCombinationCase
   );
 
-  //모든 경우의 수 중 중복되는 경우의 수가 있다면 제거한 뒤 반환
+  // 모든 경우의 수 중 중복되는 경우의 수가 있다면 제거한 뒤 반환
   const unquie = setUnique(resultAllCase);
-  return unquie;
+  // 시각적으로 안정적이기 위한 첫번째요소를 기준으로 정렬
+  const sortByFirstItem = sortArraysByFirstElementId(unquie);
+
+  return sortByFirstItem;
 }
 
 // 한 CORE_ITEM_LIST에 대해 조합 가능한 경우의 수 (case)를 하나 구하는 함수
@@ -56,6 +59,7 @@ export function calculateOneCombinationCase(
 
   // 순서대로 정렬 한 뒤 반환
   const sortById = sortObjectsById(result);
+
   return sortById;
 }
 
@@ -142,7 +146,7 @@ function applyFunctionToRotations(arr: any[], inventory: any, fn: any) {
     currentArray = rotateArray(currentArray); // 배열을 한 칸씩 회전
   }
 
-  console.log(result);
+  //console.log(result);
 
   return result;
 }
@@ -158,4 +162,8 @@ function setUnique(array: any[]) {
   const resultArray = unique.map((str) => JSON.parse(str));
 
   return resultArray;
+}
+
+function sortArraysByFirstElementId(arr: CoreItem[][]) {
+  return arr.sort((a, b) => a[0].id - b[0].id);
 }
