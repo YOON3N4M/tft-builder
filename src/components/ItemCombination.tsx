@@ -14,7 +14,8 @@ import {
   TEAR_OF_THE_GADDESS,
 } from "@/constants/item";
 import { ITEM_ICON_URL } from "@/constants/url";
-import { calculateAllCombinationCase } from "@/utils";
+import { cn } from "@/utils";
+import { calculateAllCombinationCase } from "@/utils/item";
 import Image from "next/image";
 
 import { MouseEvent, useEffect, useState } from "react";
@@ -22,20 +23,23 @@ import { useDrag } from "react-use-gesture";
 
 interface ItemCombinationProps {}
 
+const initialInventory = {
+  [BF_SWRORD.name]: 0,
+  [RECURVE_BOW.name]: 0,
+  [CHAIN_VEST.name]: 0,
+  [NEGATRON_CLOAK.name]: 0,
+  [NEEDLESSLY_LARGE_ROD.name]: 0,
+  [TEAR_OF_THE_GADDESS.name]: 0,
+  [GIANTS_BELT.name]: 0,
+  [SPARRINGS_GLOVES.name]: 0,
+  [SPATULA.name]: 0,
+};
+
 function ItemCombination(props: ItemCombinationProps) {
-  const [inventory, setInventory] = useState({
-    [BF_SWRORD.name]: 0,
-    [RECURVE_BOW.name]: 0,
-    [CHAIN_VEST.name]: 0,
-    [NEGATRON_CLOAK.name]: 0,
-    [NEEDLESSLY_LARGE_ROD.name]: 0,
-    [TEAR_OF_THE_GADDESS.name]: 0,
-    [GIANTS_BELT.name]: 0,
-    [SPARRINGS_GLOVES.name]: 0,
-    [SPATULA.name]: 0,
-  });
+  const [inventory, setInventory] = useState(initialInventory);
 
   const [combinationCase, setCombinationCase] = useState<CoreItem[][]>([]);
+  const [foldCase, setFoldCase] = useState(false);
 
   const {} = props;
 
@@ -70,6 +74,14 @@ function ItemCombination(props: ItemCombinationProps) {
     }));
   }
 
+  function resetInventory() {
+    setInventory(initialInventory);
+  }
+
+  function handleCaseFold() {
+    setFoldCase((prev) => !prev);
+  }
+
   useEffect(() => {
     const result = calculateAllCombinationCase(inventory);
     setCombinationCase(result);
@@ -83,7 +95,11 @@ function ItemCombination(props: ItemCombinationProps) {
       style={{ top: pos.y, left: pos.x }}
       className="cursor-pointer relative min-w-[200px] flex flex-col border bg-white shadow-sm rounded-[4px]"
     >
-      <div className="pt-md px-md">{/* 컨트롤러 - 닫기, 접기 등 */}</div>
+      <div className="pt-md px-md flex justify-end gap-sm text-sm">
+        <button onClick={resetInventory}>초기화</button>
+        <button onClick={handleCaseFold}>접기</button>
+        {/* 팁 호버 버튼 같은거 추가해서 도움말을 넣으면 좋을듯 */}
+      </div>
       {/* inventory */}
       <div className="flex gap-[8px] pt-[16px] px-[16px] justify-center">
         {COMBINATION_ITEM_LIST.map((item) => (
@@ -94,13 +110,20 @@ function ItemCombination(props: ItemCombinationProps) {
             >
               <ItemIcon src={item.src} alt={item.name} />
             </button>
-            <span className="text-gray-500 mt-xxs">{inventory[item.name]}</span>
+            <span className="text-gray-500 mt-xxs text-sm">
+              {inventory[item.name]}
+            </span>
           </div>
         ))}
       </div>
       {/* <div className="my-[30px] w-full border-t border-t-gray-500" /> */}
       {/* case list */}
-      <div className="flex flex-col gap-[10px] max-h-[50vh] overflow-y-auto px-[16px] pb-[16px] mt-lg">
+      <div
+        className={cn(
+          "flex flex-col gap-[10px] max-h-[50vh] overflow-y-auto px-[16px] pb-[16px] mt-lg",
+          foldCase && "h-0 !p-0"
+        )}
+      >
         {combinationCase.map((c, idx) => (
           <div key={idx} className="flex gap-[10px]">
             {c.map((i, idx) => (
