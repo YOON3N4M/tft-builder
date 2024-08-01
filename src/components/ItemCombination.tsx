@@ -81,10 +81,11 @@ function ItemCombination(props: ItemCombinationProps) {
     <div
       {...bindPos()}
       style={{ top: pos.y, left: pos.x }}
-      className="cursor-pointer relative min-w-[200px] flex flex-col border p-[16px]"
+      className="cursor-pointer relative min-w-[200px] flex flex-col border bg-white shadow-sm rounded-[4px]"
     >
+      <div className="pt-md px-md">{/* 컨트롤러 - 닫기, 접기 등 */}</div>
       {/* inventory */}
-      <div className="flex flex-wrap gap-[8px] max-w-[200px] mx-auto">
+      <div className="flex gap-[8px] pt-[16px] px-[16px] justify-center">
         {COMBINATION_ITEM_LIST.map((item) => (
           <div key={item.name} className="flex flex-col items-center">
             <button
@@ -93,13 +94,13 @@ function ItemCombination(props: ItemCombinationProps) {
             >
               <ItemIcon src={item.src} alt={item.name} />
             </button>
-            <span>{inventory[item.name]}</span>
+            <span className="text-gray-500 mt-xxs">{inventory[item.name]}</span>
           </div>
         ))}
       </div>
-      <div className="my-[30px] w-full border-t border-t-gray-500" />
+      {/* <div className="my-[30px] w-full border-t border-t-gray-500" /> */}
       {/* case list */}
-      <div className="flex flex-col gap-[10px]">
+      <div className="flex flex-col gap-[10px] max-h-[50vh] overflow-y-auto px-[16px] pb-[16px] mt-lg">
         {combinationCase.map((c, idx) => (
           <div key={idx} className="flex gap-[10px]">
             {c.map((i, idx) => (
