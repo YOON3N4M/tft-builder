@@ -316,7 +316,7 @@ const CROWN_GUARD = generateItem(
   "TFT_Item_Crownguard.png",
   [
     { requireItem: CHAIN_VEST, qty: 1 },
-    { requireItem: TEAR_OF_THE_GADDESS, qty: 1 },
+    { requireItem: NEEDLESSLY_LARGE_ROD, qty: 1 },
   ]
 );
 
