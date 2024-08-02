@@ -1,12 +1,17 @@
 {
   "generate Item": {
-    "prefix": "gen",
+    "prefix": "geni",
     "body": [
       "generateItem(\"${1}\", \"${2}\", [",
       "  { requireItem:, qty:  },",
       "]);"
     ],
     "description": "generate Item"
+  },
+  "generate champion": {
+    "prefix": "genc",
+    "body": ["generateChampion(${1},\"${2}\",${3},[${4}],\"\")"],
+    "description": "generate champion"
   }
   // Place your tft-helper workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
   // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
