@@ -20,7 +20,7 @@ import Image from "next/image";
 
 import { MouseEvent, useEffect, useState } from "react";
 import { useDrag } from "react-use-gesture";
-import { Reset, WindowMaxi, WindowMini } from "./svgs";
+import { Reset, WindowMaxi, WindowMini } from "../svgs";
 
 interface ItemCombinationProps {}
 

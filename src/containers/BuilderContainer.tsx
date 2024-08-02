@@ -1,4 +1,4 @@
-import ItemCombination from "@/components/ItemCombination";
+import ItemCombination from "@/components/overlay/ItemCombination";
 import { Reroll, Sword } from "@/components/svgs";
 import { cn } from "@/utils";
 import { HTMLAttributes, ReactNode, useState } from "react";
