@@ -42,6 +42,7 @@ const config: Config = {
         ".x-center": {},
         ".y-center": {},
         ".center": {},
+        ".hexagon": {},
       });
     }),
   ],

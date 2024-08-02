@@ -1,3 +1,4 @@
+import Field from "@/components/Field";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import { Reroll, Sword } from "@/components/svgs";
 import { cn } from "@/utils";
@@ -43,8 +44,8 @@ export default function BuilderContainer() {
       {/* 영역 */}
       <div className="h-[100px] border"></div>
       {/* 배치툴 영역 */}
-      <div className="relative h-[40%] border flex">
-        <h1 className="absolute center">배치툴 영역</h1>
+      <div className="relative min-h-[40%] border flex justify-center py-lg">
+        <Field />
       </div>
       <div></div>
     </div>
