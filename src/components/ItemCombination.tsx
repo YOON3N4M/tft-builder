@@ -20,6 +20,7 @@ import Image from "next/image";
 
 import { MouseEvent, useEffect, useState } from "react";
 import { useDrag } from "react-use-gesture";
+import { Reset, WindowMaxi, WindowMini } from "./svgs";
 
 interface ItemCombinationProps {}
 
@@ -93,17 +94,21 @@ function ItemCombination(props: ItemCombinationProps) {
     <div
       {...bindPos()}
       style={{ top: pos.y, left: pos.x }}
-      className="cursor-pointer relative min-w-[200px] flex flex-col border bg-white shadow-sm rounded-[4px]"
+      className="cursor-pointer z-overlay relative min-w-[200px] flex flex-col border bg-white shadow-sm rounded-[4px]"
     >
       <div className="pt-md px-md flex justify-end gap-sm text-sm">
-        <button onClick={resetInventory}>초기화</button>
-        <button onClick={handleCaseFold}>{foldCase ? "펼치기" : "접기"}</button>
+        <button onClick={resetInventory}>
+          <Reset />
+        </button>
+        <button onClick={handleCaseFold}>
+          {foldCase ? <WindowMaxi /> : <WindowMini />}
+        </button>
         {/* 팁 호버 버튼 같은거 추가해서 도움말을 넣으면 좋을듯 */}
       </div>
       {/* inventory */}
-      <div className="flex gap-[8px] pt-[16px] px-[16px] justify-center">
+      <ul className="flex gap-[8px] pt-[16px] px-[16px] justify-center">
         {COMBINATION_ITEM_LIST.map((item) => (
-          <div key={item.name} className="flex flex-col items-center">
+          <li key={item.name} className="flex flex-col items-center">
             <button
               onClick={() => increaseItem(item.name)}
               onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
@@ -113,9 +118,9 @@ function ItemCombination(props: ItemCombinationProps) {
             <span className="text-gray-500 mt-xxs text-sm">
               {inventory[item.name]}
             </span>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
       {/* <div className="my-[30px] w-full border-t border-t-gray-500" /> */}
       {/* case list */}
       <div
@@ -125,17 +130,17 @@ function ItemCombination(props: ItemCombinationProps) {
         )}
       >
         {combinationCase.map((c, idx) => (
-          <div
+          <ul
             key={idx}
             className="flex gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]"
           >
             {c.map((i, idx) => (
-              <span key={idx}>
+              <li key={idx}>
                 {" "}
                 <ItemIcon src={i.src} alt={i.name} />
-              </span>
+              </li>
             ))}
-          </div>
+          </ul>
         ))}
       </div>
     </div>

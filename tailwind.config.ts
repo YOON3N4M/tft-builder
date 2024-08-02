@@ -20,6 +20,7 @@ const config: Config = {
       },
       zIndex: {
         layout: "100",
+        overlay: "500",
       },
       spacing: {
         xxxs: "2px",
