@@ -6,3 +6,5 @@ export { FaRotate as Reroll } from "react-icons/fa6";
 export { FaQuestionCircle as Question } from "react-icons/fa";
 //export { PiSword as Sword } from "react-icons/pi";
 export { LuSword as Sword } from "react-icons/lu";
+export { LiaChessPawnSolid as Pawn } from "react-icons/lia";
+export { GiToken as Token } from "react-icons/gi";

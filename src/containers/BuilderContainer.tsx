@@ -15,9 +15,9 @@ interface Option {
 
 export default function BuilderContainer() {
   const [option, setOption] = useState<Option>({
-    item: false,
+    item: true,
     reroll: false,
-    champion: false,
+    champion: true,
   });
 
   function handleOption(optionItem: OptionItem) {
@@ -52,17 +52,19 @@ export default function BuilderContainer() {
         <div className="absolute right-0 flex justify-end px-xxl pt-xxl">
           <ItemCombination hidden={!option.item} />
         </div>
-        <div className="absolute right-0 flex justify-end px-xxl pt-xxl">
-          <ChampionList hidden={!option.champion} />
-        </div>
       </div>
-      {/* 영역 */}
+      {/* 상단 영역 */}
       <div className="h-[100px] border"></div>
-      {/* 배치툴 영역 */}
+      {/* 중앙 영역 */}
       <div className="relative min-h-[40%] border flex justify-center py-lg">
         <Field />
       </div>
-      <div></div>
+      {/* 하단 */}
+      <div className="">
+        <div className="absolute">
+          <ChampionList hidden={!option.champion} />
+        </div>
+      </div>
     </div>
   );
 }
