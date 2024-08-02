@@ -21,8 +21,9 @@ import Image from "next/image";
 import { MouseEvent, useEffect, useState } from "react";
 import { useDrag } from "react-use-gesture";
 import { Reset, WindowMaxi, WindowMini } from "../svgs";
+import Overlay, { OverlayProps } from "./Overlay";
 
-interface ItemCombinationProps {}
+interface ItemCombinationProps extends OverlayProps {}
 
 const initialInventory = {
   [BF_SWRORD.name]: 0,
@@ -37,20 +38,11 @@ const initialInventory = {
 };
 
 function ItemCombination(props: ItemCombinationProps) {
+  const { hidden } = props;
   const [inventory, setInventory] = useState(initialInventory);
 
   const [combinationCase, setCombinationCase] = useState<CoreItem[][]>([]);
   const [foldCase, setFoldCase] = useState(false);
-
-  const {} = props;
-
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const bindPos = useDrag((params) => {
-    setPos({
-      x: params.offset[0],
-      y: params.offset[1],
-    });
-  });
 
   function increaseItem(itemName: string) {
     setInventory((prev) => ({
@@ -91,11 +83,7 @@ function ItemCombination(props: ItemCombinationProps) {
   }, [inventory]);
 
   return (
-    <div
-      {...bindPos()}
-      style={{ top: pos.y, left: pos.x }}
-      className="cursor-pointer z-overlay relative min-w-[200px] flex flex-col border bg-white shadow-sm rounded-[4px]"
-    >
+    <Overlay hidden={hidden}>
       <div className="pt-md px-md flex justify-end gap-sm text-sm">
         <button onClick={resetInventory}>
           <Reset />
@@ -143,7 +131,7 @@ function ItemCombination(props: ItemCombinationProps) {
           </ul>
         ))}
       </div>
-    </div>
+    </Overlay>
   );
 }
 

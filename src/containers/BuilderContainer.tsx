@@ -1,18 +1,24 @@
 import Field from "@/components/Field";
+import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
-import { Reroll, Sword } from "@/components/svgs";
+import { Pawn, Reroll, Sword } from "@/components/svgs";
 import { cn } from "@/utils";
 import { HTMLAttributes, ReactNode, useState } from "react";
 
-type OptionItem = "item" | "reroll";
+type OptionItem = "item" | "reroll" | "champion";
 
 interface Option {
   item: boolean;
   reroll: boolean;
+  champion: boolean;
 }
 
 export default function BuilderContainer() {
-  const [option, setOption] = useState<Option>({ item: false, reroll: false });
+  const [option, setOption] = useState<Option>({
+    item: false,
+    reroll: false,
+    champion: false,
+  });
 
   function handleOption(optionItem: OptionItem) {
     console.log(option);
@@ -34,11 +40,20 @@ export default function BuilderContainer() {
           >
             <Reroll />
           </ControllerButton>
+          <ControllerButton
+            isOn={option.champion}
+            fn={() => handleOption("champion")}
+          >
+            <Pawn />
+          </ControllerButton>
           {/* 빌더 컨트롤러 */}
         </div>
         {/* 아이템 */}
         <div className="absolute right-0 flex justify-end px-xxl pt-xxl">
-          {option.item && <ItemCombination />}
+          <ItemCombination hidden={!option.item} />
+        </div>
+        <div className="absolute right-0 flex justify-end px-xxl pt-xxl">
+          <ChampionList hidden={!option.champion} />
         </div>
       </div>
       {/* 영역 */}
