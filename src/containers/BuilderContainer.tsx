@@ -1,6 +1,7 @@
 import Field from "@/components/Field";
 import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
+import RerollPercentage from "@/components/overlay/RerollPercentage";
 import { Pawn, Reroll, Sword } from "@/components/svgs";
 import { cn } from "@/utils";
 import { HTMLAttributes, ReactNode, useState } from "react";
@@ -62,7 +63,10 @@ export default function BuilderContainer() {
       {/* 하단 */}
       <div className="">
         <div className="absolute">
-          <ChampionList hidden={!option.champion} />
+          <div className="flex">
+            <ChampionList hidden={!option.champion} />
+            <RerollPercentage hidden={!option.reroll} />
+          </div>
         </div>
       </div>
     </div>
