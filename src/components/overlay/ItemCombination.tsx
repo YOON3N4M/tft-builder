@@ -21,7 +21,7 @@ import Image from "next/image";
 import { MouseEvent, useEffect, useState } from "react";
 import { useDrag } from "react-use-gesture";
 import { Reset, WindowMaxi, WindowMini } from "../svgs";
-import Overlay, { OverlayProps } from "./Overlay";
+import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -84,7 +84,7 @@ function ItemCombination(props: ItemCombinationProps) {
 
   return (
     <Overlay hidden={hidden}>
-      <div className="pt-md px-md flex justify-end gap-sm text-sm">
+      <OverlayTab className="flex justify-end gap-sm text-sm">
         <button onClick={resetInventory}>
           <Reset />
         </button>
@@ -92,7 +92,8 @@ function ItemCombination(props: ItemCombinationProps) {
           {foldCase ? <WindowMaxi /> : <WindowMini />}
         </button>
         {/* 팁 호버 버튼 같은거 추가해서 도움말을 넣으면 좋을듯 */}
-      </div>
+      </OverlayTab>
+
       {/* inventory */}
       <ul className="flex gap-[8px] pt-[16px] px-[16px] justify-center">
         {COMBINATION_ITEM_LIST.map((item) => (

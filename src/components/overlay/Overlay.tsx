@@ -19,7 +19,7 @@ export interface OverlayProps extends HTMLAttributes<HTMLDivElement> {
  *
  * 활용 가능한 템플릿 컴포넌트
  */
-function Overlay(props: OverlayProps) {
+export function Overlay(props: OverlayProps) {
   const { children, className, x = 0, y = 0, hidden } = props;
 
   const [pos, setPos] = useState({ x: x, y: y });
@@ -46,4 +46,9 @@ function Overlay(props: OverlayProps) {
   );
 }
 
-export default Overlay;
+interface OverlayTabProps extends HTMLAttributes<HTMLDivElement> {}
+
+export function OverlayTab(props: OverlayTabProps) {
+  const { className, children } = props;
+  return <div className={cn("pt-md px-md", className)}>{children}</div>;
+}
