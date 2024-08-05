@@ -17,6 +17,7 @@ const config: Config = {
       },
       colors: {
         "border-gray": "#dadce0",
+        "default-bg": "#f0f2f5",
       },
       zIndex: {
         layout: "100",
