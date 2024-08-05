@@ -1,4 +1,4 @@
-export const cn = (...classNames: (string | false | undefined)[]) => {
+export const cn = (...classNames: (string | false | undefined | null)[]) => {
   const styledClassNames = [...classNames]
     .map((className) => className && className.split(" "))
     .flat()

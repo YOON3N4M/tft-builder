@@ -29,7 +29,7 @@ import {
   WITCHCRAFT,
 } from "./synergy";
 
-interface Champion {
+export interface Champion {
   id: number;
   name: string;
   tier: number;

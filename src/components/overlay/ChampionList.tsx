@@ -1,12 +1,13 @@
 "use client";
 
-import { SET_12_CHAMPIONS } from "@/constants/champions";
+import { Champion, SET_12_CHAMPIONS } from "@/constants/champions";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import Image from "next/image";
 import { CHAMPION_ICON_URL } from "@/constants/url";
 import { cn, sortByKorean, sortByNumber } from "@/utils";
 import { Token } from "../svgs";
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes, MouseEvent, useState } from "react";
+import { useDragActions } from "@/store/dragStore";
 
 interface ChampionListProps extends OverlayProps {}
 
@@ -23,6 +24,8 @@ const borderColorStyles: { [key: string]: string } = {
 function ChampionList(props: ChampionListProps) {
   const { hidden } = props;
 
+  const { setDraggingTarget } = useDragActions();
+
   const [currentSortType, setCurrentSortType] = useState<SortType>("korean");
   const [championList, setChampionList] = useState(
     sortByKorean(SET_12_CHAMPIONS, "name")
@@ -38,6 +41,12 @@ function ChampionList(props: ChampionListProps) {
       case "tier":
         setChampionList(sortByNumber(SET_12_CHAMPIONS, "tier"));
     }
+  }
+
+  function handleIconDragStart(e: any, champion: Champion) {
+    console.log(e, "드래그 한다잉");
+
+    setDraggingTarget(champion);
   }
 
   return (
@@ -63,6 +72,7 @@ function ChampionList(props: ChampionListProps) {
         <div className="grid grid-cols-10 gap-xxs p-md bg-default-bg rounded-[4px]">
           {championList.map((champion, idx) => (
             <div
+              onDragStart={(e) => handleIconDragStart(e, champion)}
               key={champion.id}
               className={cn(
                 "size-[64px] flex border-2 rounded-[4px] relative overflow-hidden",
@@ -82,7 +92,9 @@ function ChampionList(props: ChampionListProps) {
                 height={128}
                 alt={champion.name}
                 src={CHAMPION_ICON_URL(champion.src)}
-                className={cn("object-cover relative object-right scale-125")}
+                className={cn(
+                  "object-cover relative object-[-55px_0px] scale-125"
+                )}
               />
               <p className="absolute bottom-0 text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
                 {champion.name}
