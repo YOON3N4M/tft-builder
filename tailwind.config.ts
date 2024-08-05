@@ -11,6 +11,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      borderRadius: {
+        md: "4px",
+      },
       screens: {
         mo: { max: "1023px" },
         pc: "1024px",
@@ -18,6 +21,13 @@ const config: Config = {
       colors: {
         "border-gray": "#dadce0",
         "default-bg": "#f0f2f5",
+
+        //tier
+        "tier-1": "#848999",
+        "tier-2": "#11b288",
+        "tier-3": "#207ac7",
+        "tier-4": "#c440da",
+        "tier-5": "#ffb93b",
       },
       zIndex: {
         layout: "100",

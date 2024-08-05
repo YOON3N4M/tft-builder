@@ -1,7 +1,7 @@
 "use client";
 
 import { SET_12_CHAMPIONS } from "@/constants/champions";
-import Overlay, { OverlayProps } from "./Overlay";
+import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import Image from "next/image";
 import { CHAMPION_ICON_URL } from "@/constants/url";
 import { cn, sortByKorean, sortByNumber } from "@/utils";
@@ -13,11 +13,11 @@ interface ChampionListProps extends OverlayProps {}
 type SortType = "korean" | "tier";
 
 const borderColorStyles: { [key: string]: string } = {
-  "1": "border-[#848999]",
-  "2": "border-[#11b288]",
-  "3": "border-[#207ac7]",
-  "4": "border-[#c440da]",
-  "5": "border-[#ffb93b]",
+  "1": "border-tier-1",
+  "2": "border-tier-2",
+  "3": "border-tier-3",
+  "4": "border-tier-4",
+  "5": "border-tier-5",
 };
 
 function ChampionList(props: ChampionListProps) {
@@ -41,8 +41,8 @@ function ChampionList(props: ChampionListProps) {
   }
 
   return (
-    <Overlay className="" hidden={hidden}>
-      <div className="flex pt-md px-xxl gap-sm">
+    <Overlay hidden={hidden}>
+      <OverlayTab className="flex !px-xxl gap-sm">
         <SortButton
           currentSortType={currentSortType}
           sortType="korean"
@@ -58,7 +58,7 @@ function ChampionList(props: ChampionListProps) {
         >
           등급순
         </SortButton>
-      </div>
+      </OverlayTab>
       <div className="p-md">
         <div className="grid grid-cols-10 gap-xxs p-md bg-default-bg rounded-[4px]">
           {championList.map((champion, idx) => (
