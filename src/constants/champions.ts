@@ -20,7 +20,7 @@ import {
   PRESERVER,
   PYRO,
   RAVENOUS,
-  SCHORLAR,
+  SCHOLAR,
   SHAPESHIFTER,
   SUGARCRAFT,
   Synergy,
@@ -52,7 +52,7 @@ const AHRI = generateChampion(
   1,
   "아리",
   2,
-  [ARCANA, SCHORLAR],
+  [ARCANA, SCHOLAR],
   "TFT12_Ahri.TFT_Set12.png"
 );
 const AKALI = generateChampion(
@@ -73,7 +73,7 @@ const BARD = generateChampion(
   4,
   "바드",
   3,
-  [SUGARCRAFT, PRESERVER, SCHORLAR],
+  [SUGARCRAFT, PRESERVER, SCHOLAR],
   "TFT12_Bard.TFT_Set12.png"
 );
 const BLITZCRANK = generateChampion(
@@ -227,7 +227,7 @@ const MILIO = generateChampion(
   26,
   "밀리오",
   5,
-  [FAERIE, SCHORLAR],
+  [FAERIE, SCHOLAR],
   "TFT12_Milio.TFT_Set12.png"
 );
 const MORDEKAISER = generateChampion(
@@ -325,7 +325,7 @@ const RYZE = generateChampion(
   40,
   "라이즈",
   4,
-  [SCHORLAR, PORTAL],
+  [SCHOLAR, PORTAL],
   "TFT12_Ryze.TFT_Set12.png"
 );
 const SERAPHINE = generateChampion(
@@ -465,7 +465,7 @@ const ZOE = generateChampion(
   60,
   "조이",
   1,
-  [PORTAL, WITCHCRAFT, SCHORLAR],
+  [PORTAL, WITCHCRAFT, SCHOLAR],
   "TFT12_Zoe.TFT_Set12.png"
 );
 
