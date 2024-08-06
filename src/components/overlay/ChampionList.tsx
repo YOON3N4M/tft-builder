@@ -75,7 +75,7 @@ function ChampionList(props: ChampionListProps) {
               onDragStart={(e) => handleIconDragStart(e, champion)}
               key={champion.id}
               className={cn(
-                "size-[64px] flex border-2 rounded-[4px] relative overflow-hidden",
+                "cursor-pointer size-[64px] flex border-2 rounded-[4px] relative overflow-hidden",
                 borderColorStyles[champion.tier.toString()]
               )}
             >

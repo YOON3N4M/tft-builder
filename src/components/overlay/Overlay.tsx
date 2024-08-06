@@ -36,7 +36,7 @@ export function Overlay(props: OverlayProps) {
     <div
       className={cn(
         className,
-        "relative cursor-pointer z-overlay border shadow-sm rounded-[4px] bg-white",
+        "relative z-overlay border shadow-sm rounded-[4px] bg-white",
         hidden && "hidden"
       )}
       style={{ top: pos.y, left: pos.x }}
