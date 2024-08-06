@@ -43,3 +43,17 @@ export function sortByNumber<T>(
 
   return arrCopy;
 }
+
+export function groupBy<T>(array: T[], key: keyof T): T[][] {
+  const grouped = array.reduce((acc, item) => {
+    const keyValue = item[key];
+    if (!acc[keyValue as keyof typeof acc]) {
+      acc[keyValue as keyof typeof acc] = [];
+    }
+    acc[keyValue as keyof typeof acc].push(item);
+    return acc;
+  }, {} as Record<string | number | symbol, T[]>);
+
+  // 그룹화된 객체를 배열로 변환
+  return Object.values(grouped);
+}

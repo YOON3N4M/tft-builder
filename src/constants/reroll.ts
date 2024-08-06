@@ -42,3 +42,20 @@ export const REROLL_PERCENTAGE = [
 ];
 
 export const PIECES_QTY = [30, 25, 18, 10, 9];
+
+const TIER_1_QTY = 14 * 30;
+const TIER_2_QTY = 13 * 25;
+const TIER_3_QTY = 12 * 18;
+const TIER_4_QTY = 12 * 10;
+const TIER_5_QTY = 8 * 9;
+
+export const SHOP_PIECES_QTY =
+  TIER_1_QTY + TIER_2_QTY + TIER_3_QTY + TIER_4_QTY + TIER_5_QTY;
+
+export const SHOP_PIECES_QTY_ARR = [
+  TIER_1_QTY,
+  TIER_2_QTY,
+  TIER_3_QTY,
+  TIER_4_QTY,
+  TIER_5_QTY,
+];
