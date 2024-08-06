@@ -1,4 +1,4 @@
-import Field from "@/components/Field";
+import Field from "@/components/field/Field";
 import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
@@ -57,7 +57,7 @@ export default function BuilderContainer() {
       {/* 상단 영역 */}
       <div className="h-[100px] border"></div>
       {/* 중앙 영역 */}
-      <div className="relative min-h-[40%] border flex justify-center py-lg">
+      <div className="relative border">
         <Field />
       </div>
       {/* 하단 */}
