@@ -17,7 +17,7 @@ interface Option {
 export default function BuilderContainer() {
   const [option, setOption] = useState<Option>({
     item: true,
-    reroll: false,
+    reroll: true,
     champion: true,
   });
 

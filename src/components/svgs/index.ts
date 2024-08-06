@@ -8,3 +8,4 @@ export { FaQuestionCircle as Question } from "react-icons/fa";
 export { LuSword as Sword } from "react-icons/lu";
 export { LiaChessPawnSolid as Pawn } from "react-icons/lia";
 export { GiToken as Token } from "react-icons/gi";
+export { GrDrag as Draggable } from "react-icons/gr";

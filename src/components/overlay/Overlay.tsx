@@ -1,6 +1,7 @@
 import { cn } from "@/utils";
 import { HTMLAttributes, ReactNode, useState } from "react";
 import { useDrag } from "react-use-gesture";
+import { Draggable } from "../svgs";
 
 export interface OverlayProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
@@ -38,9 +39,15 @@ export function Overlay(props: OverlayProps) {
         "relative cursor-pointer z-overlay border shadow-sm rounded-[4px] bg-white",
         hidden && "hidden"
       )}
-      {...bindPos()}
       style={{ top: pos.y, left: pos.x }}
     >
+      <button
+        {...bindPos()}
+        className="absolute border bg-white left-full y-center px-xxxs py-md rounded-r shadow-sm"
+      >
+        <Draggable />
+      </button>
+
       {children}
     </div>
   );

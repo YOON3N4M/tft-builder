@@ -1,13 +1,13 @@
 "use client";
 
 import { Champion, SET_12_CHAMPIONS } from "@/constants/champions";
-import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
-import Image from "next/image";
 import { CHAMPION_ICON_URL } from "@/constants/url";
-import { cn, sortByKorean, sortByNumber } from "@/utils";
-import { Token } from "../svgs";
-import { HTMLAttributes, MouseEvent, useState } from "react";
 import { useDragActions } from "@/store/dragStore";
+import { cn, sortByKorean, sortByNumber } from "@/utils";
+import Image from "next/image";
+import { HTMLAttributes, useState } from "react";
+import { Token } from "../svgs";
+import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 
 interface ChampionListProps extends OverlayProps {}
 
