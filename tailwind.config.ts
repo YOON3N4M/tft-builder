@@ -54,6 +54,8 @@ const config: Config = {
         ".y-center": {},
         ".center": {},
         ".hexagon": {},
+        ".pentagon": {},
+        ".triangle": {},
       });
     }),
   ],
