@@ -103,7 +103,14 @@ export const PYRO = generateSynergy(
   "",
   []
 );
-export const RAVENOUS = generateSynergy("허기", [1], ["gold"], [], "", []);
+export const RAVENOUS = generateSynergy(
+  "허기",
+  [1],
+  ["gold"],
+  ["ravenous"],
+  "",
+  []
+);
 export const SUGARCRAFT = generateSynergy(
   "달콤술사",
   [2, 4, 6],
