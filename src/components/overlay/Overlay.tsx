@@ -43,9 +43,9 @@ export function Overlay(props: OverlayProps) {
     >
       <button
         {...bindPos()}
-        className="absolute border bg-white left-full y-center px-xxxs py-md rounded-r shadow-sm"
+        className="absolute border bg-white top-0 !border-b-0 translate-y-[-100%] right-0 py-xxxs px-md rounded-r shadow-sm"
       >
-        <Draggable />
+        <Draggable className="rotate-90" />
       </button>
 
       {children}
