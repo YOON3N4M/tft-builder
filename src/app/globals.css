@@ -10,6 +10,7 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
   .center {
     @apply x-center y-center;
   }
@@ -21,6 +22,10 @@ body {
   }
   .text-balance {
     text-wrap: balance;
+  }
+  .inner {
+    max-width: 1200px;
+    margin: 0 auto;
   }
 }
 

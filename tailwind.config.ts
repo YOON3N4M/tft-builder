@@ -14,9 +14,13 @@ const config: Config = {
       borderRadius: {
         md: "4px",
       },
+      width: {
+        "inner-pc": "1200px",
+        "inner-mo": "768px",
+      },
       screens: {
-        mo: { max: "1023px" },
-        pc: "1024px",
+        mo: { max: "769px" },
+        pc: "1200px",
       },
       colors: {
         "border-gray": "#dadce0",
