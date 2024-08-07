@@ -166,7 +166,7 @@ function SynergyContainer(props: SynergyContainerProps) {
                 <>
                   <span
                     className={cn(
-                      "text-gray-500",
+                      "text-gray-500 text-xs",
                       checkGrade(synergy)?.gradeNumber === qty && "!text-black"
                     )}
                   >
