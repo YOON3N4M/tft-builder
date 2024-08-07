@@ -9,3 +9,4 @@ export { LuSword as Sword } from "react-icons/lu";
 export { LiaChessPawnSolid as Pawn } from "react-icons/lia";
 export { GiToken as Token } from "react-icons/gi";
 export { GrDrag as Draggable } from "react-icons/gr";
+export { BiSolidRightArrow as Arrow } from "react-icons/bi";

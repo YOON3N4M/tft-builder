@@ -1,4 +1,4 @@
-type SynergyTier = "bronze" | "silver" | "gold" | "prism";
+export type SynergyTier = "unranked" | "bronze" | "silver" | "gold" | "prism";
 
 export interface Synergy {
   name: string;
@@ -74,7 +74,7 @@ export const FAERIE = generateSynergy(
 export const FROST = generateSynergy(
   "서리",
   [3, 5, 7, 9],
-  ["bronze", "silver", "gold", "gold"],
+  ["bronze", "silver", "gold", "prism"],
   ["frost"],
   "",
   []

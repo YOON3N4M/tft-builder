@@ -1,7 +1,7 @@
 import { Champion } from "@/constants/champions";
 import { CHAMPION_ICON_URL } from "@/constants/url";
 import { useDragActions, useDraggingTarget } from "@/store/dragStore";
-import { cn, groupBy } from "@/utils";
+import { cn, groupBy, sortByNumber } from "@/utils";
 import Image from "next/image";
 import {
   Dispatch,
@@ -13,6 +13,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { Arrow } from "../svgs";
+import { Synergy } from "@/constants/synergy";
 
 interface FieldProps {}
 
@@ -36,7 +38,7 @@ function Field(props: FieldProps) {
 
   return (
     <>
-      <div className="text-black basis-[20%] flex justify-end">
+      <div className="text-black basis-[20%] flex">
         <SynergyContainer indexedChampionList={placedChampions} />
       </div>
       <div className="flex flex-grow">
@@ -61,6 +63,14 @@ interface SynergyContainerProps {
   indexedChampionList: IndexedChampion[];
 }
 
+const synergyBgStyles: { [key: string]: string } = {
+  unranked: "bg-gray-900",
+  bronze: "bg-[#a0715e]",
+  silver: "bg-[#7c8f92]",
+  gold: "bg-[#bd9a38]",
+  prism: "bg-[#ad1457]",
+};
+
 function SynergyContainer(props: SynergyContainerProps) {
   const { indexedChampionList } = props;
 
@@ -69,29 +79,106 @@ function SynergyContainer(props: SynergyContainerProps) {
   );
 
   const refinedSynergyList = groupBy(synergyList, "name");
+  const sortByLength = refinedSynergyList.sort((a, b) => b.length - a.length);
+  const soltByGrade = refinedSynergyList.sort((a, b) => {
+    const grade: any = {
+      unranked: 1,
+      bronze: 2,
+      silver: 3,
+      gold: 4,
+      prism: 5,
+    };
 
-  function checkGrade(synergyLength: number, grade: number[]) {}
+    return grade[checkGrade(b).gradeText] - grade[checkGrade(a).gradeText];
+  });
 
-  console.log(refinedSynergyList);
+  function checkGrade(synergy: Synergy[]): any {
+    if (!synergy) return;
+    console.log("grade chekc");
+    const synergyCount = synergy.length;
+    const requireQty = synergy[0].requirQty;
+    const grade = synergy[0].tier;
+
+    let index = 0;
+    let gradeText = "unranked";
+    let gradeNumber = 0;
+    while (index < requireQty.length) {
+      if (index === 0 && synergyCount < requireQty[index]) {
+        break;
+      } else if (synergyCount < requireQty[index]) {
+        gradeText = grade[index - 1];
+        gradeNumber = requireQty[index - 1];
+        break;
+      } else {
+        if (index === requireQty.length - 1) {
+          gradeText = grade[requireQty.length - 1];
+          gradeNumber = requireQty[requireQty.length - 1];
+          break;
+        } else {
+          index++;
+        }
+      }
+    }
+
+    return { gradeText, gradeNumber };
+  }
 
   useEffect(() => {
-    console.log(indexedChampionList);
+    //console.log(indexedChampionList);
+    checkGrade(sortByLength[0]);
   }, [indexedChampionList]);
 
   return (
-    <div className="pr-[40%]">
-      {refinedSynergyList.map((synergy) => (
-        <div key={synergy[0].name} className="flex items-center">
-          <div className="p-xxs">
+    <div className="flex flex-col gap-sm py-md max-h-[400px] overflow-auto w-[90%]">
+      {sortByLength.map((synergy) => (
+        <div
+          key={synergy[0].name}
+          className="flex items-center border p-xs text-sm w-[95%] bg-white rounded-md"
+        >
+          <div
+            className={cn(
+              "p-xxs hexagon w-[34px] h-[36px] flex items-center justify-center",
+              synergyBgStyles[checkGrade(synergy)?.gradeText]
+            )}
+          >
             <Image
-              width={24}
-              height={24}
+              width={22}
+              height={22}
               src={`/images/synergy/${synergy[0].src[0]}.png`}
               alt={synergy[0].name}
-              className="filter brightness-0"
+              className="filter"
             />
           </div>
-          {synergy[0].name} {synergy.length} / {synergy[0].requirQty[0]}
+          <div
+            className={cn(
+              "px-xs ml-[-5px] text-white",
+              synergyBgStyles[checkGrade(synergy)?.gradeText]
+            )}
+          >
+            {synergy.length}
+          </div>
+          <div className="ml-xs flex flex-col">
+            <div className="flex">
+              <span>{synergy[0].name}</span>
+            </div>
+            <div className="flex items-center gap-xxxs">
+              {synergy[0].requirQty.map((qty, idx) => (
+                <>
+                  <span
+                    className={cn(
+                      "text-gray-500",
+                      checkGrade(synergy)?.gradeNumber === qty && "!text-black"
+                    )}
+                  >
+                    {qty}
+                  </span>
+                  {idx + 1 !== synergy[0].requirQty.length && (
+                    <Arrow size={10} className="inline fill-gray-300" />
+                  )}
+                </>
+              ))}
+            </div>
+          </div>
         </div>
       ))}
     </div>
