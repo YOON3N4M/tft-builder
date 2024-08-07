@@ -54,6 +54,7 @@ const config: Config = {
     plugin(function ({ addUtilities }: { addUtilities: any }) {
       addUtilities({
         ".inner": {},
+        ".drag-unable": {},
         ".x-center": {},
         ".y-center": {},
         ".center": {},

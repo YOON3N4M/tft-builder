@@ -68,7 +68,7 @@ function ChampionList(props: ChampionListProps) {
           등급순
         </SortButton>
       </OverlayTab>
-      <div className="p-md">
+      <div className="p-md drag-unable">
         <div className="flex flex-wrap max-w-[600px] gap-xs p-md bg-default-bg rounded-[4px]">
           {championList.map((champion, idx) => (
             <div
@@ -80,7 +80,7 @@ function ChampionList(props: ChampionListProps) {
               )}
             >
               <div className="z-[100] absolute w-full top-0 flex justify-end ">
-                <div className="flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">
+                <div className="pointer-events-none flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">
                   <Token size={10} className="fill-white" />{" "}
                   <span className="text-white text-[11px]">
                     {champion.tier}
@@ -96,7 +96,7 @@ function ChampionList(props: ChampionListProps) {
                   "object-cover relative object-[-55px_0px] scale-125"
                 )}
               />
-              <p className="absolute bottom-0 text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
+              <p className="pointer-events-none absolute bottom-0 text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
                 {champion.name}
               </p>
             </div>
