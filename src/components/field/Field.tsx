@@ -123,11 +123,6 @@ function SynergyContainer(props: SynergyContainerProps) {
     return { gradeText, gradeNumber };
   }
 
-  useEffect(() => {
-    //console.log(indexedChampionList);
-    checkGrade(sortByLength[0]);
-  }, [indexedChampionList]);
-
   return (
     <div className="flex flex-col gap-sm py-md max-h-[400px] overflow-auto w-[90%]">
       {sortByLength.map((synergy) => (
