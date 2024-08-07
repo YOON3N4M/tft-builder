@@ -27,44 +27,49 @@ export default function BuilderContainer() {
   }
 
   return (
-    <div className="w-[100vw] h-[100dvh]">
-      {/* absolute 요소 컨테이너? */}
+    <div>
       <div className="relative">
-        {/* side menu */}
-        <div className="absolute z-[400]  h-[400px] w-[70px] py-md flex flex-col gap-xl">
-          <ControllerButton isOn={option.item} fn={() => handleOption("item")}>
-            <Sword />
-          </ControllerButton>
-          <ControllerButton
-            isOn={option.reroll}
-            fn={() => handleOption("reroll")}
-          >
-            <Reroll />
-          </ControllerButton>
-          <ControllerButton
-            isOn={option.champion}
-            fn={() => handleOption("champion")}
-          >
-            <Pawn />
-          </ControllerButton>
-          {/* 빌더 컨트롤러 */}
+        {/* 상단영역 */}
+        <div className="border-y h-[100px]">
+          <div className="absolute right-0 flex justify-end px-xxl pt-xxl"></div>
+          {/* side menu */}
+          {/* <div className="absolute z-[400]  h-[400px] w-[70px] py-md flex flex-col gap-xl">
+            <ControllerButton
+              isOn={option.item}
+              fn={() => handleOption("item")}
+            >
+              <Sword />
+            </ControllerButton>
+            <ControllerButton
+              isOn={option.reroll}
+              fn={() => handleOption("reroll")}
+            >
+              <Reroll />
+            </ControllerButton>
+            <ControllerButton
+              isOn={option.champion}
+              fn={() => handleOption("champion")}
+            >
+              <Pawn />
+            </ControllerButton>
+          
+          </div> */}
         </div>
-        {/* 아이템 */}
-        <div className="absolute right-0 flex justify-end px-xxl pt-xxl">
-          <ItemCombination hidden={!option.item} />
+        {/* 중앙 영역 */}
+        <div className="border-y flex inner">
+          <Field />
+          <div className="basis-[10%]">
+            <div className="absolute">
+              <ItemCombination hidden={!option.item} />
+            </div>
+          </div>
         </div>
-      </div>
-      {/* 상단 영역 */}
-      <div className="h-[100px] border"></div>
-      {/* 중앙 영역 */}
-      <div className="relative border">
-        <Field />
-      </div>
-      {/* 하단 */}
-      <div className="">
-        <div className="absolute">
+        {/* 하단 영역 */}
+        <div className="border flex inner">
           <div className="flex">
             <ChampionList hidden={!option.champion} />
+          </div>
+          <div className="flex self-start flex-grow">
             <RerollPercentage hidden={!option.reroll} />
           </div>
         </div>

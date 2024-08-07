@@ -106,7 +106,7 @@ function RerollPercentage(props: RerollPercentageProps) {
   }
 
   return (
-    <Overlay hidden={hidden} className="">
+    <Overlay hidden={hidden} className="w-full max-w-[600px]">
       <OverlayTab className="flex gap-sm text-sm">
         <button className="font-bold">기물 확률</button>
         {/* <button>확률표</button> */}
@@ -277,7 +277,7 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
       //onContextMenu={removeChampion}
       className={cn(`w-full h-[128px] relative  cursor-pointer`)}
     >
-      <div className="absolute top-0 bg-gradient-to-l from-black from-[40%] to-[#fff0] size-full z-[10]">
+      <div className="absolute top-0 bg-gradient-to-l from-black from-[50%] to-[#fff0] size-full z-[10]">
         <div className="text-white flex size-full flex-row-reverse">
           <div className="basis-[50%] flex py-md">
             <div className="flex flex-col w-full">

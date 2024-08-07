@@ -35,21 +35,23 @@ function Field(props: FieldProps) {
   }
 
   return (
-    <div className=" flex">
-      <div className="text-black basis-[25%] flex justify-end">
+    <>
+      <div className="text-black basis-[20%] flex justify-end">
         <SynergyContainer indexedChampionList={placedChampions} />
       </div>
-      <div className="grid grid-cols-7 gap-xs w-[700px] gap-y-0 h-min">
-        {tempArray.map((item, idx) => (
-          <Hexagon
-            setPlacedChampions={setPlacedChampions}
-            key={idx}
-            index={idx}
-            isEvenRow={isEvenRow(idx)}
-          ></Hexagon>
-        ))}
+      <div className="flex flex-grow">
+        <div className="grid grid-cols-7 gap-xs w-[700px] gap-y-0 h-min">
+          {tempArray.map((item, idx) => (
+            <Hexagon
+              setPlacedChampions={setPlacedChampions}
+              key={idx}
+              index={idx}
+              isEvenRow={isEvenRow(idx)}
+            ></Hexagon>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

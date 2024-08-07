@@ -69,7 +69,7 @@ function ChampionList(props: ChampionListProps) {
         </SortButton>
       </OverlayTab>
       <div className="p-md">
-        <div className="grid grid-cols-10 gap-xxs p-md bg-default-bg rounded-[4px]">
+        <div className="flex flex-wrap max-w-[600px] gap-xs p-md bg-default-bg rounded-[4px]">
           {championList.map((champion, idx) => (
             <div
               onDragStart={(e) => handleIconDragStart(e, champion)}
