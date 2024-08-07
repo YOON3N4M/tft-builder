@@ -2,7 +2,6 @@ import Field from "@/components/field/Field";
 import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
-import { Pawn, Reroll, Sword } from "@/components/svgs";
 import { cn } from "@/utils";
 import { HTMLAttributes, ReactNode, useState } from "react";
 
@@ -66,7 +65,7 @@ export default function BuilderContainer() {
         </div>
         {/* 하단 영역 */}
         <div className="border flex inner">
-          <div className="flex">
+          <div className="flex self-start">
             <ChampionList hidden={!option.champion} />
           </div>
           <div className="flex self-start flex-grow">
