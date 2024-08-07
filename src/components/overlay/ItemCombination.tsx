@@ -4,6 +4,7 @@ import {
   BF_SWRORD,
   CHAIN_VEST,
   COMBINATION_ITEM_LIST,
+  CombinationItem,
   CoreItem,
   GIANTS_BELT,
   NEEDLESSLY_LARGE_ROD,
@@ -19,7 +20,6 @@ import { calculateAllCombinationCase } from "@/utils/item";
 import Image from "next/image";
 
 import { MouseEvent, useEffect, useState } from "react";
-import { useDrag } from "react-use-gesture";
 import { Reset, WindowMaxi, WindowMini } from "../svgs";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 
@@ -39,6 +39,7 @@ const initialInventory = {
 
 function ItemCombination(props: ItemCombinationProps) {
   const { hidden } = props;
+  const [coreInventory, setCoreInventory] = useState<CoreItem[]>([]);
   const [inventory, setInventory] = useState(initialInventory);
 
   const [combinationCase, setCombinationCase] = useState<CoreItem[][]>([]);
@@ -68,11 +69,32 @@ function ItemCombination(props: ItemCombinationProps) {
   }
 
   function resetInventory() {
+    setCoreInventory([]);
     setInventory(initialInventory);
   }
 
   function handleCaseFold() {
     setFoldCase((prev) => !prev);
+  }
+
+  function handleCoreItemRightClick(
+    event: MouseEvent<HTMLButtonElement>,
+    targetCoreItem: CoreItem
+  ) {
+    event.preventDefault();
+
+    const cloneInventory = { ...inventory };
+
+    targetCoreItem.recipe.forEach(
+      (rec) =>
+        (cloneInventory[rec.requireItem.name] =
+          cloneInventory[rec.requireItem.name] - rec.qty)
+    );
+
+    setInventory(cloneInventory);
+    setCoreInventory((prev) => [...prev, targetCoreItem]);
+    //const result = combineItem(targetCoreItem, inventory);
+    //  console.log(result);
   }
 
   useEffect(() => {
@@ -83,34 +105,51 @@ function ItemCombination(props: ItemCombinationProps) {
   }, [inventory]);
 
   return (
-    <Overlay hidden={hidden}>
+    <Overlay className="!z-[600]" hidden={hidden}>
       <OverlayTab className="flex justify-end gap-sm text-sm">
         <button onClick={resetInventory}>
           <Reset />
         </button>
-        <button onClick={handleCaseFold}>
-          {foldCase ? <WindowMaxi /> : <WindowMini />}
-        </button>
+
         {/* 팁 호버 버튼 같은거 추가해서 도움말을 넣으면 좋을듯 */}
       </OverlayTab>
 
+      <div className="px-md text-sm">
+        <p>보유 완성 아이템</p>
+        <ul className="mt-sm flex flex-wrap gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
+          {coreInventory.map((i, idx) => (
+            <li key={idx} className="flex items-center">
+              <ItemIcon item={i} />
+            </li>
+          ))}
+        </ul>
+      </div>
+
       {/* inventory */}
-      <ul className="flex gap-[8px] pt-[16px] px-[16px] justify-center">
-        {COMBINATION_ITEM_LIST.map((item) => (
-          <li key={item.name} className="flex flex-col items-center">
-            <button
-              onClick={() => increaseItem(item.name)}
-              onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
-            >
-              <ItemIcon src={item.src} alt={item.name} />
-            </button>
-            <span className="text-gray-500 mt-xxs text-sm">
-              {inventory[item.name]}
-            </span>
-          </li>
-        ))}
-      </ul>
-      {/* <div className="my-[30px] w-full border-t border-t-gray-500" /> */}
+      <div className="pt-[16px] px-[16px] text-sm">
+        <div className="flex">
+          <p>보유 조합 아이템</p>
+          <button className="ml-auto" onClick={handleCaseFold}>
+            {foldCase ? <WindowMaxi /> : <WindowMini />}
+          </button>
+        </div>
+        <ul className="flex mt-sm gap-[8px]">
+          {COMBINATION_ITEM_LIST.map((item) => (
+            <li key={item.name} className="flex flex-col items-center">
+              <button
+                onClick={() => increaseItem(item.name)}
+                onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
+              >
+                <ItemIcon item={item} />
+              </button>
+              <span className="text-gray-500 mt-xxs text-sm">
+                {inventory[item.name]}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       {/* case list */}
       <div
         className={cn(
@@ -124,9 +163,12 @@ function ItemCombination(props: ItemCombinationProps) {
             className="flex gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]"
           >
             {c.map((i, idx) => (
-              <li key={idx}>
-                {" "}
-                <ItemIcon src={i.src} alt={i.name} />
+              <li key={idx} className="flex items-center">
+                <button
+                  onContextMenu={(event) => handleCoreItemRightClick(event, i)}
+                >
+                  <ItemIcon item={i} />
+                </button>
               </li>
             ))}
           </ul>
@@ -139,12 +181,12 @@ function ItemCombination(props: ItemCombinationProps) {
 export default ItemCombination;
 
 interface ItemIconProps {
-  src: string;
-  alt: string;
+  item: CoreItem | CombinationItem;
 }
 
 function ItemIcon(props: ItemIconProps) {
-  const { src, alt } = props;
+  const { item } = props;
+  const { src, name } = item;
 
   return (
     <Image
@@ -152,7 +194,7 @@ function ItemIcon(props: ItemIconProps) {
       src={ITEM_ICON_URL(src)}
       width={30}
       height={30}
-      alt={alt}
+      alt={name}
     />
   );
 }
