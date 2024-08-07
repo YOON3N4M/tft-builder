@@ -79,7 +79,11 @@ const synergyBgStyles: { [key: string]: string } = {
 function SynergyContainer(props: SynergyContainerProps) {
   const { indexedChampionList } = props;
 
-  const synergyList = indexedChampionList.flatMap(
+  console.log(indexedChampionList);
+
+  const duplicateRemoves = removeDuplicateSyenrgy(indexedChampionList);
+
+  const synergyList = duplicateRemoves.flatMap(
     (indexedChampion) => indexedChampion.champion.synergy
   );
 
@@ -126,6 +130,19 @@ function SynergyContainer(props: SynergyContainerProps) {
     }
 
     return { gradeText, gradeNumber };
+  }
+
+  // 동일한 챔피언이 배치되어 있을때
+  function removeDuplicateSyenrgy(indexedChampionList: IndexedChampion[]) {
+    const seen = new Set(); // 중복을 추적할 Set 생성
+    return indexedChampionList.filter((champion) => {
+      const keyValue = champion.champion["name"]; // 현재 요소의 key 값
+      if (seen.has(keyValue)) {
+        return false; // 이미 본 key 값이면 false 반환
+      }
+      seen.add(keyValue); // 새로운 key 값이면 Set에 추가
+      return true; // true 반환하여 결과 배열에 포함
+    });
   }
 
   return (
