@@ -42,7 +42,12 @@ function Field(props: FieldProps) {
         <SynergyContainer indexedChampionList={placedChampions} />
       </div>
       <div className="flex flex-grow">
-        <div className="grid grid-cols-7 gap-xs w-[700px] gap-y-0 h-min">
+        <div className="relative grid grid-cols-7 gap-xs w-[700px] gap-y-0 h-min">
+          {placedChampions.length === 0 && (
+            <div className="absolute x-center y-center z-[500] p-sm bg-white border rounded-md opacity-70">
+              드래그해서 챔피언 배치
+            </div>
+          )}
           {tempArray.map((item, idx) => (
             <Hexagon
               setPlacedChampions={setPlacedChampions}
