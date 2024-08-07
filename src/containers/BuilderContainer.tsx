@@ -55,7 +55,7 @@ export default function BuilderContainer() {
           </div> */}
         </div>
         {/* 중앙 영역 */}
-        <div className="border-y flex inner">
+        <div className="flex inner py-md">
           <Field />
           <div className="basis-[10%]">
             <div className="absolute">
@@ -64,7 +64,7 @@ export default function BuilderContainer() {
           </div>
         </div>
         {/* 하단 영역 */}
-        <div className="border flex inner">
+        <div className="flex inner !mt-xxxl">
           <div className="flex self-start">
             <ChampionList hidden={!option.champion} />
           </div>
