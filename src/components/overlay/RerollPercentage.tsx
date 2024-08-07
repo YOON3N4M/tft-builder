@@ -1,26 +1,24 @@
 "use client";
 
+import { Champion } from "@/constants/champions";
 import {
   PIECES_QTY,
   REROLL_PERCENTAGE,
-  SHOP_PIECES_QTY,
   SHOP_PIECES_QTY_ARR,
 } from "@/constants/reroll";
-import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
+import { CHAMPION_ICON_URL } from "@/constants/url";
+import { useDraggingTarget } from "@/store/dragStore";
 import { cn, sortByNumber } from "@/utils";
-import { Token } from "../svgs";
+import Image from "next/image";
 import {
   Dispatch,
   DragEvent,
   MouseEvent,
   SetStateAction,
-  useEffect,
   useState,
 } from "react";
-import { Champion } from "@/constants/champions";
-import { useDraggingTarget } from "@/store/dragStore";
-import { CHAMPION_ICON_URL } from "@/constants/url";
-import Image from "next/image";
+import { Reset, Token } from "../svgs";
+import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 
 interface RerollPercentageProps extends OverlayProps {}
 
@@ -105,10 +103,19 @@ function RerollPercentage(props: RerollPercentageProps) {
     setIsDragEnter(false);
   }
 
+  function reset() {
+    setTargetChampions([]);
+    setCurrentLevel(6);
+  }
+
   return (
     <Overlay hidden={hidden} className="w-full max-w-[600px]">
       <OverlayTab className="flex gap-sm text-sm">
         <button className="font-bold">기물 확률</button>
+
+        <button onClick={reset} className="ml-auto">
+          <Reset />
+        </button>
         {/* <button>확률표</button> */}
       </OverlayTab>
       <div className="pc:min-w-[500px] p-md text-sm">
@@ -238,6 +245,7 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
   }
 
   function decreaseQty(event: MouseEvent<HTMLButtonElement>) {
+    event.stopPropagation();
     event.preventDefault();
     if (placedPiecesQty === 0) return;
     setPlacesPieces((prev) => prev - 1);
@@ -273,11 +281,11 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
   }
 
   return (
-    <div
-      //onContextMenu={removeChampion}
-      className={cn(`w-full h-[128px] relative  cursor-pointer`)}
-    >
-      <div className="absolute top-0 bg-gradient-to-l from-black from-[50%] to-[#fff0] size-full z-[10]">
+    <div className={cn(`w-full h-[128px] relative  cursor-pointer`)}>
+      <div
+        onContextMenu={removeChampion}
+        className="absolute top-0 bg-gradient-to-l from-black from-[50%] to-[#fff0] size-full z-[10]"
+      >
         <div className="text-white flex size-full flex-row-reverse">
           <div className="basis-[50%] flex py-md">
             <div className="flex flex-col w-full">
@@ -302,7 +310,10 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
                 <button
                   onClick={increaseQty}
                   onContextMenu={decreaseQty}
-                  className="border-gray-400 border px-sm py-xxs rounded-md text-gray-400"
+                  className={cn(
+                    "border-gray-400 border px-sm py-xxs rounded-md text-gray-400",
+                    "hover:text-white hover:border-white"
+                  )}
                 >
                   {placedPiecesQty}
                 </button>

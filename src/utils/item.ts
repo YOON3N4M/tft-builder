@@ -64,7 +64,7 @@ export function calculateOneCombinationCase(
 }
 
 // 아이템을 조합해 결과물, 남은 아이템 (inventory)를 반환하는 함수
-function combineItem(coreItem: CoreItem, inventory: Inventory) {
+export function combineItem(coreItem: CoreItem, inventory: Inventory) {
   const inventoryTemp = { ...inventory };
   //console.log(coreItem.name, "조합");
   coreItem.recipe.forEach(
@@ -77,7 +77,7 @@ function combineItem(coreItem: CoreItem, inventory: Inventory) {
 }
 
 // tagetCore 아이템에 필요한 조합 아이템 수 확인 함수
-function isExistCombine(targetCore: CoreItem, inventory: Inventory) {
+export function isExistCombine(targetCore: CoreItem, inventory: Inventory) {
   const result = targetCore.recipe.map((rec) => {
     // console.log(
     //   "",
