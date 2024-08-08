@@ -1,3 +1,5 @@
+import { Synergy } from "@/constants/synergy";
+
 export const cn = (...classNames: (string | false | undefined | null)[]) => {
   const styledClassNames = [...classNames]
     .map((className) => className && className.split(" "))
@@ -56,4 +58,35 @@ export function groupBy<T>(array: T[], key: keyof T): T[][] {
 
   // 그룹화된 객체를 배열로 변환
   return Object.values(grouped);
+}
+
+export function checkGrade(synergy: Synergy[]): any {
+  if (!synergy) return;
+  console.log("grade chekc");
+  const synergyCount = synergy.length;
+  const requireQty = synergy[0].requirQty;
+  const grade = synergy[0].tier;
+
+  let index = 0;
+  let gradeText = "unranked";
+  let gradeNumber = 0;
+  while (index < requireQty.length) {
+    if (index === 0 && synergyCount < requireQty[index]) {
+      break;
+    } else if (synergyCount < requireQty[index]) {
+      gradeText = grade[index - 1];
+      gradeNumber = requireQty[index - 1];
+      break;
+    } else {
+      if (index === requireQty.length - 1) {
+        gradeText = grade[requireQty.length - 1];
+        gradeNumber = requireQty[requireQty.length - 1];
+        break;
+      } else {
+        index++;
+      }
+    }
+  }
+
+  return { gradeText, gradeNumber };
 }

@@ -1,7 +1,8 @@
-import { Champion } from "@/constants/champions";
+import { Champion, SET_12_CHAMPIONS } from "@/constants/champions";
+import { Synergy } from "@/constants/synergy";
 import { CHAMPION_ICON_URL } from "@/constants/url";
 import { useDragActions, useDraggingTarget } from "@/store/dragStore";
-import { cn, groupBy, sortByNumber } from "@/utils";
+import { checkGrade, cn, groupBy, sortByNumber } from "@/utils";
 import Image from "next/image";
 import {
   Dispatch,
@@ -9,12 +10,10 @@ import {
   MouseEvent,
   ReactNode,
   SetStateAction,
-  useEffect,
-  useRef,
   useState,
 } from "react";
+import { Tooltip, useTooltip } from "../Tooltip";
 import { Arrow } from "../svgs";
-import { Synergy } from "@/constants/synergy";
 
 interface FieldProps {}
 
@@ -101,37 +100,6 @@ function SynergyContainer(props: SynergyContainerProps) {
     return grade[checkGrade(b).gradeText] - grade[checkGrade(a).gradeText];
   });
 
-  function checkGrade(synergy: Synergy[]): any {
-    if (!synergy) return;
-    console.log("grade chekc");
-    const synergyCount = synergy.length;
-    const requireQty = synergy[0].requirQty;
-    const grade = synergy[0].tier;
-
-    let index = 0;
-    let gradeText = "unranked";
-    let gradeNumber = 0;
-    while (index < requireQty.length) {
-      if (index === 0 && synergyCount < requireQty[index]) {
-        break;
-      } else if (synergyCount < requireQty[index]) {
-        gradeText = grade[index - 1];
-        gradeNumber = requireQty[index - 1];
-        break;
-      } else {
-        if (index === requireQty.length - 1) {
-          gradeText = grade[requireQty.length - 1];
-          gradeNumber = requireQty[requireQty.length - 1];
-          break;
-        } else {
-          index++;
-        }
-      }
-    }
-
-    return { gradeText, gradeNumber };
-  }
-
   // 동일한 챔피언이 배치되어 있을때
   function removeDuplicateSyenrgy(indexedChampionList: IndexedChampion[]) {
     const seen = new Set(); // 중복을 추적할 Set 생성
@@ -153,55 +121,11 @@ function SynergyContainer(props: SynergyContainerProps) {
         </div>
       )}
       {sortByLength.map((synergy) => (
-        <div
+        <SynergyListItem
+          indexedChampionList={indexedChampionList}
           key={synergy[0].name}
-          className="flex items-center border p-xs text-sm w-[95%] bg-white rounded-md"
-        >
-          <div
-            className={cn(
-              "p-xxs hexagon w-[34px] h-[36px] flex items-center justify-center",
-              synergyBgStyles[checkGrade(synergy)?.gradeText]
-            )}
-          >
-            <Image
-              width={22}
-              height={22}
-              src={`/images/synergy/${synergy[0].src[0]}.png`}
-              alt={synergy[0].name}
-              className="filter"
-            />
-          </div>
-          <div
-            className={cn(
-              "px-xs ml-[-5px] text-white",
-              synergyBgStyles[checkGrade(synergy)?.gradeText]
-            )}
-          >
-            {synergy.length}
-          </div>
-          <div className="ml-xs flex flex-col">
-            <div className="flex">
-              <span>{synergy[0].name}</span>
-            </div>
-            <div className="flex items-center gap-xxxs">
-              {synergy[0].requirQty.map((qty, idx) => (
-                <>
-                  <span
-                    className={cn(
-                      "text-gray-500 text-xs",
-                      checkGrade(synergy)?.gradeNumber === qty && "!text-black"
-                    )}
-                  >
-                    {qty}
-                  </span>
-                  {idx + 1 !== synergy[0].requirQty.length && (
-                    <Arrow size={10} className="inline fill-gray-300" />
-                  )}
-                </>
-              ))}
-            </div>
-          </div>
-        </div>
+          synergy={synergy}
+        />
       ))}
     </div>
   );
@@ -305,6 +229,116 @@ function Hexagon(props: HexagonProps) {
             </p>
           </>
         )}
+      </div>
+    </div>
+  );
+}
+
+const borderColorStyles: { [key: string]: string } = {
+  "1": "border-tier-1",
+  "2": "border-tier-2",
+  "3": "border-tier-3",
+  "4": "border-tier-4",
+  "5": "border-tier-5",
+};
+
+interface SyenrgyListItemProps {
+  indexedChampionList: IndexedChampion[];
+  synergy: Synergy[];
+}
+
+function SynergyListItem(props: SyenrgyListItemProps) {
+  const { indexedChampionList, synergy } = props;
+  const { isTooltipOn, tooltipOn, tooltipOff } = useTooltip();
+
+  const synergyItem = synergy[0];
+  const synergyChampions = SET_12_CHAMPIONS.filter((champion) =>
+    champion.synergy.some((synergy) => synergy.name === synergyItem.name)
+  );
+
+  const sortByTier = sortByNumber(synergyChampions, "tier");
+
+  function championExist(champion: Champion) {
+    const exist = indexedChampionList.find(
+      (cham) => cham.champion.name === champion.name
+    );
+
+    return exist ? true : false;
+  }
+
+  return (
+    <div
+      key={synergyItem.name}
+      onMouseOver={tooltipOn}
+      onMouseLeave={tooltipOff}
+      className="relative flex items-center border p-xs text-sm w-[95%] bg-white rounded-md"
+    >
+      <Tooltip className="" isTooltipOn={isTooltipOn}>
+        <div className="font-semibold">{synergyItem.name}</div>
+        <div className="mt-sm flex gap-xxs">
+          {sortByTier.map((champion) => (
+            <div
+              key={champion.name}
+              className={cn(
+                "size-[40px] overflow-hidden flex rounded-md border-2",
+                borderColorStyles[champion.tier.toString()],
+                !championExist(champion) && "!opacity-50"
+              )}
+            >
+              <Image
+                src={CHAMPION_ICON_URL(champion.src)}
+                width={256}
+                height={128}
+                alt={champion.name}
+                className="object-cover relative object-[-35px_0px] scale-125"
+              />
+            </div>
+          ))}
+        </div>
+      </Tooltip>
+      <div
+        className={cn(
+          "p-xxs hexagon w-[34px] h-[36px] flex items-center justify-center",
+          synergyBgStyles[checkGrade(synergy)?.gradeText]
+        )}
+      >
+        <Image
+          width={22}
+          height={22}
+          src={`/images/synergy/${synergyItem.src[0]}.png`}
+          alt={synergyItem.name}
+          className="filter"
+        />
+      </div>
+      <div
+        className={cn(
+          "px-xs ml-[-5px] text-white",
+          synergyBgStyles[checkGrade(synergy)?.gradeText]
+        )}
+      >
+        {synergy.length}
+      </div>
+      <div className="ml-xs flex flex-col">
+        <div className="flex">
+          <span>{synergyItem.name}</span>
+        </div>
+        <div className="flex items-center gap-xxxs">
+          {synergyItem.requirQty.map((qty, idx) => (
+            <>
+              <span
+                className={cn(
+                  "text-gray-500 text-xs",
+                  checkGrade(synergy)?.gradeNumber === qty && "!text-black"
+                )}
+              >
+                {qty}
+              </span>
+              {idx + 1 !== synergyItem.requirQty.length && (
+                <Arrow size={10} className="inline fill-gray-300" />
+              )}
+            </>
+          ))}
+        </div>
       </div>
     </div>
   );
