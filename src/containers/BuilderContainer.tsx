@@ -2,6 +2,7 @@ import Field from "@/components/field/Field";
 import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
+import { Question } from "@/components/svgs";
 import { cn } from "@/utils";
 import { HTMLAttributes, ReactNode, useState } from "react";
 
@@ -20,6 +21,8 @@ export default function BuilderContainer() {
     champion: true,
   });
 
+  const [tooltip, setTooltip] = useState(false);
+
   function handleOption(optionItem: OptionItem) {
     console.log(option);
     setOption((prev) => ({ ...prev, [optionItem]: !prev[optionItem] }));
@@ -29,8 +32,85 @@ export default function BuilderContainer() {
     <div>
       <div className="relative">
         {/* 상단영역 */}
-        <div className="border-y h-[100px]">
-          <div className="absolute right-0 flex justify-end px-xxl pt-xxl"></div>
+        <div className="h-[100px] py-md flex bg-default-bg inner">
+          <div className="semi-bold">TFT HELPER</div>
+          <div className="ml-auto relative">
+            <Question
+              onMouseOver={() => setTooltip(true)}
+              onMouseLeave={() => setTooltip(false)}
+              className="fill-gray-400 cursor-pointer"
+              size={20}
+            />
+
+            <div
+              className={cn(
+                "z-[1000] transition-opacity absolute min-w-[250px] text-sm left-[100%] top-[50%] bg-white p-md shadow-md",
+                tooltip ? "opacity-100" : "opacity-0"
+              )}
+            >
+              <span className="font-semibold">조작</span>
+              <ul className="pl-sm mt-xxs">
+                <li>
+                  챔피언
+                  <br />
+                  <span className="text-gray-500">
+                    드래그로 이동해서 추가가 가능하며 추가된 챔피언은 우클릭시
+                    제거됩니다.
+                  </span>
+                </li>
+                <li className="mt-xs">
+                  숫자 카운트
+                  <br />
+                  <span className="text-gray-500">
+                    좌클릭 감소 / 우클릭 증가
+                  </span>
+                </li>
+              </ul>
+              <div className="mt-md">
+                <span className="font-semibold">확률</span>
+                <ul className="pl-sm  mt-xxs">
+                  <li>
+                    기물 확률
+                    <br />
+                    <span className="text-gray-500">
+                      각 기물은 코스트에 따라 최대 개수가 정해져 있습니다.{" "}
+                      <br />
+                      <br />
+                      예를 들어 4코스트인 나미는 게임 내 총 10개 존재 가능하며
+                      플레이어가 구매한 개수에 따라 리롤시 상점 등장 확률이
+                      조정되어집니다. 때문에 게임 내 존재하는 기물의 숫자를
+                      카운터에 입력하면 조금 더 정확한 확률을 추적할 수
+                      있습니다.
+                      <br />
+                      <br />
+                      기물 확률은 대략적인 확률 입니다. 보여지는 확률보다 실제
+                      인게임 확률이 높을 가능성이 높습니다.
+                    </span>
+                  </li>
+                  <li className="mt-xs">
+                    확률표
+                    <br />
+                    <span className="text-gray-500">
+                      해당 확률표는 라이엇 공식 제공 확률입니다.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div className="mt-md">
+                <span className="font-semibold">미구현</span>
+                <ul className="pl-sm mt-xxs">
+                  <li>
+                    뒤집개/상징
+                    <br />
+                    <span className="text-gray-500">
+                      뒤집개를 이용한 상징 조합, 상징 추가에 따른 시너지 조정은
+                      현재 미구현 상태입니다.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
           {/* side menu */}
           {/* <div className="absolute z-[400]  h-[400px] w-[70px] py-md flex flex-col gap-xl">
             <ControllerButton
@@ -55,7 +135,7 @@ export default function BuilderContainer() {
           </div> */}
         </div>
         {/* 중앙 영역 */}
-        <div className="flex inner py-md">
+        <div className="flex inner bg-default-bg py-md">
           <Field />
           <div className="basis-[10%]">
             <div className="absolute">
@@ -64,11 +144,12 @@ export default function BuilderContainer() {
           </div>
         </div>
         {/* 하단 영역 */}
-        <div className="flex inner !mt-xxxl">
-          <div className="flex self-start">
+        <div className="flex inner bg-default-bg !pt-xxxl">
+          <div className="basis-[20%]"></div>
+          <div className="flex self-start basis-[40%]">
             <ChampionList hidden={!option.champion} />
           </div>
-          <div className="flex self-start flex-grow">
+          <div className="flex self-start">
             <RerollPercentage hidden={!option.reroll} />
           </div>
         </div>
