@@ -108,7 +108,7 @@ export const COMBINATION_ITEM_LIST = [
   CHAIN_VEST,
   NEGATRON_CLOAK,
   GIANTS_BELT,
-  SPATULA,
+  // SPATULA,
 ];
 
 //완성 아이템
