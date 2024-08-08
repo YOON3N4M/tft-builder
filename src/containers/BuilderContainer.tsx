@@ -1,3 +1,4 @@
+import { Tooltip, useTooltip } from "@/components/Tooltip";
 import Field from "@/components/field/Field";
 import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
@@ -21,7 +22,7 @@ export default function BuilderContainer() {
     champion: true,
   });
 
-  const [tooltip, setTooltip] = useState(false);
+  const { isTooltipOn, tooltipOff, tooltipOn } = useTooltip();
 
   function handleOption(optionItem: OptionItem) {
     console.log(option);
@@ -36,18 +37,13 @@ export default function BuilderContainer() {
           <div className="semi-bold">TFT HELPER</div>
           <div className="ml-auto relative">
             <Question
-              onMouseOver={() => setTooltip(true)}
-              onMouseLeave={() => setTooltip(false)}
+              onMouseOver={tooltipOn}
+              onMouseLeave={tooltipOff}
               className="fill-gray-400 cursor-pointer"
               size={20}
             />
 
-            <div
-              className={cn(
-                "z-[1000] transition-opacity absolute min-w-[250px] text-sm left-[100%] top-[50%] bg-white p-md shadow-md",
-                tooltip ? "opacity-100" : "opacity-0 hidden"
-              )}
-            >
+            <Tooltip isTooltipOn={isTooltipOn}>
               <span className="font-semibold">조작</span>
               <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
                 <li>
@@ -112,7 +108,7 @@ export default function BuilderContainer() {
                   </li>
                 </ul>
               </div>
-            </div>
+            </Tooltip>
           </div>
           {/* side menu */}
           {/* <div className="absolute z-[400]  h-[400px] w-[70px] py-md flex flex-col gap-xl">
