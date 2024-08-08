@@ -62,7 +62,7 @@ export function groupBy<T>(array: T[], key: keyof T): T[][] {
 
 export function checkGrade(synergy: Synergy[]): any {
   if (!synergy) return;
-  console.log("grade chekc");
+
   const synergyCount = synergy.length;
   const requireQty = synergy[0].requirQty;
   const grade = synergy[0].tier;

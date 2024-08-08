@@ -121,7 +121,7 @@ export function checkInventoryItemQty(itemList: CombinationItem[]) {
 
   itemList.forEach((item) => (inventory[item.name] = inventory[item.name] + 1));
 
-  console.log("남은 아이템", inventory);
+  //console.log("남은 아이템", inventory);
 
   return inventory;
 }

@@ -79,7 +79,7 @@ const synergyBgStyles: { [key: string]: string } = {
 function SynergyContainer(props: SynergyContainerProps) {
   const { indexedChampionList } = props;
 
-  console.log(indexedChampionList);
+  //console.log(indexedChampionList);
 
   const duplicateRemoves = removeDuplicateSyenrgy(indexedChampionList);
 
@@ -178,7 +178,7 @@ function Hexagon(props: HexagonProps) {
     setIsDragEnter(false);
 
     if (draggingChampion) {
-      console.log("챔피언 배치");
+      //console.log("챔피언 배치");
       const indexed = {
         index,
         champion: draggingChampion as Champion,
@@ -186,7 +186,7 @@ function Hexagon(props: HexagonProps) {
       setPlacedChampion(draggingChampion as Champion);
       setPlacedChampions((prev) => [...prev, indexed]);
     } else {
-      console.log("챔피언 없음");
+      //console.log("챔피언 없음");
     }
     setDraggingTarget(null);
   }

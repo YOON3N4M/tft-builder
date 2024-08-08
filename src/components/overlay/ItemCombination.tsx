@@ -102,9 +102,9 @@ function ItemCombination(props: ItemCombinationProps) {
   useEffect(() => {
     const result = calculateAllCombinationCase(inventory);
     setCombinationCase(result);
-    console.log(result);
+    //console.log(result);
 
-    console.log("아이템 변동");
+    //console.log("아이템 변동");
   }, [inventory]);
 
   return (

@@ -86,7 +86,7 @@ function RerollPercentage(props: RerollPercentageProps) {
   }
 
   function onDragDrop() {
-    console.log("드랍함 ");
+    //console.log("드랍함 ");
     const draggingChampion = draggingTarget as Champion;
     const isExist = targetChampions.find(
       (champion) => champion.name === draggingChampion.name
