@@ -41,7 +41,7 @@ function Field(props: FieldProps) {
       <div className="text-black basis-[20%] flex">
         <SynergyContainer indexedChampionList={placedChampions} />
       </div>
-      <div className="flex flex-grow">
+      <div className="flex flex-grow justify-center">
         <div className="relative grid grid-cols-7 gap-xs w-[700px] gap-y-0 h-min">
           {placedChampions.length === 0 && (
             <div className="absolute x-center y-center z-[500] p-sm bg-white border rounded-md opacity-70">
@@ -146,7 +146,12 @@ function SynergyContainer(props: SynergyContainerProps) {
   }
 
   return (
-    <div className="flex flex-col gap-sm py-md max-h-[400px] overflow-auto w-[90%]">
+    <div className="flex flex-col gap-sm py-md max-h-[400px] w-[90%]">
+      {sortByLength.length === 0 && (
+        <div className="w-[95%] p-sm bg-white border rounded-md opacity-70">
+          챔피언 배치시 시너지가 활성화 됩니다{" "}
+        </div>
+      )}
       {sortByLength.map((synergy) => (
         <div
           key={synergy[0].name}

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-default-bg;
+  @apply bg-gray-200 break-keep;
 }
 
 @layer utilities {
@@ -24,7 +24,9 @@ body {
     text-wrap: balance;
   }
   .inner {
-    max-width: 1200px;
+    max-width: 1280px;
+    padding-left: 40px;
+    padding-right: 40px;
     margin: 0 auto;
   }
   .drag-unable {
