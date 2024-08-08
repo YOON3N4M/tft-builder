@@ -20,8 +20,9 @@ import { calculateAllCombinationCase } from "@/utils/item";
 import Image from "next/image";
 
 import { MouseEvent, useEffect, useState } from "react";
-import { Reset, WindowMaxi, WindowMini } from "../svgs";
+import { Question, Reset, WindowMaxi, WindowMini } from "../svgs";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
+import { Tooltip, useTooltip } from "../tooltip/Tooltip";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -39,6 +40,7 @@ const initialInventory = {
 
 function ItemCombination(props: ItemCombinationProps) {
   const { hidden } = props;
+  const { isTooltipOn, tooltipOff, tooltipOn } = useTooltip();
   const [coreInventory, setCoreInventory] = useState<CoreItem[]>([]);
   const [inventory, setInventory] = useState(initialInventory);
 
@@ -100,6 +102,7 @@ function ItemCombination(props: ItemCombinationProps) {
   useEffect(() => {
     const result = calculateAllCombinationCase(inventory);
     setCombinationCase(result);
+    console.log(result);
 
     console.log("아이템 변동");
   }, [inventory]);
@@ -110,7 +113,17 @@ function ItemCombination(props: ItemCombinationProps) {
         <button onClick={resetInventory}>
           <Reset />
         </button>
-
+        <div className="relative">
+          <Question
+            onMouseEnter={tooltipOn}
+            onMouseLeave={tooltipOff}
+            className="cursor-pointer"
+          />
+          <Tooltip isTooltipOn={isTooltipOn}>
+            조합 이아템 개수를 입력하면 조합 가능한 완성 아이템 경우의 수를
+            제공합니다.
+          </Tooltip>
+        </div>
         {/* 팁 호버 버튼 같은거 추가해서 도움말을 넣으면 좋을듯 */}
       </OverlayTab>
 
@@ -160,24 +173,26 @@ function ItemCombination(props: ItemCombinationProps) {
           foldCase && "h-0 !p-0"
         )}
       >
-        {combinationCase.map((c, idx) => (
-          <div key={idx}>
-            <span className="text-xs text-gray-500">{idx}.</span>
-            <ul className="mt-xxxs flex flex-wrap w-[210px] max-w-[210px] gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
-              {c.map((i, idx) => (
-                <li key={idx} className="flex items-center">
-                  <button
-                    onContextMenu={(event) =>
-                      handleCoreItemRightClick(event, i)
-                    }
-                  >
-                    <ItemIcon item={i} />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        {combinationCase[0] &&
+          combinationCase[0].length > 0 &&
+          combinationCase.map((c, idx) => (
+            <div key={idx}>
+              <span className="text-xs text-gray-500">{idx}.</span>
+              <ul className="mt-xxxs flex flex-wrap w-[210px] max-w-[210px] gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
+                {c.map((i, idx) => (
+                  <li key={idx} className="flex items-center">
+                    <button
+                      onContextMenu={(event) =>
+                        handleCoreItemRightClick(event, i)
+                      }
+                    >
+                      <ItemIcon item={i} />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
       </div>
     </Overlay>
   );
