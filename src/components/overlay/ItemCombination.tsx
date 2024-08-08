@@ -116,7 +116,7 @@ function ItemCombination(props: ItemCombinationProps) {
 
       <div className="px-md text-sm">
         <p>보유 완성 아이템</p>
-        <ul className="mt-sm flex flex-wrap gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
+        <ul className="mt-sm flex w-[210px] max-w-[210px] flex-wrap gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
           {coreInventory.map((i, idx) => (
             <li key={idx} className="flex items-center">
               <ItemIcon item={i} />
@@ -133,21 +133,24 @@ function ItemCombination(props: ItemCombinationProps) {
             {foldCase ? <WindowMaxi /> : <WindowMini />}
           </button>
         </div>
-        <ul className="flex mt-sm gap-[8px]">
+        <div className="grid w-[210px] max-w-[210px] grid-cols-3 mt-sm gap-[8px] flex-wrap">
           {COMBINATION_ITEM_LIST.map((item) => (
-            <li key={item.name} className="flex flex-col items-center">
+            <div key={item.name} className="flex flex-col items-center">
               <button
+                className="p-xxs bg-default-bg rounded-md"
                 onClick={() => increaseItem(item.name)}
                 onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
               >
-                <ItemIcon item={item} />
+                <div className="flex gap-xs p-xxxs">
+                  <ItemIcon item={item} />
+                  <div className="text-gray-500 mt-xxs text-sm">
+                    {inventory[item.name]}
+                  </div>
+                </div>
               </button>
-              <span className="text-gray-500 mt-xxs text-sm">
-                {inventory[item.name]}
-              </span>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
       {/* case list */}
@@ -158,20 +161,22 @@ function ItemCombination(props: ItemCombinationProps) {
         )}
       >
         {combinationCase.map((c, idx) => (
-          <ul
-            key={idx}
-            className="flex gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]"
-          >
-            {c.map((i, idx) => (
-              <li key={idx} className="flex items-center">
-                <button
-                  onContextMenu={(event) => handleCoreItemRightClick(event, i)}
-                >
-                  <ItemIcon item={i} />
-                </button>
-              </li>
-            ))}
-          </ul>
+          <div key={idx}>
+            <span className="text-xs text-gray-500">{idx}.</span>
+            <ul className="mt-xxxs flex flex-wrap w-[210px] max-w-[210px] gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
+              {c.map((i, idx) => (
+                <li key={idx} className="flex items-center">
+                  <button
+                    onContextMenu={(event) =>
+                      handleCoreItemRightClick(event, i)
+                    }
+                  >
+                    <ItemIcon item={i} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
     </Overlay>
