@@ -45,17 +45,25 @@ export default function BuilderContainer() {
             <div
               className={cn(
                 "z-[1000] transition-opacity absolute min-w-[250px] text-sm left-[100%] top-[50%] bg-white p-md shadow-md",
-                tooltip ? "opacity-100" : "opacity-0"
+                tooltip ? "opacity-100" : "opacity-0 hidden"
               )}
             >
               <span className="font-semibold">조작</span>
-              <ul className="pl-sm mt-xxs">
+              <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
                 <li>
                   챔피언
                   <br />
                   <span className="text-gray-500">
                     드래그로 이동해서 추가가 가능하며 추가된 챔피언은 우클릭시
                     제거됩니다.
+                  </span>
+                </li>
+                <li className="mt-xs">
+                  아이템
+                  <br />
+                  <span className="text-gray-500">
+                    완성 아이템을 우클릭하면 보유 조합 아이템을 소모하여 완성
+                    아이템을 조합합니다.
                   </span>
                 </li>
                 <li className="mt-xs">
@@ -66,9 +74,9 @@ export default function BuilderContainer() {
                   </span>
                 </li>
               </ul>
-              <div className="mt-md">
+              <div className="mt-md ">
                 <span className="font-semibold">확률</span>
-                <ul className="pl-sm  mt-xxs">
+                <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
                   <li>
                     기물 확률
                     <br />
@@ -93,7 +101,7 @@ export default function BuilderContainer() {
               </div>
               <div className="mt-md">
                 <span className="font-semibold">미구현</span>
-                <ul className="pl-sm mt-xxs">
+                <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
                   <li>
                     뒤집개/상징
                     <br />
