@@ -12,8 +12,9 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { Tooltip, useTooltip } from "../Tooltip";
+import { Tooltip, useTooltip } from "../tooltip/Tooltip";
 import { Arrow } from "../svgs";
+import ChampionTooltip from "../tooltip/ChampionTooltip";
 
 interface FieldProps {}
 
@@ -153,6 +154,8 @@ function Hexagon(props: HexagonProps) {
 
   const draggingChampion = useDraggingTarget();
 
+  const { isTooltipOn, tooltipOff, tooltipOn } = useTooltip();
+
   const [placedChampion, setPlacedChampion] = useState<Champion | null>(null);
   const [isDragEnter, setIsDragEnter] = useState(false);
 
@@ -199,36 +202,51 @@ function Hexagon(props: HexagonProps) {
   }
 
   return (
-    <div
-      className={cn(
-        "hexagon w-[84px] cursor-pointer h-[96px] bg-[#d0d2d5] relative flex justify-center items-center ",
-        isEvenRow && "translate-x-[55%]",
-        isDragEnter && "bg-blue-300",
-        placedChampion && backgroundColorStyles[placedChampion.tier.toString()]
-      )}
-    >
-      <div
-        onContextMenu={onChampionRightClick}
-        onDragEnter={onDragEnter}
-        onDragOver={onDragOver}
-        onDragLeave={onDrageLeave}
-        onDrop={onDragDrop}
-        className="hexagon size-[90%] relative"
-      >
+    <div className={cn("relative")}>
+      <div className="relative">
         {placedChampion && (
-          <>
-            <Image
-              width={256}
-              height={128}
-              src={CHAMPION_ICON_URL(placedChampion.src)}
-              alt={placedChampion.name}
-              className="object-cover absolute center w-full h-full object-[-87px_0px]"
-            />
-            <p className="absolute bottom-[15%] text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
-              {placedChampion.name}
-            </p>
-          </>
+          <ChampionTooltip
+            isTooltipOn={isTooltipOn}
+            champion={placedChampion}
+            className={cn(isEvenRow && "translate-x-[30%]")}
+          />
         )}
+      </div>
+
+      <div
+        onMouseEnter={tooltipOn}
+        onMouseLeave={tooltipOff}
+        className={cn(
+          "hexagon w-[84px] cursor-pointer h-[96px] bg-[#d0d2d5] relative flex justify-center items-center ",
+          isEvenRow && "translate-x-[55%]",
+          isDragEnter && "bg-blue-300",
+          placedChampion &&
+            backgroundColorStyles[placedChampion.tier.toString()]
+        )}
+      >
+        <div
+          onContextMenu={onChampionRightClick}
+          onDragEnter={onDragEnter}
+          onDragOver={onDragOver}
+          onDragLeave={onDrageLeave}
+          onDrop={onDragDrop}
+          className="hexagon size-[90%] relative"
+        >
+          {placedChampion && (
+            <div className="">
+              <Image
+                width={256}
+                height={128}
+                src={CHAMPION_ICON_URL(placedChampion.src)}
+                alt={placedChampion.name}
+                className="object-cover absolute center w-full h-full object-[-87px_0px]"
+              />
+              <p className="absolute bottom-[15%] text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
+                {placedChampion.name}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

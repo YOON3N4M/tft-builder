@@ -29,7 +29,7 @@ export function Tooltip(props: TooltipProps) {
   return (
     <div
       className={cn(
-        "z-[1000] transition-opacity absolute min-w-[250px] text-sm  bg-white p-md shadow-md",
+        "z-[1000] transition-opacity absolute min-w-[250px] text-sm border bg-white p-md shadow-md",
         className,
         positionStyles[position],
         isTooltipOn ? "opacity-100" : "opacity-0 hidden"

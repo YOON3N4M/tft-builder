@@ -8,12 +8,14 @@ import Image from "next/image";
 import { HTMLAttributes, useState } from "react";
 import { Token } from "../svgs";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
+import { useTooltip } from "../tooltip/Tooltip";
+import ChampionTooltip from "../tooltip/ChampionTooltip";
 
 interface ChampionListProps extends OverlayProps {}
 
 type SortType = "korean" | "tier";
 
-const borderColorStyles: { [key: string]: string } = {
+export const borderColorStyles: { [key: string]: string } = {
   "1": "border-tier-1",
   "2": "border-tier-2",
   "3": "border-tier-3",
@@ -45,7 +47,6 @@ function ChampionList(props: ChampionListProps) {
 
   function handleIconDragStart(e: any, champion: Champion) {
     console.log(e, "드래그 한다잉");
-
     setDraggingTarget(champion);
   }
 
@@ -69,37 +70,13 @@ function ChampionList(props: ChampionListProps) {
         </SortButton>
       </OverlayTab>
       <div className="p-md drag-unable">
-        <div className="grid grid-cols-6 gap-xs p-md bg-default-bg max-h-[500px] overflow-auto rounded-[4px]">
+        <div className="grid grid-cols-6 gap-xs p-md bg-default-bg rounded-[4px]">
           {championList.map((champion, idx) => (
-            <div
-              onDragStart={(e) => handleIconDragStart(e, champion)}
-              key={champion.id}
-              className={cn(
-                "cursor-pointer size-[64px] flex border-2 rounded-[4px] relative overflow-hidden",
-                borderColorStyles[champion.tier.toString()]
-              )}
-            >
-              <div className="z-[100] absolute w-full top-0 flex justify-end ">
-                <div className="pointer-events-none flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">
-                  <Token size={10} className="fill-white" />{" "}
-                  <span className="text-white text-[11px]">
-                    {champion.tier}
-                  </span>
-                </div>
-              </div>
-              <Image
-                width={256}
-                height={128}
-                alt={champion.name}
-                src={CHAMPION_ICON_URL(champion.src)}
-                className={cn(
-                  "object-cover relative object-[-55px_0px] scale-125"
-                )}
-              />
-              <p className="pointer-events-none absolute bottom-0 text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
-                {champion.name}
-              </p>
-            </div>
+            <ChampionListItem
+              key={champion.name}
+              champion={champion}
+              handleIconDragStart={handleIconDragStart}
+            />
           ))}
         </div>
       </div>
@@ -108,6 +85,49 @@ function ChampionList(props: ChampionListProps) {
 }
 
 export default ChampionList;
+
+interface ChampionListItemProps {
+  champion: Champion;
+  handleIconDragStart: (e: any, champion: Champion) => void;
+}
+
+function ChampionListItem(props: ChampionListItemProps) {
+  const { champion, handleIconDragStart } = props;
+  const { isTooltipOn, tooltipOff, tooltipOn } = useTooltip();
+
+  return (
+    <div className="relative">
+      <ChampionTooltip champion={champion} isTooltipOn={isTooltipOn} />
+      <div
+        onMouseEnter={tooltipOn}
+        onMouseLeave={tooltipOff}
+        onDragStart={(e) => handleIconDragStart(e, champion)}
+        key={champion.id}
+        className={cn(
+          "cursor-pointer size-[64px] flex border-2 rounded-[4px] relative overflow-hidden",
+          borderColorStyles[champion.tier.toString()]
+        )}
+      >
+        <div className="z-[100] absolute w-full top-0 flex justify-end ">
+          <div className="pointer-events-none flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">
+            <Token size={10} className="fill-white" />{" "}
+            <span className="text-white text-[11px]">{champion.tier}</span>
+          </div>
+        </div>
+        <Image
+          width={256}
+          height={128}
+          alt={champion.name}
+          src={CHAMPION_ICON_URL(champion.src)}
+          className={cn("object-cover relative object-[-55px_0px] scale-125")}
+        />
+        <p className="pointer-events-none absolute bottom-0 text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
+          {champion.name}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 interface SortButtonProps extends HTMLAttributes<HTMLButtonElement> {
   sortType: SortType;

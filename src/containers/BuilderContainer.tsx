@@ -1,4 +1,4 @@
-import { Tooltip, useTooltip } from "@/components/Tooltip";
+import { Tooltip, useTooltip } from "@/components/tooltip/Tooltip";
 import Field from "@/components/field/Field";
 import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
