@@ -15,6 +15,7 @@ import {
 import { Tooltip, useTooltip } from "../tooltip/Tooltip";
 import { Arrow } from "../svgs";
 import ChampionTooltip from "../tooltip/ChampionTooltip";
+import useDragEvent from "@/hooks/useDragEvent";
 
 interface FieldProps {}
 
@@ -156,26 +157,14 @@ function Hexagon(props: HexagonProps) {
 
   const { isTooltipOn, tooltipOff, tooltipOn } = useTooltip();
 
+  const { isDragEnter, onDragEnter, onDragLeave, onDragOver, onDragEnd } =
+    useDragEvent();
+
   const [placedChampion, setPlacedChampion] = useState<Champion | null>(null);
-  const [isDragEnter, setIsDragEnter] = useState(false);
 
-  function onDragEnter(event: DragEvent<HTMLDivElement>) {
+  function handleDragDrop(event: DragEvent<HTMLDivElement>) {
     event.preventDefault();
-
-    setIsDragEnter(true);
-  }
-
-  function onDrageLeave() {
-    setIsDragEnter(false);
-  }
-
-  function onDragOver(event: DragEvent<HTMLDivElement>) {
-    event.preventDefault();
-  }
-
-  function onDragDrop(event: DragEvent<HTMLDivElement>) {
-    event.preventDefault();
-    setIsDragEnter(false);
+    onDragEnd(event);
 
     if (draggingChampion) {
       //console.log("챔피언 배치");
@@ -228,8 +217,8 @@ function Hexagon(props: HexagonProps) {
           onContextMenu={onChampionRightClick}
           onDragEnter={onDragEnter}
           onDragOver={onDragOver}
-          onDragLeave={onDrageLeave}
-          onDrop={onDragDrop}
+          onDragLeave={onDragLeave}
+          onDrop={handleDragDrop}
           className="hexagon size-[90%] relative"
         >
           {placedChampion && (
