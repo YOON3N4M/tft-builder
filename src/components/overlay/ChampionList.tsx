@@ -53,7 +53,7 @@ function ChampionList(props: ChampionListProps) {
 
   return (
     <Overlay hidden={hidden}>
-      <OverlayTab className="flex !px-xxl gap-sm">
+      <OverlayTab className="flex min-w-[465px] !px-xxl gap-sm">
         <SortButton
           currentSortType={currentSortType}
           sortType="korean"

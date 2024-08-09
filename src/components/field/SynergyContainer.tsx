@@ -106,7 +106,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
       key={synergyItem.name}
       onMouseOver={tooltipOn}
       onMouseLeave={tooltipOff}
-      className="relative flex items-center border p-xs text-sm w-[95%] bg-white rounded-md"
+      className="relative flex items-center border p-xs text-sm min-w-[205px] bg-white rounded-md"
     >
       <Tooltip className="" isTooltipOn={isTooltipOn}>
         <div className="font-semibold">{synergyItem.name}</div>

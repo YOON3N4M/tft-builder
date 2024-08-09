@@ -109,7 +109,7 @@ function RerollPercentage(props: RerollPercentageProps) {
   }
 
   return (
-    <Overlay hidden={hidden} className="w-full max-w-[600px]">
+    <Overlay hidden={hidden} className="w-full min-w-[500px] max-w-[600px]">
       <OverlayTab className="flex gap-sm text-sm">
         <button className="font-bold">기물 확률</button>
 
