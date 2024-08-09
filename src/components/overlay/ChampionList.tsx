@@ -10,6 +10,7 @@ import { Token } from "../svgs";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import { useTooltip } from "../tooltip/Tooltip";
 import ChampionTooltip from "../tooltip/ChampionTooltip";
+import ChampionPortrait from "../ChampionPortrait";
 
 interface ChampionListProps extends OverlayProps {}
 
@@ -96,17 +97,19 @@ function ChampionListItem(props: ChampionListItemProps) {
   const { isTooltipOn, tooltipOff, tooltipOn } = useTooltip();
 
   return (
-    <div className="relative">
+    <div
+      onMouseEnter={tooltipOn}
+      onMouseLeave={tooltipOff}
+      onDragStart={(e) => handleIconDragStart(e, champion)}
+      className="relative cursor-pointer"
+    >
       <ChampionTooltip champion={champion} isTooltipOn={isTooltipOn} />
-      <div
-        onMouseEnter={tooltipOn}
-        onMouseLeave={tooltipOff}
-        onDragStart={(e) => handleIconDragStart(e, champion)}
+
+      <ChampionPortrait
         key={champion.id}
-        className={cn(
-          "cursor-pointer size-[64px] flex border-2 rounded-[4px] relative overflow-hidden",
-          borderColorStyles[champion.tier.toString()]
-        )}
+        className="size-[64px]"
+        champion={champion}
+        objectPosition="object-[-55px_0px]"
       >
         <div className="z-[100] absolute w-full top-0 flex justify-end ">
           <div className="pointer-events-none flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">
@@ -114,17 +117,17 @@ function ChampionListItem(props: ChampionListItemProps) {
             <span className="text-white text-[11px]">{champion.tier}</span>
           </div>
         </div>
-        <Image
+        <p className="pointer-events-none absolute bottom-0 text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
+          {champion.name}
+        </p>
+      </ChampionPortrait>
+      {/* <Image
           width={256}
           height={128}
           alt={champion.name}
           src={CHAMPION_ICON_URL(champion.src)}
           className={cn("object-cover relative object-[-55px_0px] scale-125")}
-        />
-        <p className="pointer-events-none absolute bottom-0 text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
-          {champion.name}
-        </p>
-      </div>
+        /> */}
     </div>
   );
 }

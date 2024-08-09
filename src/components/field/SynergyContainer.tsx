@@ -1,11 +1,11 @@
-import { checkGrade, cn, groupBy, sortByNumber } from "@/utils";
-import { IndexedChampion } from "./Field";
-import { Tooltip, useTooltip } from "../tooltip/Tooltip";
 import { Champion, SET_12_CHAMPIONS } from "@/constants/champions";
-import Image from "next/image";
-import { CHAMPION_ICON_URL } from "@/constants/url";
-import { Arrow } from "../svgs";
 import { Synergy } from "@/constants/synergy";
+import { checkGrade, cn, groupBy, sortByNumber } from "@/utils";
+import Image from "next/image";
+import ChampionPortrait from "../ChampionPortrait";
+import { Arrow } from "../svgs";
+import { Tooltip, useTooltip } from "../tooltip/Tooltip";
+import { IndexedChampion } from "./Field";
 
 interface SynergyContainerProps {
   indexedChampionList: IndexedChampion[];
@@ -77,14 +77,6 @@ function SynergyContainer(props: SynergyContainerProps) {
 
 export default SynergyContainer;
 
-const borderColorStyles: { [key: string]: string } = {
-  "1": "border-tier-1",
-  "2": "border-tier-2",
-  "3": "border-tier-3",
-  "4": "border-tier-4",
-  "5": "border-tier-5",
-};
-
 interface SyenrgyListItemProps {
   indexedChampionList: IndexedChampion[];
   synergy: Synergy[];
@@ -120,22 +112,15 @@ function SynergyListItem(props: SyenrgyListItemProps) {
         <div className="font-semibold">{synergyItem.name}</div>
         <div className="mt-sm flex gap-xxs">
           {sortByTier.map((champion) => (
-            <div
+            <ChampionPortrait
               key={champion.name}
+              champion={champion}
               className={cn(
-                "size-[40px] overflow-hidden flex rounded-md border-2",
-                borderColorStyles[champion.tier.toString()],
+                "size-[40px]",
                 !championExist(champion) && "!opacity-50"
               )}
-            >
-              <Image
-                src={CHAMPION_ICON_URL(champion.src)}
-                width={256}
-                height={128}
-                alt={champion.name}
-                className="object-cover relative object-[-35px_0px] scale-125"
-              />
-            </div>
+              objectPosition="object-[-35px_0px]"
+            />
           ))}
         </div>
       </Tooltip>
