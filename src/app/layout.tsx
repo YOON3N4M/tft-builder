@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "./globals.css";
 
@@ -15,6 +16,8 @@ const pretendard = localFont({
   variable: "--font-pretendard",
 });
 
+const GA_ID = process.env.GA_ID as string;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,6 +28,7 @@ export default function RootLayout({
       <body>
         <main>{children}</main>
       </body>
+      <GoogleAnalytics gaId={GA_ID} />
     </html>
   );
 }
