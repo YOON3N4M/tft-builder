@@ -16,6 +16,7 @@ const pretendard = localFont({
   variable: "--font-pretendard",
 });
 
+//ga
 const GA_ID = process.env.GA_ID as string;
 
 export default function RootLayout({
