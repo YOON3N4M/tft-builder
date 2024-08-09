@@ -15,12 +15,14 @@ import {
 import ChampionTooltip from "../tooltip/ChampionTooltip";
 import { useTooltip } from "../tooltip/Tooltip";
 import SynergyContainer from "./SynergyContainer";
+import { CoreItem } from "@/constants/item";
 
 interface FieldProps {}
 
 export interface IndexedChampion {
   index: number;
   champion: Champion;
+  itemList: CoreItem[];
 }
 
 const hexagonQty = 28;
@@ -91,7 +93,9 @@ function Hexagon(props: HexagonProps) {
   const { isDragEnter, onDragEnter, onDragLeave, onDragOver, onDragEnd } =
     useDragEvent();
 
-  const [placedChampion, setPlacedChampion] = useState<Champion | null>(null);
+  const [placedChampion, setPlacedChampion] = useState<IndexedChampion | null>(
+    null
+  );
 
   function handleDragDrop(event: DragEvent<HTMLDivElement>) {
     event.preventDefault();
@@ -102,8 +106,9 @@ function Hexagon(props: HexagonProps) {
       const indexed = {
         index,
         champion: draggingChampion as Champion,
+        itemList: [],
       };
-      setPlacedChampion(draggingChampion as Champion);
+      setPlacedChampion(indexed);
       setPlacedChampions((prev) => [...prev, indexed]);
     } else {
       //console.log("챔피언 없음");
@@ -113,10 +118,10 @@ function Hexagon(props: HexagonProps) {
 
   function onChampionRightClick(event: MouseEvent<HTMLDivElement>) {
     event.preventDefault();
-    removeChamion();
+    removeChampion();
   }
 
-  function removeChamion() {
+  function removeChampion() {
     setPlacedChampion(null);
     setPlacedChampions((prev) => prev.filter((item) => item.index !== index));
   }
@@ -127,7 +132,7 @@ function Hexagon(props: HexagonProps) {
         {placedChampion && (
           <ChampionTooltip
             isTooltipOn={isTooltipOn}
-            champion={placedChampion}
+            champion={placedChampion.champion}
             className={cn(isEvenRow && "translate-x-[30%]")}
           />
         )}
@@ -141,7 +146,7 @@ function Hexagon(props: HexagonProps) {
           isEvenRow && "translate-x-[55%]",
           isDragEnter && "bg-blue-300",
           placedChampion &&
-            backgroundColorStyles[placedChampion.tier.toString()]
+            backgroundColorStyles[placedChampion.champion.tier.toString()]
         )}
       >
         <div
@@ -157,12 +162,12 @@ function Hexagon(props: HexagonProps) {
               <Image
                 width={256}
                 height={128}
-                src={CHAMPION_ICON_URL(placedChampion.src)}
-                alt={placedChampion.name}
+                src={CHAMPION_ICON_URL(placedChampion.champion.src)}
+                alt={placedChampion.champion.name}
                 className="object-cover absolute center w-full h-full object-[-87px_0px]"
               />
               <p className="absolute bottom-[15%] text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
-                {placedChampion.name}
+                {placedChampion.champion.name}
               </p>
             </div>
           )}
