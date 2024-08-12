@@ -1,8 +1,9 @@
 import { Champion } from "@/constants/champions";
-import { CHAMPION_ICON_URL } from "@/constants/url";
+import { CHAMPION_ICON_URL, ITEM_ICON_URL } from "@/constants/url";
 import useDragEvent from "@/hooks/useDragEvent";
 import {
   useDragActions,
+  useDraggingCoreItem,
   useDraggingIndexedChampion,
   useDraggingTarget,
 } from "@/store/dragStore";
@@ -14,6 +15,7 @@ import {
   MouseEvent,
   ReactNode,
   SetStateAction,
+  useEffect,
   useState,
 } from "react";
 import { IndexedChampion } from "./Field";
@@ -36,10 +38,12 @@ const backgroundColorStyles: { [key: string]: string } = {
 export default function Hexagon(props: HexagonProps) {
   const { isEvenRow, setPlacedChampions, index } = props;
 
-  const { setDraggingTarget, setDraggingIndexedChampion } = useDragActions();
+  const { setDraggingCoreItem, setDraggingTarget, setDraggingIndexedChampion } =
+    useDragActions();
 
   const draggingChampion = useDraggingTarget();
   const draggingIndexedChampion = useDraggingIndexedChampion();
+  const draggingCoreItem = useDraggingCoreItem();
 
   const { isDragEnter, onDragEnter, onDragLeave, onDragOver, onDragEnd } =
     useDragEvent();
@@ -67,6 +71,34 @@ export default function Hexagon(props: HexagonProps) {
     event.preventDefault();
     onDragEnd(event);
 
+    handleChampionDrop();
+  }
+
+  function handleDragEnd(event: MouseEvent<HTMLDivElement>) {
+    setPlacedChampion(null);
+    setDraggingTarget(null);
+    setDraggingIndexedChampion(null);
+  }
+
+  function handleItemDrop() {
+    if (!draggingCoreItem) return;
+    if (!placedChampion) return;
+    if (placedChampion?.itemList.length > 2) {
+      alert("아이템은 최대 3개까지 장착 가능합니다.");
+      return;
+    }
+    setPlacedChampion(
+      (prev) =>
+        ({
+          ...prev,
+          itemList: [...prev?.itemList!, draggingCoreItem],
+        } as IndexedChampion)
+    );
+
+    console.log(placedChampion);
+  }
+
+  function handleChampionDrop() {
     if (draggingChampion) {
       // 챔피언 리스트에서 드래그 할 경우
 
@@ -83,6 +115,7 @@ export default function Hexagon(props: HexagonProps) {
     // 이미 배치된 챔피언을 이동 시킬때
     if (draggingIndexedChampion) {
       const newIndex = { ...draggingIndexedChampion, index };
+      console.log(newIndex);
       setPlacedChampion(newIndex);
       setPlacedChampions((prev) =>
         [...prev, newIndex].filter(
@@ -98,19 +131,35 @@ export default function Hexagon(props: HexagonProps) {
     removeChampion();
   }
 
-  function handleDragEnd(event: MouseEvent<HTMLDivElement>) {
-    setPlacedChampion(null);
-    setDraggingTarget(null);
-    setDraggingIndexedChampion(null);
-  }
-
   function removeChampion() {
     setPlacedChampion(null);
     setPlacedChampions((prev) => prev.filter((item) => item.index !== index));
   }
 
+  function handleItemRightClick(
+    event: MouseEvent<HTMLImageElement>,
+    idx: number
+  ) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    console.log(idx);
+
+    setPlacedChampion(
+      (prev) =>
+        ({
+          ...prev,
+          itemList: [...prev?.itemList!].filter((_, index) => index !== idx),
+        } as IndexedChampion)
+    );
+  }
+
+  useEffect(() => {
+    console.log(placedChampion);
+  }, [placedChampion]);
+
   return (
-    <div className={cn("relative", isEvenRow && "translate-x-[55%]")}>
+    <div className={cn("relative w-[84px]", isEvenRow && "translate-x-[55%]")}>
       <div
         className={cn(
           "hexagon w-[84px] cursor-pointer h-[96px] bg-[#d0d2d5] relative flex justify-center items-center",
@@ -128,22 +177,38 @@ export default function Hexagon(props: HexagonProps) {
           className="hexagon size-[90%] relative"
         >
           {placedChampion && (
-            <div className="">
+            <div>
               <Image
+                onDragOver={onDragOver}
                 onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
+                onDrop={handleItemDrop}
                 width={256}
                 height={128}
                 src={CHAMPION_ICON_URL(placedChampion.champion.src)}
                 alt={placedChampion.champion.name}
                 className="object-cover absolute center w-full h-full object-[-87px_0px]"
               />
-              <p className="absolute bottom-[15%] text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
-                {placedChampion.champion.name}
-              </p>
+              <div className="absolute pointer-events-none flex flex-col bottom-[15%] text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
+                <p>{placedChampion.champion.name}</p>
+              </div>
             </div>
           )}
         </div>
+      </div>
+      <div className="absolute flex w-full gap-xxxs bottom-0 justify-center">
+        {placedChampion &&
+          placedChampion.itemList.map((item, idx) => (
+            <Image
+              onContextMenu={(event) => handleItemRightClick(event, idx)}
+              key={`${placedChampion}-${index}-${item.id}`}
+              src={ITEM_ICON_URL(item.src)}
+              width={20}
+              height={20}
+              alt={item.name}
+              className="rounded-md cursor-pointer"
+            ></Image>
+          ))}
       </div>
     </div>
   );

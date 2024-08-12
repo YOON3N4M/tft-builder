@@ -23,6 +23,7 @@ import { MouseEvent, useEffect, useState } from "react";
 import { Question, Reset, WindowMaxi, WindowMini } from "../svgs";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import { Tooltip, useTooltip } from "../tooltip/Tooltip";
+import { useDragActions } from "@/store/dragStore";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -46,6 +47,8 @@ function ItemCombination(props: ItemCombinationProps) {
 
   const [combinationCase, setCombinationCase] = useState<CoreItem[][]>([]);
   const [foldCase, setFoldCase] = useState(false);
+
+  const { setDraggingCoreItem } = useDragActions();
 
   function increaseItem(itemName: string) {
     setInventory((prev) => ({
@@ -99,6 +102,15 @@ function ItemCombination(props: ItemCombinationProps) {
     //  console.log(result);
   }
 
+  function handleCoreItemDrag(coreItem: CoreItem) {
+    setDraggingCoreItem(coreItem);
+  }
+
+  function handleCoreItemDragEnd() {
+    console.log("드래그 끝");
+    setDraggingCoreItem(null);
+  }
+
   useEffect(() => {
     const result = calculateAllCombinationCase(inventory);
     setCombinationCase(result);
@@ -131,7 +143,12 @@ function ItemCombination(props: ItemCombinationProps) {
         <p>보유 완성 아이템</p>
         <ul className="mt-sm flex w-[210px] max-w-[210px] flex-wrap gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
           {coreInventory.map((i, idx) => (
-            <li key={idx} className="flex items-center">
+            <li
+              onDragStart={() => handleCoreItemDrag(i)}
+              onDragEnd={handleCoreItemDragEnd}
+              key={idx}
+              className="flex items-center cursor-pointer"
+            >
               <ItemIcon item={i} />
             </li>
           ))}
