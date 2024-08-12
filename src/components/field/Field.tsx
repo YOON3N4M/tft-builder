@@ -20,7 +20,6 @@ const tempArray = [...Array(hexagonQty)].map((_, idx) => idx);
 function Field(props: FieldProps) {
   const {} = props;
 
-  const { setDraggingTarget, setDraggingIndexedChampion } = useDragActions();
   const [placedChampions, setPlacedChampions] = useState<IndexedChampion[]>([]);
 
   function isEvenRow(idx: number): boolean {
