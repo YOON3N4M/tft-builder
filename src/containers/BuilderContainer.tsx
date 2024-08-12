@@ -61,6 +61,11 @@ export default function BuilderContainer() {
                     완성 아이템을 우클릭하면 보유 조합 아이템을 소모하여 완성
                     아이템을 조합합니다.
                   </span>
+                  <br /> <br />
+                  <span className="text-gray-500">
+                    조합된 완성 아이템은 드래그해서 배치된 챔피언에게 장착 할 수
+                    있습니다.
+                  </span>
                 </li>
                 <li className="mt-xs">
                   숫자 카운트

@@ -132,8 +132,12 @@ function ItemCombination(props: ItemCombinationProps) {
             className="cursor-pointer"
           />
           <Tooltip isTooltipOn={isTooltipOn}>
-            조합 이아템 개수를 입력하면 조합 가능한 완성 아이템 경우의 수를
-            제공합니다.
+            <div className="bg-default-bg p-sm text-gray-500 rounded-md">
+              <p>
+                조합 이아템 개수를 입력하면 조합 가능한 완성 아이템 경우의 수를
+                제공합니다.
+              </p>
+            </div>
           </Tooltip>
         </div>
         {/* 팁 호버 버튼 같은거 추가해서 도움말을 넣으면 좋을듯 */}
