@@ -173,7 +173,7 @@ export const HUNTER = generateSynergy(
   "사냥꾼",
   [2, 4, 6],
   ["bronze", "silver", "gold"],
-  ["blaster"],
+  ["hunter"],
   "",
   []
 );

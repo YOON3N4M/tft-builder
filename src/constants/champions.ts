@@ -59,7 +59,7 @@ const AKALI = generateChampion(
   2,
   "아칼리",
   2,
-  [PYRO, MULTISTRIKER],
+  [PYRO, MULTISTRIKER, WARRIOR],
   "TFT12_Akali.TFT_Set12.png"
 );
 const ASHE = generateChampion(
@@ -213,7 +213,7 @@ const KOG_MAW = generateChampion(
   24,
   "코그모",
   2,
-  [HONEYMANCY, WARRIOR],
+  [HONEYMANCY, HUNTER],
   "TFT12_KogMaw.TFT_Set12.png"
 );
 const LILLIA = generateChampion(
@@ -360,7 +360,7 @@ const SORAKA = generateChampion(
   45,
   "소라카",
   1,
-  [SUGARCRAFT, BLASTER],
+  [SUGARCRAFT, MAGE],
   "TFT12_Soraka.TFT_Set12.png"
 );
 const SWAIN = generateChampion(
