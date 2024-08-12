@@ -19,11 +19,11 @@ import { cn } from "@/utils";
 import { calculateAllCombinationCase } from "@/utils/item";
 import Image from "next/image";
 
+import { useDragActions } from "@/store/dragStore";
 import { MouseEvent, useEffect, useState } from "react";
 import { Question, Reset, WindowMaxi, WindowMini } from "../svgs";
+
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
-import { Tooltip, useTooltip } from "../tooltip/Tooltip";
-import { useDragActions } from "@/store/dragStore";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -41,7 +41,7 @@ const initialInventory = {
 
 function ItemCombination(props: ItemCombinationProps) {
   const { hidden } = props;
-  const { isTooltipOn, tooltipOff, tooltipOn } = useTooltip();
+
   const [coreInventory, setCoreInventory] = useState<CoreItem[]>([]);
   const [inventory, setInventory] = useState(initialInventory);
 
@@ -122,19 +122,7 @@ function ItemCombination(props: ItemCombinationProps) {
           <Reset />
         </button>
         <div className="relative">
-          <Question
-            onMouseEnter={tooltipOn}
-            onMouseLeave={tooltipOff}
-            className="cursor-pointer"
-          />
-          <Tooltip isTooltipOn={isTooltipOn}>
-            <div className="bg-default-bg p-sm text-gray-500 rounded-md">
-              <p>
-                조합 이아템 개수를 입력하면 조합 가능한 완성 아이템 경우의 수를
-                제공합니다.
-              </p>
-            </div>
-          </Tooltip>
+          <Question className="cursor-pointer" />
         </div>
         {/* 팁 호버 버튼 같은거 추가해서 도움말을 넣으면 좋을듯 */}
       </OverlayTab>

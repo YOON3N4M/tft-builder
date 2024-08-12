@@ -1,9 +1,9 @@
-import { Tooltip, useTooltip } from "@/components/tooltip/Tooltip";
 import Field from "@/components/field/Field";
 import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
 import { Question } from "@/components/svgs";
+import { ToolTip, useToolTip } from "@/components/tooltip/ToolTip";
 import { cn } from "@/utils";
 import { HTMLAttributes, ReactNode, useState } from "react";
 
@@ -22,7 +22,7 @@ export default function BuilderContainer() {
     champion: true,
   });
 
-  const { isTooltipOn, tooltipOff, tooltipOn } = useTooltip();
+  const { pos, isTooltipOn, tooltipOff, tooltipOn } = useToolTip();
 
   function handleOption(optionItem: OptionItem) {
     console.log(option);
@@ -37,13 +37,13 @@ export default function BuilderContainer() {
           <div className="semi-bold">TFT HELPER</div>
           <div className="ml-auto relative">
             <Question
-              onMouseOver={tooltipOn}
+              onMouseEnter={tooltipOn}
               onMouseLeave={tooltipOff}
               className="fill-gray-400 cursor-pointer"
               size={20}
             />
 
-            <Tooltip isTooltipOn={isTooltipOn}>
+            <ToolTip isOn={isTooltipOn} x={pos.x} y={pos.y}>
               <span className="font-semibold">조작</span>
               <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
                 <li>
@@ -113,7 +113,7 @@ export default function BuilderContainer() {
                   </li>
                 </ul>
               </div>
-            </Tooltip>
+            </ToolTip>
           </div>
           {/* side menu */}
           {/* <div className="absolute z-[400]  h-[400px] w-[70px] py-md flex flex-col gap-xl">

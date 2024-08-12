@@ -4,7 +4,7 @@ import { checkGrade, cn, groupBy, sortByNumber } from "@/utils";
 import Image from "next/image";
 import ChampionPortrait from "../ChampionPortrait";
 import { Arrow } from "../svgs";
-import { Tooltip, useTooltip } from "../tooltip/Tooltip";
+import { ToolTip, useToolTip } from "../tooltip/ToolTip";
 import { IndexedChampion } from "./Field";
 
 interface SynergyContainerProps {
@@ -84,7 +84,7 @@ interface SyenrgyListItemProps {
 
 function SynergyListItem(props: SyenrgyListItemProps) {
   const { indexedChampionList, synergy } = props;
-  const { isTooltipOn, tooltipOn, tooltipOff } = useTooltip();
+  const { isTooltipOn, tooltipOff, tooltipOn, pos } = useToolTip();
 
   const synergyItem = synergy[0];
   const synergyChampions = SET_12_CHAMPIONS.filter((champion) =>
@@ -104,11 +104,11 @@ function SynergyListItem(props: SyenrgyListItemProps) {
   return (
     <div
       key={synergyItem.name}
-      onMouseOver={tooltipOn}
+      onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
       className="relative flex items-center border p-xs text-sm min-w-[205px] bg-white rounded-md"
     >
-      <Tooltip className="" isTooltipOn={isTooltipOn}>
+      <ToolTip isOn={isTooltipOn} x={pos.x} y={pos.y}>
         <div className="font-semibold">{synergyItem.name}</div>
         <div className="mt-sm flex gap-xxs">
           {sortByTier.map((champion) => (
@@ -123,7 +123,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
             />
           ))}
         </div>
-      </Tooltip>
+      </ToolTip>
       <div
         className={cn(
           "p-xxs hexagon w-[34px] h-[36px] flex items-center justify-center",

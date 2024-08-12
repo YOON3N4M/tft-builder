@@ -1,17 +1,14 @@
 "use client";
 
 import { Champion, SET_12_CHAMPIONS } from "@/constants/champions";
-import { CHAMPION_ICON_URL } from "@/constants/url";
 import { useDragActions } from "@/store/dragStore";
 import { cn, sortByKorean, sortByNumber } from "@/utils";
-import Image from "next/image";
 import { HTMLAttributes, useState } from "react";
-import { Token } from "../svgs";
-import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
-import { useTooltip } from "../tooltip/Tooltip";
-import ChampionTooltip from "../tooltip/ChampionTooltip";
 import ChampionPortrait from "../ChampionPortrait";
-import { TipTool, useTiptool } from "../tooltip/TipTool";
+import { Token } from "../svgs";
+import ChampionTooltip from "../tooltip/ChampionTooltip";
+import { ToolTip, useToolTip } from "../tooltip/ToolTip";
+import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 
 interface ChampionListProps extends OverlayProps {}
 
@@ -96,7 +93,7 @@ interface ChampionListItemProps {
 function ChampionListItem(props: ChampionListItemProps) {
   const { champion, handleIconDragStart } = props;
 
-  const { pos, isTooltipOn, tooltipOn, tooltipOff } = useTiptool();
+  const { pos, isTooltipOn, tooltipOn, tooltipOff } = useToolTip();
 
   function drageStart(e: any, champion: any) {
     handleIconDragStart(e, champion);
@@ -109,9 +106,9 @@ function ChampionListItem(props: ChampionListItemProps) {
       onDragStart={(e) => drageStart(e, champion)}
       className="relative cursor-pointer"
     >
-      <TipTool isOn={isTooltipOn} x={pos.x} y={pos.y}>
+      <ToolTip isOn={isTooltipOn} x={pos.x} y={pos.y}>
         <ChampionTooltip champion={champion} />
-      </TipTool>
+      </ToolTip>
       <ChampionPortrait
         key={champion.id}
         className="size-[64px]"

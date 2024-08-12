@@ -1,41 +1,54 @@
 import { cn } from "@/utils";
-import { HTMLAttributes, ReactNode, useState } from "react";
+import { MouseEvent, ReactNode, useState } from "react";
+import { createPortal } from "react-dom";
 
-export function useTooltip() {
+interface ToolTipProps {
+  children: ReactNode;
+  isOn: boolean;
+  x: null | number;
+  y: null | number;
+}
+
+export function ToolTip(props: ToolTipProps) {
+  const { children, isOn, x, y } = props;
+
+  if (!x && !y) return;
+
+  return (
+    <>
+      {isOn &&
+        createPortal(
+          <div
+            className="absolute z-[1500] p-md text-sm bg-white shadow-md rounded-md"
+            style={{ top: y!, left: x! }}
+          >
+            {children}
+          </div>,
+          document.body
+        )}
+    </>
+  );
+}
+
+interface Pos {
+  x: number | null;
+  y: number | null;
+}
+
+export function useToolTip() {
   const [isTooltipOn, setIsToolTipOn] = useState(false);
+  const [pos, setPos] = useState<Pos>({ x: null, y: null });
 
-  function tooltipOn() {
+  function tooltipOn(event: MouseEvent<any>) {
+    const x = event.clientX + 10;
+    const y = event.clientY + 10;
+
+    setPos((prev) => ({ x, y }));
     setIsToolTipOn(true);
   }
   function tooltipOff() {
     setIsToolTipOn(false);
   }
 
-  return { isTooltipOn, tooltipOn, tooltipOff };
-}
-interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
-  isTooltipOn: boolean;
-  position?: "rb" | "rt";
-}
-
-const positionStyles = {
-  rb: "left-[100%] top-[50%]",
-  rt: "",
-};
-
-export function Tooltip(props: TooltipProps) {
-  const { children, isTooltipOn, className, position = "rb" } = props;
-
-  return (
-    <div
-      className={cn(
-        "z-[1000] transition-opacity absolute min-w-[250px] text-sm border bg-white p-md shadow-md",
-        className,
-        positionStyles[position],
-        isTooltipOn ? "opacity-100" : "opacity-0 hidden"
-      )}
-    >
-      {children}
-    </div>
-  );
+  return { pos, isTooltipOn, tooltipOn, tooltipOff };
 }

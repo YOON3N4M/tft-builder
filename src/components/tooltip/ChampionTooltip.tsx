@@ -1,9 +1,7 @@
 import { Champion } from "@/constants/champions";
-import { Tooltip } from "./Tooltip";
 import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
-import { IndexedChampion } from "../field/Field";
 
 interface ChampionTooltipProps extends HTMLAttributes<HTMLDivElement> {
   champion: Champion;
