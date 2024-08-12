@@ -111,7 +111,7 @@ function ChampionListItem(props: ChampionListItemProps) {
         champion={champion}
         objectPosition="object-[-55px_0px]"
       >
-        <div className="z-[100] absolute w-full top-0 flex justify-end ">
+        <div className="z-[100] pointer-events-none absolute w-full top-0 flex justify-end ">
           <div className="pointer-events-none flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">
             <Token size={10} className="fill-white" />{" "}
             <span className="text-white text-[11px]">{champion.tier}</span>
