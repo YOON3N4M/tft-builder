@@ -31,8 +31,11 @@ function Field(props: FieldProps) {
       <div className="text-black basis-[20%] flex">
         <SynergyContainer indexedChampionList={placedChampions} />
       </div>
-      <div className="flex flex-grow justify-center">
+      <div className="flex relative flex-grow justify-center">
         <div className="relative grid grid-cols-7 gap-xs w-[700px] gap-y-0 h-min">
+          <span className="absolute left-2 text-gray-500 top-[33%] text-3xl">
+            {placedChampions.length}
+          </span>
           {placedChampions.length === 0 && (
             <div className="absolute x-center y-center z-[500] p-sm bg-white border rounded-md opacity-70">
               드래그해서 챔피언 배치
