@@ -107,16 +107,12 @@ function ItemCombination(props: ItemCombinationProps) {
   }
 
   function handleCoreItemDragEnd() {
-    console.log("드래그 끝");
     setDraggingCoreItem(null);
   }
 
   useEffect(() => {
     const result = calculateAllCombinationCase(inventory);
     setCombinationCase(result);
-    //console.log(result);
-
-    //console.log("아이템 변동");
   }, [inventory]);
 
   return (

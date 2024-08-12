@@ -105,8 +105,6 @@ export default function Hexagon(props: HexagonProps) {
           itemList: [...prev?.itemList!, draggingCoreItem],
         } as IndexedChampion)
     );
-
-    console.log(placedChampion);
   }
 
   function handleChampionDrop() {
@@ -154,8 +152,6 @@ export default function Hexagon(props: HexagonProps) {
     event.stopPropagation();
     event.preventDefault();
 
-    console.log(idx);
-
     setPlacedChampion(
       (prev) =>
         ({
@@ -164,10 +160,6 @@ export default function Hexagon(props: HexagonProps) {
         } as IndexedChampion)
     );
   }
-
-  useEffect(() => {
-    console.log(placedChampion);
-  }, [placedChampion]);
 
   return (
     <div className={cn("relative w-[84px]", isEvenRow && "translate-x-[55%]")}>

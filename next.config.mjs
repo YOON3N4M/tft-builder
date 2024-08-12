@@ -2,6 +2,8 @@
 const nextConfig = {
   env: {
     GA_ID: process.env.GA_ID,
+    ENV: process.env.ENV,
+    ADSENSE_ID: process.env.ADSENSE_ID,
   },
   images: {
     remotePatterns: [

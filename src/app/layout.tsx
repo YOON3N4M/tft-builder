@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "./globals.css";
+import GoogleAdsense from "@/components/GoogleAdsense";
 
 export const metadata: Metadata = {
   title: "롤체 도우미",
@@ -18,7 +19,8 @@ const pretendard = localFont({
 
 //ga
 const GA_ID = process.env.GA_ID as string;
-
+//adsense
+const ADSENSE_ID = process.env.ADSENSE_ID as string;
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,6 +32,7 @@ export default function RootLayout({
         <main>{children}</main>
       </body>
       <GoogleAnalytics gaId={GA_ID} />
+      <GoogleAdsense adsenseId={ADSENSE_ID} />
     </html>
   );
 }
