@@ -19,6 +19,7 @@ import {
   useState,
 } from "react";
 import { IndexedChampion } from "./Field";
+import { THIEFS_GLOVES } from "@/constants/item";
 
 interface HexagonProps {
   children?: ReactNode;
@@ -83,6 +84,16 @@ export default function Hexagon(props: HexagonProps) {
   function handleItemDrop() {
     if (!draggingCoreItem) return;
     if (!placedChampion) return;
+    if (placedChampion.itemList.length !== 0) {
+      if (draggingCoreItem.name === "도적의 장갑") {
+        alert("도적의 장갑은 단독으로만 장착 가능합니다.");
+        return;
+      }
+    }
+    if (placedChampion.itemList.some((item) => item.name === "도적의 장갑")) {
+      alert("도적의 장갑은 단독으로만 장착 가능합니다.");
+      return;
+    }
     if (placedChampion?.itemList.length > 2) {
       alert("아이템은 최대 3개까지 장착 가능합니다.");
       return;

@@ -153,7 +153,7 @@ const SPEAR_OF_SHOJIN = generateItem(
   ]
 );
 
-const THIEFS_GLOVES = generateItem(
+export const THIEFS_GLOVES = generateItem(
   13,
   "도적의 장갑",
   "공격력 +50",
