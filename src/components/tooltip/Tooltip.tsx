@@ -1,8 +1,8 @@
 import { cn } from "@/utils";
-import { MouseEvent, ReactNode, useState } from "react";
+import { HTMLAttributes, MouseEvent, ReactNode, useState } from "react";
 import { createPortal } from "react-dom";
 
-interface ToolTipProps {
+interface ToolTipProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   isOn: boolean;
   x: null | number;
@@ -10,7 +10,7 @@ interface ToolTipProps {
 }
 
 export function ToolTip(props: ToolTipProps) {
-  const { children, isOn, x, y } = props;
+  const { children, isOn, x, y, className } = props;
 
   if (!x && !y) return;
 
@@ -19,7 +19,10 @@ export function ToolTip(props: ToolTipProps) {
       {isOn &&
         createPortal(
           <div
-            className="absolute z-[1500] p-md text-sm bg-white shadow-md rounded-md"
+            className={cn(
+              "absolute z-[1500] p-md text-sm bg-white shadow-md rounded-md",
+              className
+            )}
             style={{ top: y!, left: x! }}
           >
             {children}
@@ -40,8 +43,8 @@ export function useToolTip() {
   const [pos, setPos] = useState<Pos>({ x: null, y: null });
 
   function tooltipOn(event: MouseEvent<any>) {
-    const x = event.clientX + 10;
-    const y = event.clientY + 10;
+    const x = event.pageX + 50;
+    const y = event.pageY - 100;
 
     setPos((prev) => ({ x, y }));
     setIsToolTipOn(true);

@@ -15,13 +15,11 @@ import {
   MouseEvent,
   ReactNode,
   SetStateAction,
-  useEffect,
   useState,
 } from "react";
-import { IndexedChampion } from "./Field";
-import { THIEFS_GLOVES } from "@/constants/item";
-import { ToolTip, useToolTip } from "../tooltip/ToolTip";
 import ChampionTooltip from "../tooltip/ChampionTooltip";
+import { ToolTip, useToolTip } from "../tooltip/ToolTip";
+import { IndexedChampion } from "./Field";
 
 interface HexagonProps {
   children?: ReactNode;
