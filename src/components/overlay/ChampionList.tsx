@@ -11,6 +11,7 @@ import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import { useTooltip } from "../tooltip/Tooltip";
 import ChampionTooltip from "../tooltip/ChampionTooltip";
 import ChampionPortrait from "../ChampionPortrait";
+import { TipTool, useTiptool } from "../tooltip/TipTool";
 
 interface ChampionListProps extends OverlayProps {}
 
@@ -94,17 +95,23 @@ interface ChampionListItemProps {
 
 function ChampionListItem(props: ChampionListItemProps) {
   const { champion, handleIconDragStart } = props;
-  const { isTooltipOn, tooltipOff, tooltipOn } = useTooltip();
 
+  const { pos, isTooltipOn, tooltipOn, tooltipOff } = useTiptool();
+
+  function drageStart(e: any, champion: any) {
+    handleIconDragStart(e, champion);
+    tooltipOff();
+  }
   return (
     <div
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
-      onDragStart={(e) => handleIconDragStart(e, champion)}
+      onDragStart={(e) => drageStart(e, champion)}
       className="relative cursor-pointer"
     >
-      <ChampionTooltip champion={champion} isTooltipOn={isTooltipOn} />
-
+      <TipTool isOn={isTooltipOn} x={pos.x} y={pos.y}>
+        <ChampionTooltip champion={champion} />
+      </TipTool>
       <ChampionPortrait
         key={champion.id}
         className="size-[64px]"

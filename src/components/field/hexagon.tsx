@@ -20,6 +20,8 @@ import {
 } from "react";
 import { IndexedChampion } from "./Field";
 import { THIEFS_GLOVES } from "@/constants/item";
+import { TipTool, useTiptool } from "../tooltip/TipTool";
+import ChampionTooltip from "../tooltip/ChampionTooltip";
 
 interface HexagonProps {
   children?: ReactNode;
@@ -42,6 +44,7 @@ export default function Hexagon(props: HexagonProps) {
   const { setDraggingCoreItem, setDraggingTarget, setDraggingIndexedChampion } =
     useDragActions();
 
+  const { pos, isTooltipOn, tooltipOn, tooltipOff } = useTiptool();
   const draggingChampion = useDraggingTarget();
   const draggingIndexedChampion = useDraggingIndexedChampion();
   const draggingCoreItem = useDraggingCoreItem();
@@ -54,6 +57,7 @@ export default function Hexagon(props: HexagonProps) {
   );
 
   function handleDragStart() {
+    tooltipOff();
     if (!placedChampion) return;
 
     setDraggingIndexedChampion(placedChampion);
@@ -179,8 +183,11 @@ export default function Hexagon(props: HexagonProps) {
           onDrop={handleDragDrop}
           className="hexagon size-[90%] relative"
         >
-          {placedChampion && (
-            <div>
+          {placedChampion?.champion && placedChampion && (
+            <div onMouseEnter={tooltipOn} onMouseLeave={tooltipOff}>
+              <TipTool isOn={isTooltipOn} x={pos.x} y={pos.y}>
+                <ChampionTooltip champion={placedChampion.champion} />
+              </TipTool>
               <Image
                 onDragOver={onDragOver}
                 onDragStart={handleDragStart}

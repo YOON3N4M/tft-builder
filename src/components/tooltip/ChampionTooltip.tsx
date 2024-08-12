@@ -3,10 +3,10 @@ import { Tooltip } from "./Tooltip";
 import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
+import { IndexedChampion } from "../field/Field";
 
 interface ChampionTooltipProps extends HTMLAttributes<HTMLDivElement> {
   champion: Champion;
-  isTooltipOn: boolean;
 }
 
 const shapeStyles: { [key: string]: string } = {
@@ -18,13 +18,9 @@ const shapeStyles: { [key: string]: string } = {
 };
 
 function ChampionTooltip(props: ChampionTooltipProps) {
-  const { champion, isTooltipOn, className } = props;
-
+  const { champion } = props;
   return (
-    <Tooltip
-      className={cn("z-[2000] !min-w-[150px]", className)}
-      isTooltipOn={isTooltipOn}
-    >
+    <div>
       <div className="flex items-center gap-xs z-[2000]">
         <span className={cn(shapeStyles[champion.tier])} />
         <span className="text-base">{champion.name}</span>
@@ -43,7 +39,7 @@ function ChampionTooltip(props: ChampionTooltipProps) {
           </div>
         ))}
       </div>
-    </Tooltip>
+    </div>
   );
 }
 
