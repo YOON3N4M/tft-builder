@@ -18,8 +18,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import ChampionTooltip from "../tooltip/ChampionTooltip";
-import { ToolTip, useToolTip } from "../tooltip/ToolTip";
+import ChampionTooltip from "../tooltips/ChampionTooltip";
+import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { IndexedChampion } from "./Field";
 
 interface HexagonProps {

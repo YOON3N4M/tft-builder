@@ -6,7 +6,7 @@ import ChampionPortrait from "../ChampionPortrait";
 import { Arrow } from "../svgs";
 
 import { IndexedChampion } from "./Field";
-import { ToolTip, useToolTip } from "../tooltip/ToolTip";
+import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 
 interface SynergyContainerProps {
   indexedChampionList: IndexedChampion[];

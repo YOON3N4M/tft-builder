@@ -6,8 +6,8 @@ import { cn, sortByKorean, sortByNumber } from "@/utils";
 import { HTMLAttributes, useState } from "react";
 import ChampionPortrait from "../ChampionPortrait";
 import { Token } from "../svgs";
-import ChampionTooltip from "../tooltip/ChampionTooltip";
-import { ToolTip, useToolTip } from "../tooltip/ToolTip";
+import ChampionTooltip from "../tooltips/ChampionTooltip";
+import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 
 interface ChampionListProps extends OverlayProps {}

@@ -3,7 +3,7 @@ import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
 import { Question } from "@/components/svgs";
-import { ToolTip, useToolTip } from "@/components/tooltip/ToolTip";
+import { ToolTip, useToolTip } from "@/components/tooltips/ToolTip";
 import { cn, copyClipboard } from "@/utils";
 import { HTMLAttributes, ReactNode, useEffect, useState } from "react";
 
