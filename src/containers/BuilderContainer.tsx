@@ -9,8 +9,16 @@ import { HTMLAttributes, ReactNode, useEffect, useState } from "react";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import useHandleParams from "@/hooks/useHandleParams";
+import { CORE_ITEM_LIST, CoreItem } from "@/constants/item";
+import { SET_12_CHAMPIONS } from "@/constants/champions";
 
 type OptionItem = "item" | "reroll" | "champion";
+
+interface OptimizedIndexedChampion {
+  name: string;
+  itemList: string[];
+  index: number;
+}
 
 interface Option {
   item: boolean;
@@ -40,13 +48,16 @@ export default function BuilderContainer() {
     router.push("/");
   }
 
+  // 저장
   function saveBuild() {
     if (placedChampions.length === 0) {
       alert("배치된 챔피언이 없습니다.");
       return;
     }
 
-    const fieldToString = JSON.stringify(placedChampions);
+    const optimized = optimizeIndexedChampion(placedChampions);
+
+    const fieldToString = JSON.stringify(optimized);
 
     addParams("field", fieldToString);
 
@@ -55,14 +66,37 @@ export default function BuilderContainer() {
     copyClipboard(encode);
   }
 
+  // 불러오기
   useEffect(() => {
     const fieldParams = params.get("field") as string;
-    console.log(fieldParams);
-    const parsing = JSON.parse(fieldParams) as IndexedChampion[];
 
+    const parsing = JSON.parse(fieldParams) as OptimizedIndexedChampion[];
     if (!parsing) return;
-    setPlacedChampions(parsing);
+
+    console.log(parsing);
+
+    const unOptimized: IndexedChampion[] = parsing.map((champion) => ({
+      index: champion.index,
+      champion: SET_12_CHAMPIONS.find((cham) => cham.name === champion.name)!,
+      itemList: champion.itemList.map((item) => {
+        return CORE_ITEM_LIST.find((core) => item === core.name)!;
+      })!,
+    }));
+
+    console.log(unOptimized);
+
+    setPlacedChampions(unOptimized);
   }, []);
+
+  function optimizeIndexedChampion(arr: IndexedChampion[]) {
+    const optimized = arr.map((item) => ({
+      name: item.champion.name,
+      index: item.index,
+      itemList: item.itemList.map((tem) => tem.name),
+    }));
+
+    return optimized;
+  }
 
   return (
     <div>
@@ -71,6 +105,9 @@ export default function BuilderContainer() {
         <div className="h-[100px] py-md flex bg-default-bg inner">
           <div className="semi-bold basis-[20%]">TFT HELPER</div>
           <div className="flex gap-sm items-center text-sm">
+            <button className="bg-white py-xxs px-xs border rounded-md">
+              내 빌드
+            </button>
             <button
               onClick={saveBuild}
               className="bg-white py-xxs px-xs border rounded-md"
