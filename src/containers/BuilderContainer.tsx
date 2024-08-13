@@ -49,7 +49,7 @@ export default function BuilderContainer() {
     const fieldToString = JSON.stringify(placedChampions);
 
     addParams("field", fieldToString);
-    copyClipboard(`https://tft-helper-zeta.vercel.app/?${fieldToString}`);
+    copyClipboard(`https://tft-helper-zeta.vercel.app/?field=${fieldToString}`);
   }
 
   useEffect(() => {
