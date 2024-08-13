@@ -4,8 +4,9 @@ import { checkGrade, cn, groupBy, sortByNumber } from "@/utils";
 import Image from "next/image";
 import ChampionPortrait from "../ChampionPortrait";
 import { Arrow } from "../svgs";
-import { ToolTip, useToolTip } from "../tooltip/ToolTip";
+
 import { IndexedChampion } from "./Field";
+import { ToolTip, useToolTip } from "../tooltip/ToolTip";
 
 interface SynergyContainerProps {
   indexedChampionList: IndexedChampion[];
