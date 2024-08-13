@@ -1,16 +1,17 @@
 import { Champion } from "@/constants/champions";
 import { CoreItem } from "@/constants/item";
-import { useDragActions } from "@/store/dragStore";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import SynergyContainer from "./SynergyContainer";
 import Hexagon from "./hexagon";
-
-interface FieldProps {}
 
 export interface IndexedChampion {
   index: number;
   champion: Champion;
   itemList: CoreItem[];
+}
+interface FieldProps {
+  placedChampions: IndexedChampion[];
+  setPlacedChampions: Dispatch<SetStateAction<IndexedChampion[]>>;
 }
 
 const hexagonQty = 28;
@@ -18,9 +19,7 @@ const hexagonQty = 28;
 const tempArray = [...Array(hexagonQty)].map((_, idx) => idx);
 
 function Field(props: FieldProps) {
-  const {} = props;
-
-  const [placedChampions, setPlacedChampions] = useState<IndexedChampion[]>([]);
+  const { placedChampions, setPlacedChampions } = props;
 
   function isEvenRow(idx: number): boolean {
     return (idx > 6 && idx < 14) || idx > 20;
@@ -43,6 +42,7 @@ function Field(props: FieldProps) {
           )}
           {tempArray.map((item, idx) => (
             <Hexagon
+              placedChampions={placedChampions}
               setPlacedChampions={setPlacedChampions}
               key={idx}
               index={idx}

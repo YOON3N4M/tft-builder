@@ -1,11 +1,14 @@
-import Field from "@/components/field/Field";
+import Field, { IndexedChampion } from "@/components/field/Field";
 import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
 import { Question } from "@/components/svgs";
 import { ToolTip, useToolTip } from "@/components/tooltip/ToolTip";
-import { cn } from "@/utils";
-import { HTMLAttributes, ReactNode, useState } from "react";
+import { cn, copyClipboard } from "@/utils";
+import { HTMLAttributes, ReactNode, useEffect, useState } from "react";
+
+import { useRouter, useSearchParams } from "next/navigation";
+import useHandleParams from "@/hooks/useHandleParams";
 
 type OptionItem = "item" | "reroll" | "champion";
 
@@ -22,19 +25,62 @@ export default function BuilderContainer() {
     champion: true,
   });
 
+  const router = useRouter();
+
   const { pos, isTooltipOn, tooltipOff, tooltipOn } = useToolTip();
 
-  function handleOption(optionItem: OptionItem) {
-    console.log(option);
-    setOption((prev) => ({ ...prev, [optionItem]: !prev[optionItem] }));
+  const [placedChampions, setPlacedChampions] = useState<IndexedChampion[]>([]);
+
+  const { addParams } = useHandleParams();
+  const params = useSearchParams();
+
+  function resetBuilder() {
+    if (!confirm("배치된 챔피언을 모두 제거 합니다.")) return;
+    setPlacedChampions([]);
+    router.push("/");
   }
+
+  function saveBuild() {
+    if (placedChampions.length === 0) {
+      alert("배치된 챔피언이 없습니다.");
+      return;
+    }
+
+    const fieldToString = JSON.stringify(placedChampions);
+
+    addParams("field", fieldToString);
+    copyClipboard(`https://tft-helper-zeta.vercel.app/?${fieldToString}`);
+  }
+
+  useEffect(() => {
+    const fieldParams = params.get("field") as string;
+    console.log(fieldParams);
+    const parsing = JSON.parse(fieldParams) as IndexedChampion[];
+
+    if (!parsing) return;
+    setPlacedChampions(parsing);
+  }, []);
 
   return (
     <div>
       <div className="relative">
         {/* 상단영역 */}
         <div className="h-[100px] py-md flex bg-default-bg inner">
-          <div className="semi-bold">TFT HELPER</div>
+          <div className="semi-bold basis-[20%]">TFT HELPER</div>
+          <div className="flex gap-sm items-center text-sm">
+            <button
+              onClick={saveBuild}
+              className="bg-white py-xxs px-xs border rounded-md"
+            >
+              빌드 저장
+            </button>
+            <button
+              onClick={resetBuilder}
+              className="bg-white py-xxs px-xs border rounded-md"
+            >
+              배치 초기화
+            </button>
+          </div>
           <div className="ml-auto relative">
             <Question
               onMouseEnter={tooltipOn}
@@ -140,7 +186,10 @@ export default function BuilderContainer() {
         </div>
         {/* 중앙 영역 */}
         <div className="flex inner bg-default-bg py-md">
-          <Field />
+          <Field
+            placedChampions={placedChampions}
+            setPlacedChampions={setPlacedChampions}
+          />
           <div className="basis-[10%]">
             <div className="absolute">
               <ItemCombination hidden={!option.item} />

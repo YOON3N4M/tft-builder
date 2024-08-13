@@ -90,3 +90,8 @@ export function checkGrade(synergy: Synergy[]): any {
 
   return { gradeText, gradeNumber };
 }
+
+export function copyClipboard(text: string) {
+  navigator.clipboard.writeText(text);
+  alert("빌드 링크가 클립보드에 저장었습니다.");
+}

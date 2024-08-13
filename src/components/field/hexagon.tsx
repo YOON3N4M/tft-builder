@@ -15,6 +15,7 @@ import {
   MouseEvent,
   ReactNode,
   SetStateAction,
+  useEffect,
   useState,
 } from "react";
 import ChampionTooltip from "../tooltip/ChampionTooltip";
@@ -22,6 +23,7 @@ import { ToolTip, useToolTip } from "../tooltip/ToolTip";
 import { IndexedChampion } from "./Field";
 
 interface HexagonProps {
+  placedChampions: IndexedChampion[];
   children?: ReactNode;
   isEvenRow: boolean;
   setPlacedChampions: Dispatch<SetStateAction<IndexedChampion[]>>;
@@ -37,7 +39,7 @@ const backgroundColorStyles: { [key: string]: string } = {
 };
 
 export default function Hexagon(props: HexagonProps) {
-  const { isEvenRow, setPlacedChampions, index } = props;
+  const { placedChampions, isEvenRow, setPlacedChampions, index } = props;
 
   const { setDraggingCoreItem, setDraggingTarget, setDraggingIndexedChampion } =
     useDragActions();
@@ -100,13 +102,33 @@ export default function Hexagon(props: HexagonProps) {
       alert("아이템은 최대 3개까지 장착 가능합니다.");
       return;
     }
-    setPlacedChampion(
-      (prev) =>
-        ({
-          ...prev,
-          itemList: [...prev?.itemList!, draggingCoreItem],
-        } as IndexedChampion)
+
+    const currentChampion = placedChampions.find(
+      (item) => item.index === index
     );
+    if (!currentChampion) return;
+
+    const championWithItem = {
+      ...currentChampion,
+      itemList: [...currentChampion.itemList, draggingCoreItem],
+    };
+    const newPlacedChampionsArr = [
+      ...placedChampions.filter((item, itemIndex) => item.index !== index),
+      championWithItem,
+    ];
+    setPlacedChampions(newPlacedChampionsArr);
+    // setPlacedChampions((prev) => [
+    //   ...prev.filter((_, itemIndex) => itemIndex !== index),
+
+    // ]);
+
+    // setPlacedChampion(
+    //   (prev) =>
+    //     ({
+    //       ...prev,
+    //       itemList: [...prev?.itemList!, draggingCoreItem],
+    //     } as IndexedChampion)
+    // );
   }
 
   function handleChampionDrop() {
@@ -163,6 +185,16 @@ export default function Hexagon(props: HexagonProps) {
     );
   }
 
+  useEffect(() => {
+    const correctIndexChampion = placedChampions.find(
+      (item) => item.index === index
+    );
+    if (!correctIndexChampion) {
+      setPlacedChampion(null);
+    } else {
+      setPlacedChampion(correctIndexChampion);
+    }
+  }, [placedChampions]);
   return (
     <div className={cn("relative w-[84px]", isEvenRow && "translate-x-[55%]")}>
       <div
