@@ -3,12 +3,13 @@
 import { Champion, SET_12_CHAMPIONS } from "@/constants/champions";
 import { useDragActions } from "@/store/dragStore";
 import { cn, sortByKorean, sortByNumber } from "@/utils";
-import { HTMLAttributes, useState } from "react";
+import { ChangeEvent, HTMLAttributes, useEffect, useState } from "react";
 import ChampionPortrait from "../ChampionPortrait";
 import { Token } from "../svgs";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
+import { getChoseong } from "es-hangul";
 
 interface ChampionListProps extends OverlayProps {}
 
@@ -31,6 +32,7 @@ function ChampionList(props: ChampionListProps) {
   const [championList, setChampionList] = useState(
     sortByKorean(SET_12_CHAMPIONS, "name")
   );
+  const [keyword, setKeyword] = useState("");
 
   function sortChampionList(sortType: SortType) {
     setCurrentSortType(sortType);
@@ -48,6 +50,36 @@ function ChampionList(props: ChampionListProps) {
     //console.log(e, "드래그 한다잉");
     setDraggingTarget(champion);
   }
+
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    setKeyword(event.target.value);
+  }
+
+  function filteringByKeyword() {
+    console.log(keyword);
+    const filtered = SET_12_CHAMPIONS.filter(
+      (item) =>
+        item.name.includes(keyword) ||
+        item.synergy.some((synergy) => synergy.name.includes(keyword))
+      // 시너지까지 필터링이 되게 하려면 아래에 더해 similarity를 검사할 수 있어야 하는데
+      //  추후로 미뤄둠
+      // getChoseong(item.name).includes(getChoseong(keyword)) ||
+      // item.synergy.some((synergy) =>
+      //   getChoseong(synergy.name).includes(getChoseong(keyword))
+      // )
+    );
+
+    console.log(filtered);
+    return filtered;
+  }
+
+  useEffect(() => {
+    if (keyword === "") {
+      sortChampionList(currentSortType);
+    } else {
+      setChampionList(filteringByKeyword);
+    }
+  }, [keyword]);
 
   return (
     <Overlay className="mo:w-full " hidden={hidden}>
@@ -67,12 +99,18 @@ function ChampionList(props: ChampionListProps) {
         >
           등급순
         </SortButton>
+        <input
+          onChange={onChange}
+          placeholder="챔피언, 시너지..."
+          className="bg-default-bg text-sm ml-auto border rounded-md p-xxxs"
+          value={keyword}
+        ></input>
       </OverlayTab>
       <div className="p-md drag-unable">
         <div
           className={cn(
-            "grid grid-cols-6 gap-xs p-md bg-default-bg rounded-[4px]",
-            "mo:grid-cols-8 mo:max-h-[200px] mo:overflow-auto"
+            "relative grid grid-cols-6 gap-xs p-md bg-default-bg max-h-[400px] rounded-[4px] overflow-auto",
+            "mo:grid-cols-8 mo:max-h-[200px] "
           )}
         >
           {championList.map((champion, idx) => (
@@ -82,6 +120,11 @@ function ChampionList(props: ChampionListProps) {
               handleIconDragStart={handleIconDragStart}
             />
           ))}
+          {keyword !== "" && championList.length === 0 && (
+            <p className="absolute y-center x-center text-gray-500 text-sm">
+              일치하는 챔피언이 없습니다.
+            </p>
+          )}
         </div>
       </div>
     </Overlay>

@@ -230,7 +230,7 @@ export default function BuilderContainer() {
         {/* 하단 영역 */}
         <div
           className={cn(
-            "flex pc:inner bg-default-bg !pc:pt-xxxl",
+            "flex pc:inner bg-default-bg !pc:pt-xxxl pc:min-h-[800px]",
             "mo:flex-col"
           )}
         >
