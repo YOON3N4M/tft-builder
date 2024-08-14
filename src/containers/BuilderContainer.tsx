@@ -303,46 +303,51 @@ function LocalBuild(props: LocalBuildProps) {
         내 빌드
       </button>
       {isOpen && (
-        <div className="absolute flex flex-col gap-sm p-md bg-white border shadow-md top-[40px] min-w-[200px] z-[2000]">
-          {unOptimized?.map((build) => (
-            <div key={build.buildName} className="p-xs border rounded-md">
-              <div className="flex items-center">
-                <span>{build.buildName.replace("-tft-build", "")}</span>
-                <div className="flex ml-auto gap-xs">
-                  <button onClick={() => loadBuild(build.buildName)}>
-                    <LoadIcon className="fill-gray-500" />
-                  </button>
-                  <button
-                    onClick={() => copyBuildUrl(build.buildName)}
-                    className="cursor-pointer"
-                  >
-                    <Clipboard className="fill-gray-500" />
-                  </button>
-                  <button
-                    onClick={() => deleteBuild(build.buildName)}
-                    className="cursor-pointer"
-                  >
-                    <Trash className="fill-gray-500" />
-                  </button>
+        <div className="absolute bg-white z-[2000] top-[40px] border p-md shadow-md">
+          <div className="max-h-[460px] overflow-auto flex flex-col gap-sm  min-w-[200px] ">
+            {unOptimized?.map((build) => (
+              <div
+                key={build.buildName}
+                className="p-xs border bg-white rounded-md"
+              >
+                <div className="flex items-center">
+                  <span>{build.buildName.replace("-tft-build", "")}</span>
+                  <div className="flex ml-auto gap-xs">
+                    <button onClick={() => loadBuild(build.buildName)}>
+                      <LoadIcon className="fill-gray-500" />
+                    </button>
+                    <button
+                      onClick={() => copyBuildUrl(build.buildName)}
+                      className="cursor-pointer"
+                    >
+                      <Clipboard className="fill-gray-500" />
+                    </button>
+                    <button
+                      onClick={() => deleteBuild(build.buildName)}
+                      className="cursor-pointer"
+                    >
+                      <Trash className="fill-gray-500" />
+                    </button>
+                  </div>
+                </div>
+                <div className="flex gap-xxs mt-xxs bg-default-bg p-xs rounded-md">
+                  {build.build?.map((indexed) => (
+                    <ChampionPortrait
+                      key={indexed.champion.name}
+                      champion={indexed.champion}
+                      className={cn("size-[40px]")}
+                      objectPosition="object-[-35px_0px]"
+                    />
+                  ))}
                 </div>
               </div>
-              <div className="flex gap-xxs mt-xxs bg-default-bg p-xs rounded-md">
-                {build.build?.map((indexed) => (
-                  <ChampionPortrait
-                    key={indexed.champion.name}
-                    champion={indexed.champion}
-                    className={cn("size-[40px]")}
-                    objectPosition="object-[-35px_0px]"
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-          {buildList?.length === 0 && (
-            <p className="text-sm bg-default-bg p-md rounded-md">
-              저장된 빌드가 없습니다.
-            </p>
-          )}
+            ))}
+            {buildList?.length === 0 && (
+              <p className="text-sm bg-default-bg p-md rounded-md">
+                저장된 빌드가 없습니다.
+              </p>
+            )}
+          </div>
         </div>
       )}
     </div>
