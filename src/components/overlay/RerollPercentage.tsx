@@ -155,7 +155,8 @@ function RerollPercentage(props: RerollPercentageProps) {
           onDrop={onDragDrop}
           onDragOver={onDragOver}
           className={cn(
-            "w-full flex min-h-[100px] border bg-black mt-md flex-col rounded-md",
+            "pc:w-full flex min-h-[100px] border bg-default-bg mt-md flex-col rounded-md",
+            "",
             isDragEnter && "border-blue-300 border-2"
           )}
         >
