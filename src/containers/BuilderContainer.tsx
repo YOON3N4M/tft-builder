@@ -136,7 +136,12 @@ export default function BuilderContainer() {
                 size={20}
               />
 
-              <ToolTip isOn={isTooltipOn} x={pos.x} y={pos.y}>
+              <div
+                className={cn(
+                  "absolute top-[200%] min-w-[250px] bg-white p-md shadow-md rounded-md right-0 z-[1500]",
+                  !isTooltipOn && "hidden"
+                )}
+              >
                 <span className="font-semibold">조작</span>
                 <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
                   <li>
@@ -206,7 +211,7 @@ export default function BuilderContainer() {
                     </li>
                   </ul>
                 </div>
-              </ToolTip>
+              </div>
             </div>
           </div>
         </div>
