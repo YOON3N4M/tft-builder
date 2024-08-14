@@ -122,7 +122,10 @@ function ItemCombination(props: ItemCombinationProps) {
           <Reset />
         </button>
         <div className="relative">
-          <Question className="cursor-pointer" />
+          {/* <Question className="cursor-pointer" />
+          <div className="absolute p-md bg-white border rounded-md right-0 top-[200%] shadow-md min-w-[150px]">
+            조합을 완료한 아이템만 챔피언에게 장착이 가능합니다
+          </div> */}
         </div>
         {/* 팁 호버 버튼 같은거 추가해서 도움말을 넣으면 좋을듯 */}
       </OverlayTab>
