@@ -50,7 +50,11 @@ export function unOptimizedBuild(optimizedString: string) {
     })!,
   }));
 
-  return unOptimized;
+  const sortByTier = unOptimized.sort(
+    (indexA, indexB) => indexA.champion.tier - indexB.champion.tier
+  );
+
+  return sortByTier;
 }
 
 export function localStorageDelete(key: string) {
