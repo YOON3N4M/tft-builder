@@ -244,6 +244,7 @@ interface LocalBuildProps {
 
 function LocalBuild(props: LocalBuildProps) {
   const { buildList, setBuildList } = props;
+
   const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();
@@ -322,6 +323,11 @@ function LocalBuild(props: LocalBuildProps) {
               </div>
             </div>
           ))}
+          {buildList?.length === 0 && (
+            <p className="text-sm bg-default-bg p-md rounded-md">
+              저장된 빌드가 없습니다.
+            </p>
+          )}
         </div>
       )}
     </div>
