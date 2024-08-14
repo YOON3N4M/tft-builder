@@ -2,23 +2,34 @@ import Field, { IndexedChampion } from "@/components/field/Field";
 import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
-import { Question } from "@/components/svgs";
+import { Clipboard, LoadIcon, Question, Trash } from "@/components/svgs";
 import { ToolTip, useToolTip } from "@/components/tooltips/ToolTip";
 import { cn, copyClipboard } from "@/utils";
-import { HTMLAttributes, ReactNode, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import ChampionPortrait from "@/components/ChampionPortrait";
 import useHandleParams from "@/hooks/useHandleParams";
-import { CORE_ITEM_LIST, CoreItem } from "@/constants/item";
-import { SET_12_CHAMPIONS } from "@/constants/champions";
+import {
+  getlocalAll,
+  localStorageDelete,
+  unOptimizedBuild,
+  uploadToLocalstorage,
+} from "@/utils/localstorage";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type OptionItem = "item" | "reroll" | "champion";
 
-interface OptimizedIndexedChampion {
+export interface OptimizedIndexedChampion {
   name: string;
   itemList: string[];
   index: number;
 }
+
+interface LocalBuildType {
+  buildName: string;
+  build: string | null;
+}
+[];
 
 interface Option {
   item: boolean;
@@ -38,8 +49,7 @@ export default function BuilderContainer() {
   const { pos, isTooltipOn, tooltipOff, tooltipOn } = useToolTip();
 
   const [placedChampions, setPlacedChampions] = useState<IndexedChampion[]>([]);
-
-  const { addParams } = useHandleParams();
+  const [buildList, setBuildList] = useState(getlocalAll);
   const params = useSearchParams();
 
   function resetBuilder() {
@@ -49,7 +59,7 @@ export default function BuilderContainer() {
   }
 
   // 저장
-  function saveBuild() {
+  function saveBuild(buildName: string) {
     if (placedChampions.length === 0) {
       alert("배치된 챔피언이 없습니다.");
       return;
@@ -59,34 +69,21 @@ export default function BuilderContainer() {
 
     const fieldToString = JSON.stringify(optimized);
 
-    addParams("field", fieldToString);
+    const encoded = encodeURI(fieldToString);
+    // addParams("field", fieldToString);
+    //  const pureURL = `https://tft-helper-zeta.vercel.app/?field=${fieldToString}`;
+    //  const encode = encodeURI(pureURL);
 
-    const pureURL = `https://tft-helper-zeta.vercel.app/?field=${fieldToString}`;
-    const encode = encodeURI(pureURL);
-    copyClipboard(encode);
+    uploadToLocalstorage(buildName, encoded);
+    setBuildList(getlocalAll);
+    alert("저장 되었습니다.");
+    // copyClipboard(encode);
   }
 
   // 불러오기
   useEffect(() => {
-    const fieldParams = params.get("field") as string;
-
-    const parsing = JSON.parse(fieldParams) as OptimizedIndexedChampion[];
-    if (!parsing) return;
-
-    console.log(parsing);
-
-    const unOptimized: IndexedChampion[] = parsing.map((champion) => ({
-      index: champion.index,
-      champion: SET_12_CHAMPIONS.find((cham) => cham.name === champion.name)!,
-      itemList: champion.itemList.map((item) => {
-        return CORE_ITEM_LIST.find((core) => item === core.name)!;
-      })!,
-    }));
-
-    console.log(unOptimized);
-
-    setPlacedChampions(unOptimized);
-  }, []);
+    getBuildFromUrl();
+  }, [params]);
 
   function optimizeIndexedChampion(arr: IndexedChampion[]) {
     const optimized = arr.map((item) => ({
@@ -98,22 +95,28 @@ export default function BuilderContainer() {
     return optimized;
   }
 
+  function getBuildFromUrl() {
+    const fieldParams = params.get("field") as string;
+
+    if (!fieldParams) return;
+
+    const unOptimized: IndexedChampion[] = unOptimizedBuild(
+      fieldParams
+    ) as IndexedChampion[];
+
+    setPlacedChampions(unOptimized);
+  }
+
   return (
     <div>
       <div className="relative">
         {/* 상단영역 */}
+
         <div className="h-[100px] py-md flex bg-default-bg inner">
           <div className="semi-bold basis-[20%]">TFT HELPER</div>
           <div className="flex gap-sm items-center text-sm">
-            <button className="bg-white py-xxs px-xs border rounded-md">
-              내 빌드
-            </button>
-            <button
-              onClick={saveBuild}
-              className="bg-white py-xxs px-xs border rounded-md"
-            >
-              빌드 저장
-            </button>
+            <LocalBuild buildList={buildList} setBuildList={setBuildList} />
+            <BuildSave saveFn={saveBuild} />
             <button
               onClick={resetBuilder}
               className="bg-white py-xxs px-xs border rounded-md"
@@ -201,28 +204,6 @@ export default function BuilderContainer() {
               </div>
             </ToolTip>
           </div>
-          {/* side menu */}
-          {/* <div className="absolute z-[400]  h-[400px] w-[70px] py-md flex flex-col gap-xl">
-            <ControllerButton
-              isOn={option.item}
-              fn={() => handleOption("item")}
-            >
-              <Sword />
-            </ControllerButton>
-            <ControllerButton
-              isOn={option.reroll}
-              fn={() => handleOption("reroll")}
-            >
-              <Reroll />
-            </ControllerButton>
-            <ControllerButton
-              isOn={option.champion}
-              fn={() => handleOption("champion")}
-            >
-              <Pawn />
-            </ControllerButton>
-          
-          </div> */}
         </div>
         {/* 중앙 영역 */}
         <div className="flex inner bg-default-bg py-md">
@@ -251,24 +232,150 @@ export default function BuilderContainer() {
   );
 }
 
-interface ControllerButtionProps extends HTMLAttributes<HTMLButtonElement> {
-  children?: ReactNode;
-  fn: (optionItem: OptionItem) => void;
-  isOn: boolean;
+interface LocalBuildProps {
+  buildList:
+    | {
+        buildName: string;
+        build: string | null;
+      }[]
+    | undefined;
+  setBuildList: any;
 }
 
-function ControllerButton(props: ControllerButtionProps) {
-  const { isOn, className, children, fn } = props;
+function LocalBuild(props: LocalBuildProps) {
+  const { buildList, setBuildList } = props;
+  const [isOpen, setIsOpen] = useState(false);
+
+  const router = useRouter();
+
+  const unOptimized = buildList?.map((build) => ({
+    buildName: build.buildName,
+    build: unOptimizedBuild(build.build!),
+  }));
+
+  function handleOpen() {
+    setIsOpen((prev) => !prev);
+  }
+
+  function loadBuild(key: string) {
+    const build = buildList?.find((item) => item.buildName === `${key}`);
+    router.push(`?field=${build?.build}`);
+  }
+
+  function deleteBuild(key: string) {
+    if (!confirm("빌드를 삭제합니다.")) return;
+    localStorageDelete(key);
+    setBuildList(getlocalAll);
+  }
+
+  function copyBuildUrl(key: string) {
+    console.log("dho enqjs?");
+    const build = buildList?.find((item) => item.buildName === `${key}`);
+    const baseUrl = "https://tft-helper-zeta.vercel.app/";
+    const resultUrl = `${baseUrl}?field=${build?.build}`;
+
+    copyClipboard(resultUrl);
+    alert("클립보드에 링크가 복사되었습니다.");
+  }
+
   return (
-    <button
-      onClick={() => fn("item")}
-      className={cn(
-        "w-full mx-auto px-md py-xl rounded-tr-[4px] rounded-br-[4px] bg-white border flex justify-center !border-l-0",
-        className,
-        isOn ? "drop-shadow-2xl font-bold" : "bg-white shadow-sm"
+    <div className="relative">
+      <button
+        onClick={handleOpen}
+        className="bg-white py-xxs px-xs border rounded-md"
+      >
+        내 빌드
+      </button>
+      {isOpen && (
+        <div className="absolute flex flex-col gap-sm p-md bg-white border shadow-md top-[40px] min-w-[200px] z-[2000]">
+          {unOptimized?.map((build) => (
+            <div key={build.buildName} className="p-xs border rounded-md">
+              <div className="flex items-center">
+                <span>{build.buildName.replace("-tft-build", "")}</span>
+                <div className="flex ml-auto gap-xs">
+                  <button onClick={() => loadBuild(build.buildName)}>
+                    <LoadIcon className="fill-gray-500" />
+                  </button>
+                  <button
+                    onClick={() => copyBuildUrl(build.buildName)}
+                    className="cursor-pointer"
+                  >
+                    <Clipboard className="fill-gray-500" />
+                  </button>
+                  <button
+                    onClick={() => deleteBuild(build.buildName)}
+                    className="cursor-pointer"
+                  >
+                    <Trash className="fill-gray-500" />
+                  </button>
+                </div>
+              </div>
+              <div className="flex gap-xxs mt-xxs bg-default-bg p-xs rounded-md">
+                {build.build?.map((indexed) => (
+                  <ChampionPortrait
+                    key={indexed.champion.name}
+                    champion={indexed.champion}
+                    className={cn("size-[40px]")}
+                    objectPosition="object-[-35px_0px]"
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       )}
-    >
-      {children && children}
-    </button>
+    </div>
+  );
+}
+
+interface BuildSaveProps {
+  saveFn: (buildName: string) => void;
+}
+
+function BuildSave(props: BuildSaveProps) {
+  const { saveFn } = props;
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [buildName, setBuildName] = useState("");
+
+  function onChnage(event: ChangeEvent<HTMLInputElement>) {
+    setBuildName(event.target.value);
+  }
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    saveFn(`${buildName}-tft-build`);
+    setIsOpen(false);
+    setBuildName("");
+  }
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="bg-white py-xxs px-xs border rounded-md"
+      >
+        빌드 저장
+      </button>
+      {isOpen && (
+        <div className="absolute p-md bg-white border shadow-md z-[2000] min-w-[200px] top-[40px] rounded-md">
+          <div className="flex items-center">
+            <p>빌드 이름</p>
+          </div>
+          <div>
+            <form onSubmit={onSubmit} className="flex items-center mt-xs">
+              <input
+                value={buildName}
+                onChange={onChnage}
+                className="bg-default-bg p-xxs"
+              ></input>
+              <button className="p-xxs bg-default-bg rounded-md ml-xxs text-gray-500 hover:text-gray-600">
+                저장
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

@@ -11,3 +11,6 @@ export { GiToken as Token } from "react-icons/gi";
 export { GrDrag as Draggable } from "react-icons/gr";
 export { BiSolidRightArrow as Arrow } from "react-icons/bi";
 export { FaRegCircleQuestion as Question } from "react-icons/fa6";
+export { PiClipboard as Clipboard } from "react-icons/pi";
+export { PiDownloadSimple as LoadIcon } from "react-icons/pi";
+export { PiTrash as Trash } from "react-icons/pi";
