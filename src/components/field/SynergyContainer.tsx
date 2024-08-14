@@ -59,9 +59,14 @@ function SynergyContainer(props: SynergyContainerProps) {
   }
 
   return (
-    <div className="flex flex-col gap-sm py-md max-h-[400px] w-[90%]">
+    <div
+      className={cn(
+        "flex flex-col gap-sm py-md max-h-[400px] w-[90%] ",
+        "mo:grid grid-cols-2 mo:w-full mo:max-h-[200px] mo:overflow-auto mo:py-0"
+      )}
+    >
       {sortByLength.length === 0 && (
-        <div className="w-[95%] p-sm bg-white border rounded-md opacity-70">
+        <div className="mo:hidden w-[95%] p-sm bg-white border rounded-md opacity-70">
           챔피언 배치시 시너지가 활성화 됩니다{" "}
         </div>
       )}
@@ -107,7 +112,10 @@ function SynergyListItem(props: SyenrgyListItemProps) {
       key={synergyItem.name}
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
-      className="relative flex items-center border p-xs text-sm min-w-[205px] bg-white rounded-md"
+      className={cn(
+        "relative flex items-center border p-xs text-sm pc:min-w-[205px] bg-white rounded-md",
+        ""
+      )}
     >
       <ToolTip isOn={isTooltipOn} x={pos.x} y={pos.y}>
         <div className="font-semibold">{synergyItem.name}</div>

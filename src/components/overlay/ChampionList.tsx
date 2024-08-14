@@ -50,8 +50,8 @@ function ChampionList(props: ChampionListProps) {
   }
 
   return (
-    <Overlay hidden={hidden}>
-      <OverlayTab className="flex min-w-[465px] !px-xxl gap-sm">
+    <Overlay className="mo:w-full " hidden={hidden}>
+      <OverlayTab className="flex pc:min-w-[465px] !px-xxl gap-sm">
         <SortButton
           currentSortType={currentSortType}
           sortType="korean"
@@ -69,7 +69,12 @@ function ChampionList(props: ChampionListProps) {
         </SortButton>
       </OverlayTab>
       <div className="p-md drag-unable">
-        <div className="grid grid-cols-6 gap-xs p-md bg-default-bg rounded-[4px]">
+        <div
+          className={cn(
+            "grid grid-cols-6 gap-xs p-md bg-default-bg rounded-[4px]",
+            "mo:grid-cols-10 mo:max-h-[200px] mo:overflow-auto"
+          )}
+        >
           {championList.map((champion, idx) => (
             <ChampionListItem
               key={champion.name}
@@ -111,17 +116,22 @@ function ChampionListItem(props: ChampionListItemProps) {
       </ToolTip>
       <ChampionPortrait
         key={champion.id}
-        className="size-[64px]"
+        className="size-[64px] mo:size-[40px]"
         champion={champion}
-        objectPosition="object-[-55px_0px]"
+        objectPosition="object-[-55px_0px] mo:object-[-32px_0px]"
       >
         <div className="z-[100] pointer-events-none absolute w-full top-0 flex justify-end ">
-          <div className="pointer-events-none flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">
+          <div className="mo:hidden pointer-events-none flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">
             <Token size={10} className="fill-white" />{" "}
             <span className="text-white text-[11px]">{champion.tier}</span>
           </div>
         </div>
-        <p className="pointer-events-none absolute bottom-0 text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
+        <p
+          className={cn(
+            "pointer-events-none absolute bottom-0 text-center w-full text-white font-semibold text-[11px] bg-[#00000099]",
+            "mo:text-[8px]"
+          )}
+        >
           {champion.name}
         </p>
       </ChampionPortrait>

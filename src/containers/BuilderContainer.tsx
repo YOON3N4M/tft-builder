@@ -112,9 +112,14 @@ export default function BuilderContainer() {
       <div className="relative">
         {/* 상단영역 */}
 
-        <div className="h-[100px] py-md flex bg-default-bg inner">
+        <div
+          className={cn(
+            "pc:h-[100px] py-md flex bg-default-bg inner",
+            "mo:flex-col mo:gap-md"
+          )}
+        >
           <div className="semi-bold basis-[20%]">TFT HELPER</div>
-          <div className="flex gap-sm items-center text-sm">
+          <div className="flex gap-sm items-center text-sm basis-[80%]">
             <LocalBuild buildList={buildList} setBuildList={setBuildList} />
             <BuildSave saveFn={saveBuild} />
             <button
@@ -123,107 +128,112 @@ export default function BuilderContainer() {
             >
               배치 초기화
             </button>
-          </div>
-          <div className="ml-auto relative">
-            <Question
-              onMouseEnter={tooltipOn}
-              onMouseLeave={tooltipOff}
-              className="fill-gray-400 cursor-pointer"
-              size={20}
-            />
+            <div className="ml-auto relative">
+              <Question
+                onMouseEnter={tooltipOn}
+                onMouseLeave={tooltipOff}
+                className="fill-gray-400 cursor-pointer"
+                size={20}
+              />
 
-            <ToolTip isOn={isTooltipOn} x={pos.x} y={pos.y}>
-              <span className="font-semibold">조작</span>
-              <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
-                <li>
-                  챔피언
-                  <br />
-                  <span className="text-gray-500">
-                    드래그로 이동해서 추가가 가능하며 추가된 챔피언은 우클릭시
-                    제거됩니다.
-                  </span>
-                </li>
-                <li className="mt-xs">
-                  아이템
-                  <br />
-                  <span className="text-gray-500">
-                    완성 아이템을 우클릭하면 보유 조합 아이템을 소모하여 완성
-                    아이템을 조합합니다.
-                  </span>
-                  <br /> <br />
-                  <span className="text-gray-500">
-                    조합된 완성 아이템은 드래그해서 배치된 챔피언에게 장착 할 수
-                    있습니다.
-                  </span>
-                </li>
-                <li className="mt-xs">
-                  숫자 카운트
-                  <br />
-                  <span className="text-gray-500">
-                    좌클릭 증가 / 우클릭 감소
-                  </span>
-                </li>
-              </ul>
-              <div className="mt-md ">
-                <span className="font-semibold">확률</span>
+              <ToolTip isOn={isTooltipOn} x={pos.x} y={pos.y}>
+                <span className="font-semibold">조작</span>
                 <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
                   <li>
-                    기물 확률
+                    챔피언
                     <br />
                     <span className="text-gray-500">
-                      모든 기물은 코스트에 따라 최대 개수가 정해져 있기때문에
-                      게임 내 존재하는 기물의 개수를 입력하면 보다 근접한 확률을
-                      얻을 수 있습니다
-                      <br />
-                      <br />
-                      기물 확률은 대략적인 확률 입니다. 실제 인게임 확률과는
-                      오차가 있습니다.
+                      드래그로 이동해서 추가가 가능하며 추가된 챔피언은 우클릭시
+                      제거됩니다.
                     </span>
                   </li>
                   <li className="mt-xs">
-                    확률표
+                    아이템
                     <br />
                     <span className="text-gray-500">
-                      해당 확률표는 라이엇 공식 제공 확률입니다.
+                      완성 아이템을 우클릭하면 보유 조합 아이템을 소모하여 완성
+                      아이템을 조합합니다.
+                    </span>
+                    <br /> <br />
+                    <span className="text-gray-500">
+                      조합된 완성 아이템은 드래그해서 배치된 챔피언에게 장착 할
+                      수 있습니다.
+                    </span>
+                  </li>
+                  <li className="mt-xs">
+                    숫자 카운트
+                    <br />
+                    <span className="text-gray-500">
+                      좌클릭 증가 / 우클릭 감소
                     </span>
                   </li>
                 </ul>
-              </div>
-              <div className="mt-md">
-                <span className="font-semibold">미구현</span>
-                <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
-                  <li>
-                    뒤집개/상징
-                    <br />
-                    <span className="text-gray-500">
-                      뒤집개를 이용한 상징 조합, 상징 추가에 따른 시너지 조정은
-                      현재 미구현 상태입니다.
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </ToolTip>
+                <div className="mt-md ">
+                  <span className="font-semibold">확률</span>
+                  <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
+                    <li>
+                      기물 확률
+                      <br />
+                      <span className="text-gray-500">
+                        모든 기물은 코스트에 따라 최대 개수가 정해져 있기때문에
+                        게임 내 존재하는 기물의 개수를 입력하면 보다 근접한
+                        확률을 얻을 수 있습니다
+                        <br />
+                        <br />
+                        기물 확률은 대략적인 확률 입니다. 실제 인게임 확률과는
+                        오차가 있습니다.
+                      </span>
+                    </li>
+                    <li className="mt-xs">
+                      확률표
+                      <br />
+                      <span className="text-gray-500">
+                        해당 확률표는 라이엇 공식 제공 확률입니다.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mt-md">
+                  <span className="font-semibold">미구현</span>
+                  <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
+                    <li>
+                      뒤집개/상징
+                      <br />
+                      <span className="text-gray-500">
+                        뒤집개를 이용한 상징 조합, 상징 추가에 따른 시너지
+                        조정은 현재 미구현 상태입니다.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </ToolTip>
+            </div>
           </div>
         </div>
         {/* 중앙 영역 */}
-        <div className="flex inner bg-default-bg py-md">
+        <div className="flex inner bg-default-bg py-md mo:flex-col">
           <Field
             placedChampions={placedChampions}
             setPlacedChampions={setPlacedChampions}
           />
           <div className="basis-[10%]">
             <div className="absolute">
-              <ItemCombination hidden={!option.item} />
+              {/* <ItemCombination hidden={!option.item} /> */}
             </div>
           </div>
         </div>
         {/* 하단 영역 */}
-        <div className="flex inner bg-default-bg !pt-xxxl">
+        <div
+          className={cn(
+            "flex pc:inner bg-default-bg !pc:pt-xxxl",
+            "mo:flex-col"
+          )}
+        >
           <div className="basis-[20%]"></div>
-          <div className="flex self-start basis-[40%]">
+          <div className="flex self-start basis-[40%] mo:w-full">
             <ChampionList hidden={!option.champion} />
           </div>
-          <div className="flex self-start">
+          <div className="flex self-start mo:w-full">
             <RerollPercentage hidden={!option.reroll} />
           </div>
         </div>

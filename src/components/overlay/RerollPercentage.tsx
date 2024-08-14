@@ -109,7 +109,10 @@ function RerollPercentage(props: RerollPercentageProps) {
   }
 
   return (
-    <Overlay hidden={hidden} className="w-full min-w-[500px] max-w-[600px]">
+    <Overlay
+      hidden={hidden}
+      className="w-full pc:min-w-[500px] pc:max-w-[600px]"
+    >
       <OverlayTab className="flex gap-sm text-sm">
         <button className="font-bold">기물 확률</button>
 
@@ -119,16 +122,18 @@ function RerollPercentage(props: RerollPercentageProps) {
         {/* <button>확률표</button> */}
       </OverlayTab>
       <div className="pc:min-w-[500px] p-md text-sm">
-        <div className="flex gap-xs items-center">
-          <span>현재 내 레벨</span>
-          <button
-            className="p-xs hover:bg-default-bg border rounded-md"
-            onClick={increaseLevel}
-            onContextMenu={decreaseLevel}
-          >
-            {currentLevel}
-          </button>
-          <div className="flex gap-sm ml-md bg-default-bg p-sm rounded-md">
+        <div className="flex gap-xs items-center mo:flex-col">
+          <div className="flex gap-xs items-center mo:w-full">
+            <span>현재 내 레벨</span>
+            <button
+              className="p-xs hover:bg-default-bg border rounded-md"
+              onClick={increaseLevel}
+              onContextMenu={decreaseLevel}
+            >
+              {currentLevel}
+            </button>
+          </div>
+          <div className="flex mo:self-start gap-sm pc:ml-md bg-default-bg p-sm rounded-m mo:justify-start">
             {currentPercentage.map((per, idx) => (
               <div
                 key={`${currentLevel}-${per}-${idx}`}
@@ -150,7 +155,7 @@ function RerollPercentage(props: RerollPercentageProps) {
           onDrop={onDragDrop}
           onDragOver={onDragOver}
           className={cn(
-            "w-full flex min-h-[100px] border bg-default-bg mt-md flex-col rounded-md",
+            "w-full flex min-h-[100px] border bg-black mt-md flex-col rounded-md",
             isDragEnter && "border-blue-300 border-2"
           )}
         >
@@ -281,7 +286,9 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
   }
 
   return (
-    <div className={cn(`w-full h-[128px] relative  cursor-pointer`)}>
+    <div
+      className={cn(`w-full h-[128px] max-w-[466px] relative  cursor-pointer`)}
+    >
       <div
         onContextMenu={removeChampion}
         className="absolute top-0 bg-gradient-to-l from-black from-[50%] to-[#fff0] size-full z-[10]"

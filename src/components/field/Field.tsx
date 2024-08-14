@@ -3,6 +3,7 @@ import { CoreItem } from "@/constants/item";
 import { Dispatch, SetStateAction } from "react";
 import SynergyContainer from "./SynergyContainer";
 import Hexagon from "./hexagon";
+import { cn } from "@/utils";
 
 export interface IndexedChampion {
   index: number;
@@ -27,12 +28,22 @@ function Field(props: FieldProps) {
 
   return (
     <>
-      <div className="text-black basis-[20%] flex">
+      <div className="text-black basis-[20%] flex pc:min-w-[216px]">
         <SynergyContainer indexedChampionList={placedChampions} />
       </div>
-      <div className="flex relative flex-grow justify-center">
-        <div className="relative grid grid-cols-7 gap-xs w-[700px] gap-y-0 h-min">
-          <span className="absolute left-2 text-gray-500 top-[33%] text-3xl">
+      <div className={cn("flex relative flex-grow justify-center", "mo:mt-md")}>
+        <div
+          className={cn(
+            "relative grid grid-cols-7 gap-xs w-[700px] gap-y-0 h-min",
+            "mo:ml-[-20px] mo:max-w-[440px]"
+          )}
+        >
+          <span
+            className={cn(
+              "absolute left-2 text-gray-500 top-[33%] text-3xl",
+              "mo:top-[27%] mo:left-0 mo:text-2xl "
+            )}
+          >
             {placedChampions.length}
           </span>
           {placedChampions.length === 0 && (

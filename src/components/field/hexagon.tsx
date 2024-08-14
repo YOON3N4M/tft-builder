@@ -196,10 +196,17 @@ export default function Hexagon(props: HexagonProps) {
     }
   }, [placedChampions]);
   return (
-    <div className={cn("relative w-[84px]", isEvenRow && "translate-x-[55%]")}>
+    <div
+      className={cn(
+        "relative pc:w-[84px]",
+        "mo:w-[40px]",
+        isEvenRow && "translate-x-[55%]"
+      )}
+    >
       <div
         className={cn(
           "hexagon w-[84px] cursor-pointer h-[96px] bg-[#d0d2d5] relative flex justify-center items-center",
+          "mo:w-[40px] mo:h-[45px] ",
           isDragEnter && "bg-blue-300",
           placedChampion &&
             backgroundColorStyles[placedChampion.champion.tier.toString()]
@@ -227,10 +234,13 @@ export default function Hexagon(props: HexagonProps) {
                 height={128}
                 src={CHAMPION_ICON_URL(placedChampion.champion.src)}
                 alt={placedChampion.champion.name}
-                className="object-cover absolute center w-full h-full object-[-87px_0px]"
+                className={cn(
+                  "object-cover absolute center w-full h-full object-[-87px_0px]",
+                  "mo:object-[-37px_0px]"
+                )}
               />
               <div className="absolute pointer-events-none flex flex-col bottom-[15%] text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
-                <p>{placedChampion.champion.name}</p>
+                <p className="mo:text-[8px]">{placedChampion.champion.name}</p>
               </div>
             </div>
           )}
@@ -246,7 +256,7 @@ export default function Hexagon(props: HexagonProps) {
               width={20}
               height={20}
               alt={item.name}
-              className="rounded-md cursor-pointer"
+              className={cn("rounded-md cursor-pointer", "mo:size-[13px]")}
             ></Image>
           ))}
       </div>
