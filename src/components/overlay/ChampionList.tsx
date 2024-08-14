@@ -72,7 +72,7 @@ function ChampionList(props: ChampionListProps) {
         <div
           className={cn(
             "grid grid-cols-6 gap-xs p-md bg-default-bg rounded-[4px]",
-            "mo:grid-cols-10 mo:max-h-[200px] mo:overflow-auto"
+            "mo:grid-cols-8 mo:max-h-[200px] mo:overflow-auto"
           )}
         >
           {championList.map((champion, idx) => (

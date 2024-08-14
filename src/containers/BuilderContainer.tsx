@@ -217,8 +217,8 @@ export default function BuilderContainer() {
             setPlacedChampions={setPlacedChampions}
           />
           <div className="basis-[10%]">
-            <div className="absolute">
-              {/* <ItemCombination hidden={!option.item} /> */}
+            <div className="absolute mo:hidden">
+              <ItemCombination hidden={!option.item} />
             </div>
           </div>
         </div>
