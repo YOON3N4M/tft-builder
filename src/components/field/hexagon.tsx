@@ -15,18 +15,18 @@ import {
   MouseEvent,
   ReactNode,
   SetStateAction,
-  useEffect,
-  useState,
 } from "react";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { IndexedChampion } from "./Field";
 
+export type PlacedChampion = IndexedChampion | null;
+
 interface HexagonProps {
-  placedChampions: IndexedChampion[];
+  placedChampion: PlacedChampion;
   children?: ReactNode;
   isEvenRow: boolean;
-  setPlacedChampions: Dispatch<SetStateAction<IndexedChampion[]>>;
+  setPlacedChampions: Dispatch<SetStateAction<PlacedChampion[]>>;
   index: number;
 }
 
@@ -39,7 +39,7 @@ const backgroundColorStyles: { [key: string]: string } = {
 };
 
 export default function Hexagon(props: HexagonProps) {
-  const { placedChampions, isEvenRow, setPlacedChampions, index } = props;
+  const { placedChampion, isEvenRow, setPlacedChampions, index } = props;
 
   const { setDraggingCoreItem, setDraggingTarget, setDraggingIndexedChampion } =
     useDragActions();
@@ -52,9 +52,15 @@ export default function Hexagon(props: HexagonProps) {
   const { isDragEnter, onDragEnter, onDragLeave, onDragOver, onDragEnd } =
     useDragEvent();
 
-  const [placedChampion, setPlacedChampion] = useState<IndexedChampion | null>(
-    null
-  );
+  function handleIndexItem(idx: number, item: IndexedChampion | null) {
+    setPlacedChampions((prev) => {
+      const cloneArray = [...prev];
+
+      cloneArray[idx] = item;
+
+      return cloneArray;
+    });
+  }
 
   function handleDragStart() {
     tooltipOff();
@@ -80,7 +86,7 @@ export default function Hexagon(props: HexagonProps) {
   }
 
   function handleDragEnd(event: MouseEvent<HTMLDivElement>) {
-    setPlacedChampion(null);
+    handleIndexItem(index, null);
     setDraggingTarget(null);
     setDraggingIndexedChampion(null);
   }
@@ -103,32 +109,12 @@ export default function Hexagon(props: HexagonProps) {
       return;
     }
 
-    const currentChampion = placedChampions.find(
-      (item) => item.index === index
-    );
-    if (!currentChampion) return;
-
     const championWithItem = {
-      ...currentChampion,
-      itemList: [...currentChampion.itemList, draggingCoreItem],
+      ...placedChampion,
+      itemList: [...placedChampion.itemList, draggingCoreItem],
     };
-    const newPlacedChampionsArr = [
-      ...placedChampions.filter((item, itemIndex) => item.index !== index),
-      championWithItem,
-    ];
-    setPlacedChampions(newPlacedChampionsArr);
-    // setPlacedChampions((prev) => [
-    //   ...prev.filter((_, itemIndex) => itemIndex !== index),
 
-    // ]);
-
-    // setPlacedChampion(
-    //   (prev) =>
-    //     ({
-    //       ...prev,
-    //       itemList: [...prev?.itemList!, draggingCoreItem],
-    //     } as IndexedChampion)
-    // );
+    handleIndexItem(index, championWithItem);
   }
 
   function handleChampionDrop() {
@@ -140,21 +126,22 @@ export default function Hexagon(props: HexagonProps) {
         champion: draggingChampion as Champion,
         itemList: [],
       };
-      setPlacedChampion(indexed);
-      setPlacedChampions((prev) => [...prev, indexed]);
+
+      setPlacedChampions((prev) => {
+        const cloneArray = [...prev];
+
+        cloneArray[index] = indexed;
+
+        return cloneArray;
+      });
       setDraggingTarget(null);
     }
 
     // 이미 배치된 챔피언을 이동 시킬때
     if (draggingIndexedChampion) {
       const newIndex = { ...draggingIndexedChampion, index };
-      console.log(newIndex);
-      setPlacedChampion(newIndex);
-      setPlacedChampions((prev) =>
-        [...prev, newIndex].filter(
-          (prevSecond) => prevSecond.index !== draggingIndexedChampion.index
-        )
-      );
+
+      handleIndexItem(index, newIndex);
       setDraggingIndexedChampion(null);
     }
   }
@@ -165,8 +152,7 @@ export default function Hexagon(props: HexagonProps) {
   }
 
   function removeChampion() {
-    setPlacedChampion(null);
-    setPlacedChampions((prev) => prev.filter((item) => item.index !== index));
+    handleIndexItem(index, null);
   }
 
   function handleItemRightClick(
@@ -176,25 +162,18 @@ export default function Hexagon(props: HexagonProps) {
     event.stopPropagation();
     event.preventDefault();
 
-    setPlacedChampion(
-      (prev) =>
-        ({
-          ...prev,
-          itemList: [...prev?.itemList!].filter((_, index) => index !== idx),
-        } as IndexedChampion)
-    );
+    if (!placedChampion) return;
+
+    const newIndexedChampion = {
+      ...placedChampion,
+      itemList: [...placedChampion?.itemList!].filter(
+        (_, index) => index !== idx
+      ),
+    };
+
+    handleIndexItem(index, newIndexedChampion);
   }
 
-  useEffect(() => {
-    const correctIndexChampion = placedChampions.find(
-      (item) => item.index === index
-    );
-    if (!correctIndexChampion) {
-      setPlacedChampion(null);
-    } else {
-      setPlacedChampion(correctIndexChampion);
-    }
-  }, [placedChampions]);
   return (
     <div
       className={cn(

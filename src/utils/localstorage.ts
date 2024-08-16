@@ -1,6 +1,7 @@
 import { SET_12_CHAMPIONS } from "@/constants/champions";
 import { CORE_ITEM_LIST } from "@/constants/item";
 import { OptimizedIndexedChampion } from "@/containers/BuilderContainer";
+import { filterNull } from ".";
 
 export function uploadToLocalstorage(key: string, data: string) {
   localStorage.setItem(key, data);
@@ -41,8 +42,11 @@ export function unOptimizedBuild(optimizedString: string) {
   const decoeded = decodeURI(optimizedString);
 
   const optimizedArr = JSON.parse(decoeded) as OptimizedIndexedChampion[];
+  console.log(optimizedArr);
 
-  const unOptimized = optimizedArr.map((champion) => ({
+  const filteredNull = filterNull(optimizedArr);
+
+  const unOptimized = filteredNull.map((champion) => ({
     index: champion.index,
     champion: SET_12_CHAMPIONS.find((cham) => cham.name === champion.name)!,
     itemList: champion.itemList.map((item) => {

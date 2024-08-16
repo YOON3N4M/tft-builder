@@ -94,3 +94,8 @@ export function checkGrade(synergy: Synergy[]): any {
 export function copyClipboard(text: string) {
   navigator.clipboard.writeText(text);
 }
+
+export function filterNull<T>(arr: T[]): T[] {
+  const result = arr.filter((item) => item !== null);
+  return result;
+}

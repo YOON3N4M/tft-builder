@@ -1,9 +1,9 @@
 import { Champion } from "@/constants/champions";
 import { CoreItem } from "@/constants/item";
+import { cn, filterNull } from "@/utils";
 import { Dispatch, SetStateAction } from "react";
 import SynergyContainer from "./SynergyContainer";
-import Hexagon from "./hexagon";
-import { cn } from "@/utils";
+import Hexagon, { PlacedChampion } from "./hexagon";
 
 export interface IndexedChampion {
   index: number;
@@ -11,13 +11,9 @@ export interface IndexedChampion {
   itemList: CoreItem[];
 }
 interface FieldProps {
-  placedChampions: IndexedChampion[];
-  setPlacedChampions: Dispatch<SetStateAction<IndexedChampion[]>>;
+  placedChampions: (IndexedChampion | null)[];
+  setPlacedChampions: Dispatch<SetStateAction<PlacedChampion[]>>;
 }
-
-const hexagonQty = 28;
-
-const tempArray = [...Array(hexagonQty)].map((_, idx) => idx);
 
 function Field(props: FieldProps) {
   const { placedChampions, setPlacedChampions } = props;
@@ -44,16 +40,16 @@ function Field(props: FieldProps) {
               "mo:top-[27%] mo:left-0 mo:text-2xl "
             )}
           >
-            {placedChampions.length}
+            {filterNull(placedChampions).length}
           </span>
           {placedChampions.length === 0 && (
             <div className="absolute x-center y-center z-[500] p-sm bg-white border rounded-md opacity-70">
               드래그해서 챔피언 배치
             </div>
           )}
-          {tempArray.map((item, idx) => (
+          {placedChampions.map((item, idx) => (
             <Hexagon
-              placedChampions={placedChampions}
+              placedChampion={item}
               setPlacedChampions={setPlacedChampions}
               key={idx}
               index={idx}

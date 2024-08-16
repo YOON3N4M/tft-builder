@@ -1,15 +1,16 @@
 import { Champion, SET_12_CHAMPIONS } from "@/constants/champions";
 import { Synergy } from "@/constants/synergy";
-import { checkGrade, cn, groupBy, sortByNumber } from "@/utils";
+import { checkGrade, cn, filterNull, groupBy, sortByNumber } from "@/utils";
 import Image from "next/image";
 import ChampionPortrait from "../ChampionPortrait";
 import { Arrow } from "../svgs";
 
-import { IndexedChampion } from "./Field";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+import { IndexedChampion } from "./Field";
+import { PlacedChampion } from "./hexagon";
 
 interface SynergyContainerProps {
-  indexedChampionList: IndexedChampion[];
+  indexedChampionList: PlacedChampion[];
 }
 
 const synergyBgStyles: { [key: string]: string } = {
@@ -25,7 +26,9 @@ function SynergyContainer(props: SynergyContainerProps) {
 
   //console.log(indexedChampionList);
 
-  const duplicateRemoves = removeDuplicateSyenrgy(indexedChampionList);
+  const nullFiltered = filterNull(indexedChampionList) as IndexedChampion[];
+
+  const duplicateRemoves = removeDuplicateSyenrgy(nullFiltered);
 
   const synergyList = duplicateRemoves.flatMap(
     (indexedChampion) => indexedChampion.champion.synergy
@@ -58,6 +61,8 @@ function SynergyContainer(props: SynergyContainerProps) {
     });
   }
 
+  console.log(sortByLength);
+
   return (
     <div
       className={cn(
@@ -72,7 +77,7 @@ function SynergyContainer(props: SynergyContainerProps) {
       )}
       {sortByLength.map((synergy) => (
         <SynergyListItem
-          indexedChampionList={indexedChampionList}
+          indexedChampionList={nullFiltered}
           key={synergy[0].name}
           synergy={synergy}
         />

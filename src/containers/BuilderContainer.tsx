@@ -3,12 +3,12 @@ import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
 import { Clipboard, LoadIcon, Question, Trash } from "@/components/svgs";
-import { ToolTip, useToolTip } from "@/components/tooltips/ToolTip";
-import { cn, copyClipboard } from "@/utils";
+import { useToolTip } from "@/components/tooltips/ToolTip";
+import { cn, copyClipboard, filterNull } from "@/utils";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import ChampionPortrait from "@/components/ChampionPortrait";
-import useHandleParams from "@/hooks/useHandleParams";
+import { PlacedChampion } from "@/components/field/hexagon";
 import {
   getlocalAll,
   localStorageDelete,
@@ -37,6 +37,9 @@ interface Option {
   champion: boolean;
 }
 
+const HEXAGON_QTY = 28;
+const INITIAL_FIELD_ARRAY = [...Array(HEXAGON_QTY)].map((_) => null);
+
 export default function BuilderContainer() {
   const [option, setOption] = useState<Option>({
     item: true,
@@ -44,17 +47,30 @@ export default function BuilderContainer() {
     champion: true,
   });
 
+  console.log(INITIAL_FIELD_ARRAY);
+
   const router = useRouter();
 
   const { pos, isTooltipOn, tooltipOff, tooltipOn } = useToolTip();
 
-  const [placedChampions, setPlacedChampions] = useState<IndexedChampion[]>([]);
+  const [placedChampions, setPlacedChampions] =
+    useState<(IndexedChampion | null)[]>(INITIAL_FIELD_ARRAY);
   const [buildList, setBuildList] = useState(getlocalAll);
   const params = useSearchParams();
 
+  function handleIndexItem(idx: number, item: IndexedChampion | null) {
+    setPlacedChampions((prev) => {
+      const cloneArray = [...prev];
+
+      cloneArray[idx] = item;
+
+      return cloneArray;
+    });
+  }
+
   function resetBuilder() {
     if (!confirm("배치된 챔피언을 모두 제거 합니다.")) return;
-    setPlacedChampions([]);
+    setPlacedChampions(INITIAL_FIELD_ARRAY);
     router.push("/");
   }
 
@@ -64,8 +80,9 @@ export default function BuilderContainer() {
       alert("배치된 챔피언이 없습니다.");
       return;
     }
+    const filteredNull = filterNull(placedChampions);
 
-    const optimized = optimizeIndexedChampion(placedChampions);
+    const optimized = optimizeIndexedChampion(filteredNull);
 
     const fieldToString = JSON.stringify(optimized);
 
@@ -85,12 +102,16 @@ export default function BuilderContainer() {
     getBuildFromUrl();
   }, [params]);
 
-  function optimizeIndexedChampion(arr: IndexedChampion[]) {
-    const optimized = arr.map((item) => ({
-      name: item.champion.name,
-      index: item.index,
-      itemList: item.itemList.map((tem) => tem.name),
-    }));
+  function optimizeIndexedChampion(arr: PlacedChampion[]) {
+    const optimized = arr.map((item) => {
+      if (!item) return;
+
+      return {
+        name: item.champion.name,
+        index: item.index,
+        itemList: item.itemList.map((tem) => tem.name),
+      };
+    });
 
     return optimized;
   }
@@ -104,7 +125,11 @@ export default function BuilderContainer() {
       fieldParams
     ) as IndexedChampion[];
 
-    setPlacedChampions(unOptimized);
+    const clonedInitial: PlacedChampion[] = [...INITIAL_FIELD_ARRAY];
+
+    unOptimized.forEach((item) => (clonedInitial[item.index] = item));
+
+    setPlacedChampions(clonedInitial);
   }
 
   return (
@@ -259,6 +284,8 @@ interface LocalBuildProps {
 
 function LocalBuild(props: LocalBuildProps) {
   const { buildList, setBuildList } = props;
+
+  console.log(buildList);
 
   const [isOpen, setIsOpen] = useState(false);
 
