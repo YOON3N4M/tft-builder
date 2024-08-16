@@ -61,8 +61,6 @@ function SynergyContainer(props: SynergyContainerProps) {
     });
   }
 
-  console.log(sortByLength);
-
   return (
     <div
       className={cn(

@@ -15,10 +15,12 @@ import {
   MouseEvent,
   ReactNode,
   SetStateAction,
+  useEffect,
 } from "react";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { IndexedChampion } from "./Field";
+import { SYNERGY_LIST, Synergy } from "@/constants/synergy";
 
 export type PlacedChampion = IndexedChampion | null;
 
@@ -114,6 +116,24 @@ export default function Hexagon(props: HexagonProps) {
       itemList: [...placedChampion.itemList, draggingCoreItem],
     };
 
+    //상징인 경우
+    if (draggingCoreItem.name.includes("상징")) {
+      const synergy = SYNERGY_LIST.find(
+        (item) => item.src[0] === draggingCoreItem.src
+      ) as Synergy;
+
+      // 시너지 중복체크
+      const isExist = championWithItem.champion.synergy.some(
+        (item) => item.name === synergy.name
+      );
+      if (isExist) {
+        alert("이미 해당 시너지를 가진 챔피언 입니다.");
+        return;
+      }
+
+      championWithItem.champion.synergy.push(synergy);
+    }
+
     handleIndexItem(index, championWithItem);
   }
 
@@ -121,9 +141,11 @@ export default function Hexagon(props: HexagonProps) {
     if (draggingChampion) {
       // 챔피언 리스트에서 드래그 할 경우
 
+      const clonedChampion = structuredClone(draggingChampion);
+
       const indexed = {
         index,
-        champion: draggingChampion as Champion,
+        champion: clonedChampion as Champion,
         itemList: [],
       };
 
@@ -164,15 +186,32 @@ export default function Hexagon(props: HexagonProps) {
 
     if (!placedChampion) return;
 
+    let ClonedPlacedChampion = structuredClone(placedChampion);
+
+    const targetItem = placedChampion.itemList[idx];
+
+    // 제거 아이템이 상징인 경우
+    // 적용된 시너지도 함께 제거
+    if (targetItem.name.includes("상징")) {
+      const newSynergyList = placedChampion.champion.synergy.filter(
+        (item) => item.src[0] !== targetItem.src
+      );
+      ClonedPlacedChampion.champion.synergy = newSynergyList;
+    }
+
     const newIndexedChampion = {
-      ...placedChampion,
-      itemList: [...placedChampion?.itemList!].filter(
+      ...ClonedPlacedChampion,
+      itemList: [...ClonedPlacedChampion.itemList!].filter(
         (_, index) => index !== idx
       ),
     };
 
     handleIndexItem(index, newIndexedChampion);
   }
+
+  useEffect(() => {
+    console.log(placedChampion);
+  }, [placedChampion]);
 
   return (
     <div
@@ -231,7 +270,11 @@ export default function Hexagon(props: HexagonProps) {
             <Image
               onContextMenu={(event) => handleItemRightClick(event, idx)}
               key={`${placedChampion}-${index}-${item.id}`}
-              src={ITEM_ICON_URL(item.src)}
+              src={
+                item.name.includes("상징")
+                  ? `/images/emblem/${item.src}.png`
+                  : ITEM_ICON_URL(item.src)
+              }
               width={20}
               height={20}
               alt={item.name}
