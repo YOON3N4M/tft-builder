@@ -107,7 +107,7 @@ function ChampionList(props: ChampionListProps) {
         <input
           onChange={onChange}
           placeholder="챔피언, 시너지..."
-          className="bg-default-bg text-sm ml-auto border rounded-md p-xxxs"
+          className="bg-default-bg text-sm ml-auto border rounded-md pt-xxxs px-xxs"
           value={keyword}
         ></input>
       </OverlayTab>
