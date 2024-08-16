@@ -18,7 +18,9 @@ function Tab(props: TabProps) {
       <div className={cn("flex px-md", className)}>
         <div className="flex gap-sm text-sm">
           {tabs.map((tab, idx) => (
-            <button onClick={() => handleTabsClick(idx)}>{tab}</button>
+            <button key={idx} onClick={() => handleTabsClick(idx)}>
+              {tab}
+            </button>
           ))}
         </div>
         <div className="ml-auto">{tabRightContents}</div>
