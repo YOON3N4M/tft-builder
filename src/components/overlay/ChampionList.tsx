@@ -1,6 +1,10 @@
 "use client";
 
-import { Champion, SET_12_CHAMPIONS } from "@/constants/champions";
+import {
+  Champion,
+  SET_12_CHAMPIONS,
+  TRAINING_BOT,
+} from "@/constants/champions";
 import { useDragActions } from "@/store/dragStore";
 import { cn, sortByKorean, sortByNumber } from "@/utils";
 import { ChangeEvent, HTMLAttributes, useEffect, useState } from "react";
@@ -16,6 +20,7 @@ interface ChampionListProps extends OverlayProps {}
 type SortType = "korean" | "tier";
 
 export const borderColorStyles: { [key: string]: string } = {
+  "0": "border-tier-1",
   "1": "border-tier-1",
   "2": "border-tier-2",
   "3": "border-tier-3",
@@ -161,7 +166,11 @@ function ChampionListItem(props: ChampionListItemProps) {
         key={champion.id}
         className="size-[64px] mo:size-[40px]"
         champion={champion}
-        objectPosition="object-[-55px_0px] mo:object-[-32px_0px]"
+        objectPosition={
+          champion.name === TRAINING_BOT.name
+            ? ""
+            : "object-[-55px_0px] mo:object-[-32px_0px]"
+        }
       >
         <div className="z-[100] pointer-events-none absolute w-full top-0 flex justify-end ">
           <div className="mo:hidden pointer-events-none flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">

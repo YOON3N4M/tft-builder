@@ -1,5 +1,9 @@
-import { Champion } from "@/constants/champions";
-import { CHAMPION_ICON_URL, ITEM_ICON_URL } from "@/constants/url";
+import { Champion, TRAINING_BOT } from "@/constants/champions";
+import {
+  CHAMPION_ICON_URL,
+  ITEM_ICON_URL,
+  TRAINING_BOT_ICON_URL,
+} from "@/constants/url";
 import useDragEvent from "@/hooks/useDragEvent";
 import {
   useDragActions,
@@ -42,6 +46,8 @@ const backgroundColorStyles: { [key: string]: string } = {
 
 export default function Hexagon(props: HexagonProps) {
   const { placedChampion, isEvenRow, setPlacedChampions, index } = props;
+
+  const isTrainingBot = placedChampion?.champion.name === TRAINING_BOT.name;
 
   const { setDraggingCoreItem, setDraggingTarget, setDraggingIndexedChampion } =
     useDragActions();
@@ -209,10 +215,6 @@ export default function Hexagon(props: HexagonProps) {
     handleIndexItem(index, newIndexedChampion);
   }
 
-  useEffect(() => {
-    console.log(placedChampion);
-  }, [placedChampion]);
-
   return (
     <div
       className={cn(
@@ -250,11 +252,16 @@ export default function Hexagon(props: HexagonProps) {
                 onDrop={handleItemDrop}
                 width={256}
                 height={128}
-                src={CHAMPION_ICON_URL(placedChampion.champion.src)}
+                src={
+                  isTrainingBot
+                    ? TRAINING_BOT_ICON_URL()
+                    : CHAMPION_ICON_URL(placedChampion.champion.src)
+                }
                 alt={placedChampion.champion.name}
                 className={cn(
-                  "object-cover absolute center w-full h-full object-[-87px_0px]",
-                  "mo:object-[-37px_0px]"
+                  "absolute center w-full h-full ",
+                  !isTrainingBot &&
+                    "object-cover object-[-87px_0px] mo:object-[-37px_0px]"
                 )}
               />
               <div className="absolute pointer-events-none flex flex-col bottom-[15%] text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
@@ -271,7 +278,7 @@ export default function Hexagon(props: HexagonProps) {
               onContextMenu={(event) => handleItemRightClick(event, idx)}
               key={`${placedChampion}-${index}-${item.id}`}
               src={
-                item.name.includes("상징")
+                item!.name.includes("상징")
                   ? `/images/emblem/${item.src}.png`
                   : ITEM_ICON_URL(item.src)
               }

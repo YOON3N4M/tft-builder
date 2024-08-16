@@ -1,4 +1,4 @@
-import { Champion } from "@/constants/champions";
+import { Champion, TRAINING_BOT } from "@/constants/champions";
 import { CoreItem } from "@/constants/item";
 import { cn, filterNull } from "@/utils";
 import { Dispatch, SetStateAction } from "react";
@@ -40,7 +40,11 @@ function Field(props: FieldProps) {
               "mo:top-[27%] mo:left-0 mo:text-2xl "
             )}
           >
-            {filterNull(placedChampions).length}
+            {
+              filterNull(placedChampions).filter(
+                (item) => item?.champion.name !== TRAINING_BOT.name
+              ).length
+            }
           </span>
           {placedChampions.length === 0 && (
             <div className="absolute x-center y-center z-[500] p-sm bg-white border rounded-md opacity-70">

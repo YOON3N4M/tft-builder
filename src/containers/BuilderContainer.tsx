@@ -16,6 +16,8 @@ import {
   uploadToLocalstorage,
 } from "@/utils/localstorage";
 import { useRouter, useSearchParams } from "next/navigation";
+import { SYNERGY_LIST, Synergy } from "@/constants/synergy";
+import { TRAINING_BOT } from "@/constants/champions";
 
 type OptionItem = "item" | "reroll" | "champion";
 
@@ -47,8 +49,6 @@ export default function BuilderContainer() {
     champion: true,
   });
 
-  console.log(INITIAL_FIELD_ARRAY);
-
   const router = useRouter();
 
   const { pos, isTooltipOn, tooltipOff, tooltipOn } = useToolTip();
@@ -57,16 +57,6 @@ export default function BuilderContainer() {
     useState<(IndexedChampion | null)[]>(INITIAL_FIELD_ARRAY);
   const [buildList, setBuildList] = useState(getlocalAll);
   const params = useSearchParams();
-
-  function handleIndexItem(idx: number, item: IndexedChampion | null) {
-    setPlacedChampions((prev) => {
-      const cloneArray = [...prev];
-
-      cloneArray[idx] = item;
-
-      return cloneArray;
-    });
-  }
 
   function resetBuilder() {
     if (!confirm("배치된 챔피언을 모두 제거 합니다.")) return;
@@ -99,6 +89,7 @@ export default function BuilderContainer() {
 
   // 불러오기
   useEffect(() => {
+    if (!params) return;
     getBuildFromUrl();
   }, [params]);
 
@@ -124,6 +115,21 @@ export default function BuilderContainer() {
     const unOptimized: IndexedChampion[] = unOptimizedBuild(
       fieldParams
     ) as IndexedChampion[];
+
+    //console.log(unOptimized);
+
+    // 초기 로딩 상징 처리
+    const processingEmblem = unOptimized.forEach((indexed) =>
+      indexed.itemList.forEach((item) => {
+        if (!item.name.includes("상징")) return;
+        const synergy = SYNERGY_LIST.find(
+          (synergyItem) => synergyItem.src[0] === item.src
+        ) as Synergy;
+        if (indexed.champion.synergy.some((sy) => sy.name === synergy.name))
+          return;
+        indexed.champion.synergy.push(synergy);
+      })
+    );
 
     const clonedInitial: PlacedChampion[] = [...INITIAL_FIELD_ARRAY];
 
@@ -285,8 +291,6 @@ interface LocalBuildProps {
 function LocalBuild(props: LocalBuildProps) {
   const { buildList, setBuildList } = props;
 
-  console.log(buildList);
-
   const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();
@@ -312,7 +316,6 @@ function LocalBuild(props: LocalBuildProps) {
   }
 
   function copyBuildUrl(key: string) {
-    //console.log("dho enqjs?");
     const build = buildList?.find((item) => item.buildName === `${key}`);
     const baseUrl = "https://tft-helper-zeta.vercel.app/";
     const resultUrl = `${baseUrl}?field=${build?.build}`;
@@ -363,7 +366,11 @@ function LocalBuild(props: LocalBuildProps) {
                       key={indexed.champion.name}
                       champion={indexed.champion}
                       className={cn("size-[40px]")}
-                      objectPosition="object-[-35px_0px]"
+                      objectPosition={
+                        indexed.champion.name !== TRAINING_BOT.name
+                          ? "object-[-35px_0px]"
+                          : ""
+                      }
                     />
                   ))}
                 </div>

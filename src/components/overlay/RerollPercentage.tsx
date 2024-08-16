@@ -1,6 +1,6 @@
 "use client";
 
-import { Champion } from "@/constants/champions";
+import { Champion, TRAINING_BOT } from "@/constants/champions";
 import {
   PIECES_QTY,
   REROLL_PERCENTAGE,
@@ -88,6 +88,13 @@ function RerollPercentage(props: RerollPercentageProps) {
   function onDragDrop() {
     //console.log("드랍함 ");
     const draggingChampion = draggingTarget as Champion;
+
+    // 훈련 봇 예외 처리
+    if (draggingChampion.name === TRAINING_BOT.name) {
+      alert("상점에 등장할 수 없는 챔피언 입니다.");
+      return;
+    }
+
     const isExist = targetChampions.find(
       (champion) => champion.name === draggingChampion.name
     );

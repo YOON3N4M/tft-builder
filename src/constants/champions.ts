@@ -47,7 +47,13 @@ function generateChampion(
   return { id, name, tier, synergy, src };
 }
 
-const TRAINING_BOT = generateChampion(0, "훈련 봇", 0, [], "");
+export const TRAINING_BOT = generateChampion(
+  0,
+  "훈련 봇",
+  0,
+  [],
+  "TFT_Consumable_TrainingDummy"
+);
 const AHRI = generateChampion(
   1,
   "아리",
@@ -470,7 +476,7 @@ const ZOE = generateChampion(
 );
 
 export const SET_12_CHAMPIONS = [
-  //TRAINING_BOT,
+  TRAINING_BOT,
   AHRI,
   AKALI,
   ASHE,
