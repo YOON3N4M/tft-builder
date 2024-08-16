@@ -116,10 +116,14 @@ export default function BuilderContainer() {
       fieldParams
     ) as IndexedChampion[];
 
+    const clonedIndexed = unOptimized.map((indexed) =>
+      structuredClone(indexed)
+    );
+
     //console.log(unOptimized);
 
     // 초기 로딩 상징 처리
-    const processingEmblem = unOptimized.forEach((indexed) =>
+    const processingEmblem = clonedIndexed.forEach((indexed) =>
       indexed.itemList.forEach((item) => {
         if (!item.name.includes("상징")) return;
         const synergy = SYNERGY_LIST.find(
@@ -133,7 +137,7 @@ export default function BuilderContainer() {
 
     const clonedInitial: PlacedChampion[] = [...INITIAL_FIELD_ARRAY];
 
-    unOptimized.forEach((item) => (clonedInitial[item.index] = item));
+    clonedIndexed.forEach((item) => (clonedInitial[item.index] = item));
 
     setPlacedChampions(clonedInitial);
   }
