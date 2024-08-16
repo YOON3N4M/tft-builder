@@ -198,7 +198,7 @@ function ItemCombination(props: ItemCombinationProps) {
         {/* 상징 */}
         <div>
           <div className="w-[210px] max-w-[210px] !pt-0 p-md">
-            <ul className="mt-sm flex max-w-[210px] flex-wrap gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
+            <ul className="mt-sm  max-w-[210px] grid grid-cols-4 gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
               {EMBLEM_ITEM_LIST.map((i, idx) => (
                 <li
                   onDragStart={() => handleCoreItemDrag(i)}
