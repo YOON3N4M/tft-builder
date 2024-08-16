@@ -510,3 +510,57 @@ export const CORE_ITEM_LIST: CoreItem[] = [
   WARMOGS_ARMOR,
   STRIDE_BREAKER,
 ];
+
+const ARCANA_EMBLEM = generateItem(100, "아르카나 상징", "", "arcana");
+const HONEYMANCY_EMBLEM = generateItem(101, "벌꿀술사 상징", "", "honeymancy");
+const ELDRITCH_EMBLEM = generateItem(102, "섬뜩한 힘 상징", "", "eldritch");
+const FAERIE_EMBLEM = generateItem(103, "요정 상징", "", "faerie");
+const SUGARCRAFT_EMBLEM = generateItem(104, "달콤술사 상징", "", "sugarcraft");
+const PORTAL_EMBLEM = generateItem(105, "차원문 상징", "", "portal");
+const PYRO_EMBLEM = generateItem(106, "화염 상징", "", "pyro");
+const CHRONO_EMBLEM = generateItem(107, "시공간 상징", "", "chrono");
+const FROST_EMBLEM = generateItem(108, "서리 상징", "", "frost");
+const WITCHCRAFT_EMBLEM = generateItem(109, "마녀 상징", "", "witchraft");
+const BASTION_EMBLEM = generateItem(110, "요새 상징", "", "bastion");
+const WARRIOR_EMBLEM = generateItem(111, "전사 상징", "", "warrior");
+const HUNTER_EMBLEM = generateItem(112, "사냥꾼 상징", "", "hunter");
+const INCANTOR_EMBLEM = generateItem(113, "마도사 상징", "", "incantor");
+const MAGE_EMBLEM = generateItem(114, "마도사 상징", "", "mage");
+const PRESERVER_EMBLEM = generateItem(115, "보호술사 상징", "", "preserver");
+const SCHOLAR_EMBLEM = generateItem(116, "학자 상징", "", "scholar");
+const SHAPESHIFTER_EMBLEM = generateItem(
+  117,
+  "형상변환자 상징",
+  "",
+  "shapeshifter"
+);
+const VANGUARD_EMBLEM = generateItem(118, "선봉대 상징", "", "vanguard");
+const MULTISTRIKER_EMBLEM = generateItem(
+  119,
+  "쇄도자 상징",
+  "",
+  "multistriker"
+);
+
+export const EMBLEM_ITEM_LIST = [
+  ARCANA_EMBLEM,
+  HONEYMANCY_EMBLEM,
+  ELDRITCH_EMBLEM,
+  FAERIE_EMBLEM,
+  SUGARCRAFT_EMBLEM,
+  PORTAL_EMBLEM,
+  PYRO_EMBLEM,
+  CHRONO_EMBLEM,
+  FROST_EMBLEM,
+  WITCHCRAFT_EMBLEM,
+  BASTION_EMBLEM,
+  WARRIOR_EMBLEM,
+  HUNTER_EMBLEM,
+  INCANTOR_EMBLEM,
+  MAGE_EMBLEM,
+  PRESERVER_EMBLEM,
+  SCHOLAR_EMBLEM,
+  SHAPESHIFTER_EMBLEM,
+  VANGUARD_EMBLEM,
+  MULTISTRIKER_EMBLEM,
+];
