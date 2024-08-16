@@ -6,6 +6,7 @@ import {
   COMBINATION_ITEM_LIST,
   CombinationItem,
   CoreItem,
+  EMBLEM_ITEM_LIST,
   GIANTS_BELT,
   NEEDLESSLY_LARGE_ROD,
   NEGATRON_CLOAK,
@@ -21,9 +22,10 @@ import Image from "next/image";
 
 import { useDragActions } from "@/store/dragStore";
 import { MouseEvent, useEffect, useState } from "react";
-import { Question, Reset, WindowMaxi, WindowMini } from "../svgs";
+import { Reset, WindowMaxi, WindowMini } from "../svgs";
 
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
+import Tab from "../tab/Tab";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -117,91 +119,106 @@ function ItemCombination(props: ItemCombinationProps) {
 
   return (
     <Overlay className="!z-[600]" hidden={hidden}>
-      <OverlayTab className="flex justify-end gap-sm text-sm">
-        <button onClick={resetInventory}>
-          <Reset />
-        </button>
-        <div className="relative">
-          {/* <Question className="cursor-pointer" />
-          <div className="absolute p-md bg-white border rounded-md right-0 top-[200%] shadow-md min-w-[150px]">
-            조합을 완료한 아이템만 챔피언에게 장착이 가능합니다
-          </div> */}
-        </div>
-        {/* 팁 호버 버튼 같은거 추가해서 도움말을 넣으면 좋을듯 */}
-      </OverlayTab>
+      <Tab className="text-sm mt-sm" tabs={["아이템", "상징"]}>
+        {/* 아이템  */}
+        <div>
+          <div className="px-md text-sm">
+            <p>보유 완성 아이템</p>
+            <ul className="mt-sm flex w-[210px] max-w-[210px] flex-wrap gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
+              {coreInventory.map((i, idx) => (
+                <li
+                  onDragStart={() => handleCoreItemDrag(i)}
+                  onDragEnd={handleCoreItemDragEnd}
+                  key={idx}
+                  className="flex items-center cursor-pointer"
+                >
+                  <ItemIcon item={i} />
+                </li>
+              ))}
+            </ul>
+          </div>
 
-      <div className="px-md text-sm">
-        <p>보유 완성 아이템</p>
-        <ul className="mt-sm flex w-[210px] max-w-[210px] flex-wrap gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
-          {coreInventory.map((i, idx) => (
-            <li
-              onDragStart={() => handleCoreItemDrag(i)}
-              onDragEnd={handleCoreItemDragEnd}
-              key={idx}
-              className="flex items-center cursor-pointer"
-            >
-              <ItemIcon item={i} />
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* inventory */}
-      <div className="pt-[16px] px-[16px] text-sm">
-        <div className="flex">
-          <p>보유 조합 아이템</p>
-          <button className="ml-auto" onClick={handleCaseFold}>
-            {foldCase ? <WindowMaxi /> : <WindowMini />}
-          </button>
-        </div>
-        <div className="grid w-[210px] max-w-[210px] grid-cols-3 mt-sm gap-[8px] flex-wrap">
-          {COMBINATION_ITEM_LIST.map((item) => (
-            <div key={item.name} className="flex flex-col items-center">
-              <button
-                className="p-xxs bg-default-bg rounded-md"
-                onClick={() => increaseItem(item.name)}
-                onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
-              >
-                <div className="flex gap-xs p-xxxs">
-                  <ItemIcon item={item} />
-                  <div className="text-gray-500 mt-xxs text-sm">
-                    {inventory[item.name]}
-                  </div>
-                </div>
+          {/* inventory */}
+          <div className="pt-[16px] px-[16px] text-sm">
+            <div className="flex">
+              <p>보유 조합 아이템</p>
+              <button className="ml-auto" onClick={handleCaseFold}>
+                {foldCase ? <WindowMaxi /> : <WindowMini />}
               </button>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* case list */}
-      <div
-        className={cn(
-          "flex flex-col gap-[10px] max-h-[50vh] overflow-y-auto px-[16px] pb-[16px] mt-lg ",
-          foldCase && "h-0 !p-0"
-        )}
-      >
-        {combinationCase[0] &&
-          combinationCase[0].length > 0 &&
-          combinationCase.map((c, idx) => (
-            <div key={idx}>
-              <span className="text-xs text-gray-500">{idx}.</span>
-              <ul className="mt-xxxs flex flex-wrap w-[210px] max-w-[210px] gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
-                {c.map((i, idx) => (
-                  <li key={idx} className="flex items-center">
-                    <button
-                      onContextMenu={(event) =>
-                        handleCoreItemRightClick(event, i)
-                      }
-                    >
-                      <ItemIcon item={i} />
-                    </button>
-                  </li>
-                ))}
-              </ul>
+            <div className="grid w-[210px] max-w-[210px] grid-cols-3 mt-sm gap-[8px] flex-wrap">
+              {COMBINATION_ITEM_LIST.map((item) => (
+                <div key={item.name} className="flex flex-col items-center">
+                  <button
+                    className="p-xxs bg-default-bg rounded-md"
+                    onClick={() => increaseItem(item.name)}
+                    onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
+                  >
+                    <div className="flex gap-xs p-xxxs">
+                      <ItemIcon item={item} />
+                      <div className="text-gray-500 mt-xxs text-sm">
+                        {inventory[item.name]}
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              ))}
             </div>
-          ))}
-      </div>
+          </div>
+
+          {/* case list */}
+          <div
+            className={cn(
+              "flex flex-col gap-[10px] max-h-[50vh] overflow-y-auto px-[16px] pb-[16px] mt-lg ",
+              foldCase && "h-0 !p-0"
+            )}
+          >
+            {combinationCase[0] &&
+              combinationCase[0].length > 0 &&
+              combinationCase.map((c, idx) => (
+                <div key={idx}>
+                  <span className="text-xs text-gray-500">{idx}.</span>
+                  <ul className="mt-xxxs flex flex-wrap w-[210px] max-w-[210px] gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
+                    {c.map((i, idx) => (
+                      <li key={idx} className="flex items-center">
+                        <button
+                          onContextMenu={(event) =>
+                            handleCoreItemRightClick(event, i)
+                          }
+                        >
+                          <ItemIcon item={i} />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+          </div>
+        </div>
+        {/* 상징 */}
+        <div>
+          <div className="w-[210px] max-w-[210px] !pt-0 p-md">
+            <ul className="mt-sm flex max-w-[210px] flex-wrap gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
+              {EMBLEM_ITEM_LIST.map((i, idx) => (
+                <li
+                  onDragStart={() => handleCoreItemDrag(i)}
+                  onDragEnd={handleCoreItemDragEnd}
+                  key={idx}
+                  className="flex items-center cursor-pointer"
+                >
+                  <Image
+                    className="rounded-[4px]"
+                    src={`/images/emblem/${i.src}.png`}
+                    width={30}
+                    height={30}
+                    alt={i.name}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Tab>
     </Overlay>
   );
 }
