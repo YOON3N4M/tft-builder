@@ -164,7 +164,7 @@ function ItemCombination(props: ItemCombinationProps) {
                     onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
                   >
                     <div className="flex gap-xs p-xxxs">
-                      <ItemPortrait noTooltip item={item} />
+                      <ItemPortrait item={item} />
                       <div className="text-gray-500 mt-xxs text-sm">
                         {inventory[item.name]}
                       </div>
@@ -178,7 +178,7 @@ function ItemCombination(props: ItemCombinationProps) {
           {/* case list */}
           <div
             className={cn(
-              "flex relative flex-col gap-[10px] max-h-[50vh] overflow-x-hidden overflow-y-auto px-[16px] pb-[16px] mt-lg ",
+              "flex flex-col gap-[10px] max-h-[50vh] overflow-x-hidden overflow-y-auto px-[16px] pb-[16px] mt-lg ",
               foldCase && "h-0 !p-0"
             )}
           >
