@@ -19,6 +19,7 @@ import {
 } from "react";
 import { Reset, Token } from "../svgs";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
+import Tab from "../tab/Tab";
 
 interface RerollPercentageProps extends OverlayProps {}
 
@@ -120,73 +121,77 @@ function RerollPercentage(props: RerollPercentageProps) {
       hidden={hidden}
       className="w-full pc:min-w-[500px] pc:max-w-[600px]"
     >
-      <OverlayTab className="flex gap-sm text-sm">
-        <button className="font-bold">기물 확률</button>
-
-        <button onClick={reset} className="ml-auto">
-          <Reset />
-        </button>
-        {/* <button>확률표</button> */}
-      </OverlayTab>
-      <div className="pc:min-w-[500px] p-md text-sm">
-        <div className="flex gap-xs items-center mo:flex-col">
-          <div className="flex gap-xs items-center mo:w-full">
-            <span>현재 내 레벨</span>
-            <button
-              className="p-xs hover:bg-default-bg border rounded-md"
-              onClick={increaseLevel}
-              onContextMenu={decreaseLevel}
-            >
-              {currentLevel}
-            </button>
-          </div>
-          <div className="flex mo:self-start gap-sm pc:ml-md bg-default-bg p-sm rounded-m mo:justify-start">
-            {currentPercentage.map((per, idx) => (
-              <div
-                key={`${currentLevel}-${per}-${idx}`}
-                className="flex items-center gap-xxs"
+      <Tab
+        className="pt-md"
+        tabs={["기물 확률", "확률표"]}
+        tabRightContents={
+          <button onClick={reset} className="ml-auto">
+            <Reset />
+          </button>
+        }
+      >
+        <div className="pc:min-w-[500px] p-md text-sm">
+          <div className="flex gap-xs items-center mo:flex-col">
+            <div className="flex gap-xs items-center mo:w-full">
+              <span>현재 내 레벨</span>
+              <button
+                className="p-xs hover:bg-default-bg border rounded-md"
+                onClick={increaseLevel}
+                onContextMenu={decreaseLevel}
               >
-                <span className={cn(shapeStyles[idx + 1])} />
-                <span
-                  className={cn("text-xs", colorStyles[(idx + 1).toString()])}
+                {currentLevel}
+              </button>
+            </div>
+            <div className="flex mo:self-start gap-sm pc:ml-md bg-default-bg p-sm rounded-m mo:justify-start">
+              {currentPercentage.map((per, idx) => (
+                <div
+                  key={`${currentLevel}-${per}-${idx}`}
+                  className="flex items-center gap-xxs"
                 >
-                  {per}%
-                </span>
-              </div>
-            ))}
+                  <span className={cn(shapeStyles[idx + 1])} />
+                  <span
+                    className={cn("text-xs", colorStyles[(idx + 1).toString()])}
+                  >
+                    {per}%
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            onDragEnter={onDragEnter}
+            onDragLeave={onDrageLeave}
+            onDrop={onDragDrop}
+            onDragOver={onDragOver}
+            className={cn(
+              "pc:w-full flex min-h-[100px] border bg-default-bg mt-md flex-col rounded-md",
+              "",
+              isDragEnter && "border-blue-300 border-2"
+            )}
+          >
+            {targetChampions.length < 1 ? (
+              <p className="m-auto pointer-events-none text-gray-500">
+                상점 등장 확률을 알고 싶은 챔피언을 여기에 드래그 해보세요!
+              </p>
+            ) : (
+              <>
+                {targetChampions.map((champion, idx) => (
+                  // 이부분 컴포넌트 분리하고 리팩토링하는게 나을 듯
+                  <RerollTargetChampion
+                    key={champion.name}
+                    champion={champion}
+                    currentLevel={currentLevel}
+                    setTargetChampions={setTargetChampions}
+                  />
+                ))}
+              </>
+            )}
           </div>
         </div>
-        <div
-          onDragEnter={onDragEnter}
-          onDragLeave={onDrageLeave}
-          onDrop={onDragDrop}
-          onDragOver={onDragOver}
-          className={cn(
-            "pc:w-full flex min-h-[100px] border bg-default-bg mt-md flex-col rounded-md",
-            "",
-            isDragEnter && "border-blue-300 border-2"
-          )}
-        >
-          {targetChampions.length < 1 ? (
-            <p className="m-auto pointer-events-none">
-              상점 등장 확률을 알고 싶은 챔피언을 여기에 드래그 해보세요!
-            </p>
-          ) : (
-            <>
-              {targetChampions.map((champion, idx) => (
-                // 이부분 컴포넌트 분리하고 리팩토링하는게 나을 듯
-                <RerollTargetChampion
-                  key={champion.name}
-                  champion={champion}
-                  currentLevel={currentLevel}
-                  setTargetChampions={setTargetChampions}
-                />
-              ))}
-            </>
-          )}
+        <div className="pc:max-w-[500px] p-md text-sm">
+          <RerollTable />
         </div>
-        {/* 여기서 탭 조건부 렌더링 <RerollTable /> */}
-      </div>
+      </Tab>
     </Overlay>
   );
 }
@@ -195,7 +200,7 @@ export default RerollPercentage;
 
 function RerollTable() {
   return (
-    <table className="pc:min-w-[500px] [&_th]:p-xs [&_td]:p-xs rounded-md">
+    <table className="w-full [&_th]:p-xxs [&_td]:p-xxs rounded-md">
       <thead>
         <tr className="bg-default-bg">
           <th>레벨</th>

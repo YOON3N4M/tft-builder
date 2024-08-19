@@ -88,7 +88,7 @@ function ChampionList(props: ChampionListProps) {
 
   return (
     <Overlay className="mo:w-full " hidden={hidden}>
-      <OverlayTab className="flex pc:min-w-[465px] !px-xxl gap-sm">
+      <OverlayTab className="flex pc:min-w-[465px] !px-md gap-sm">
         <SortButton
           currentSortType={currentSortType}
           sortType="korean"
@@ -211,8 +211,8 @@ function SortButton(props: SortButtonProps) {
     <button
       className={cn(
         className,
-        "text-sm",
-        sortType === currentSortType && "font-bold"
+        "text-sm py-xxs px-xs rounded-md",
+        sortType === currentSortType && "font-semibold bg-gray-200"
       )}
       onClick={() => onClickFn(sortType)}
     >

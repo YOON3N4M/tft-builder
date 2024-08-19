@@ -18,7 +18,14 @@ function Tab(props: TabProps) {
       <div className={cn("flex px-md", className)}>
         <div className="flex gap-sm text-sm">
           {tabs.map((tab, idx) => (
-            <button key={idx} onClick={() => handleTabsClick(idx)}>
+            <button
+              className={cn(
+                "py-xxs px-xs rounded-md",
+                activeIndex === idx && "bg-gray-200 font-semibold"
+              )}
+              key={idx}
+              onClick={() => handleTabsClick(idx)}
+            >
               {tab}
             </button>
           ))}
