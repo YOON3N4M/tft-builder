@@ -26,6 +26,7 @@ import { Reset, WindowMaxi, WindowMini } from "../svgs";
 
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import Tab from "../tab/Tab";
+import ItemPortrait from "../ItemPortrait";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -119,7 +120,15 @@ function ItemCombination(props: ItemCombinationProps) {
 
   return (
     <Overlay className="!z-[600]" hidden={hidden}>
-      <Tab className="text-sm mt-sm" tabs={["아이템", "상징"]}>
+      <Tab
+        className="text-sm mt-sm"
+        tabs={["아이템", "상징"]}
+        tabRightContents={
+          <button onClick={resetInventory}>
+            <Reset />
+          </button>
+        }
+      >
         {/* 아이템  */}
         <div>
           <div className="px-md text-sm">
@@ -132,7 +141,7 @@ function ItemCombination(props: ItemCombinationProps) {
                   key={idx}
                   className="flex items-center cursor-pointer"
                 >
-                  <ItemIcon item={i} />
+                  <ItemPortrait item={i} />
                 </li>
               ))}
             </ul>
@@ -155,7 +164,7 @@ function ItemCombination(props: ItemCombinationProps) {
                     onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
                   >
                     <div className="flex gap-xs p-xxxs">
-                      <ItemIcon item={item} />
+                      <ItemPortrait noTooltip item={item} />
                       <div className="text-gray-500 mt-xxs text-sm">
                         {inventory[item.name]}
                       </div>
@@ -169,7 +178,7 @@ function ItemCombination(props: ItemCombinationProps) {
           {/* case list */}
           <div
             className={cn(
-              "flex flex-col gap-[10px] max-h-[50vh] overflow-y-auto px-[16px] pb-[16px] mt-lg ",
+              "flex relative flex-col gap-[10px] max-h-[50vh] overflow-x-hidden overflow-y-auto px-[16px] pb-[16px] mt-lg ",
               foldCase && "h-0 !p-0"
             )}
           >
@@ -186,7 +195,7 @@ function ItemCombination(props: ItemCombinationProps) {
                             handleCoreItemRightClick(event, i)
                           }
                         >
-                          <ItemIcon item={i} />
+                          <ItemPortrait item={i} />
                         </button>
                       </li>
                     ))}
@@ -198,24 +207,29 @@ function ItemCombination(props: ItemCombinationProps) {
         {/* 상징 */}
         <div>
           <div className="w-[210px] max-w-[210px] !pt-0 p-md">
-            <ul className="mt-sm  max-w-[210px] grid grid-cols-4 gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
+            <div className="mt-sm max-w-[210px] grid grid-cols-4 gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
               {EMBLEM_ITEM_LIST.map((i, idx) => (
-                <li
+                <ItemPortrait
                   onDragStart={() => handleCoreItemDrag(i)}
                   onDragEnd={handleCoreItemDragEnd}
-                  key={idx}
-                  className="flex items-center cursor-pointer"
-                >
-                  <Image
-                    className="rounded-[4px]"
-                    src={`/images/emblem/${i.src}.png`}
-                    width={30}
-                    height={30}
-                    alt={i.name}
-                  />
-                </li>
+                  item={i}
+                />
+                // <div
+                //   onDragStart={() => handleCoreItemDrag(i)}
+                //   onDragEnd={handleCoreItemDragEnd}
+                //   key={idx}
+                //   className="flex items-center cursor-pointer"
+                // >
+                //   <Image
+                //     className="rounded-[4px]"
+                //     src={`/images/emblem/${i.src}.png`}
+                //     width={30}
+                //     height={30}
+                //     alt={i.name}
+                //   />
+                // </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </Tab>

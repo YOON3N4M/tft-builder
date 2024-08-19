@@ -25,6 +25,7 @@ import ChampionTooltip from "../tooltips/ChampionTooltip";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { IndexedChampion } from "./Field";
 import { SYNERGY_LIST, Synergy } from "@/constants/synergy";
+import ItemPortrait from "../ItemPortrait";
 
 export type PlacedChampion = IndexedChampion | null;
 
@@ -275,19 +276,15 @@ export default function Hexagon(props: HexagonProps) {
       <div className="absolute flex w-full gap-xxxs bottom-0 justify-center">
         {placedChampion &&
           placedChampion.itemList.map((item, idx) => (
-            <Image
-              onContextMenu={(event) => handleItemRightClick(event, idx)}
+            <ItemPortrait
+              noTooltip
+              item={item}
               key={`${placedChampion}-${index}-${item.id}`}
-              src={
-                item!.name.includes("상징")
-                  ? `/images/emblem/${item.src}.png`
-                  : ITEM_ICON_URL(item.src)
-              }
+              onContextMenu={(event) => handleItemRightClick(event, idx)}
+              className={cn("rounded-md cursor-pointer", "mo:size-[13px]")}
               width={20}
               height={20}
-              alt={item.name}
-              className={cn("rounded-md cursor-pointer", "mo:size-[13px]")}
-            ></Image>
+            />
           ))}
       </div>
     </div>
