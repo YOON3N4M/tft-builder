@@ -15,7 +15,8 @@ function generateItem(
   id: number,
   name: string,
   effect: string[],
-  src: string
+  src: string,
+  desc: string
 ): CombinationItem;
 function generateItem(
   id: number,
@@ -31,6 +32,7 @@ function generateItem(
   name: string,
   effect: string[],
   src: string,
+  desc: string,
   recipe?: any
 ): CombinationItem | CoreItem {
   if (recipe) {
@@ -39,6 +41,7 @@ function generateItem(
       name,
       effect,
       src,
+      desc,
       recipe,
     } as CoreItem;
   } else {
@@ -55,55 +58,64 @@ export const BF_SWRORD = generateItem(
   1,
   "BF 대검",
   ["공격력 10%"],
-  "TFT_Item_BFSword.png"
+  "TFT_Item_BFSword.png",
+  ""
 );
 export const RECURVE_BOW = generateItem(
   2,
   "곡궁",
   ["공격속도 10%"],
-  "TFT_Item_RecurveBow.png"
+  "TFT_Item_RecurveBow.png",
+  ""
 );
 export const CHAIN_VEST = generateItem(
   3,
   "쇠사슬 갑옷",
   ["방어력 +20"],
-  "TFT_Item_ChainVest.png"
+  "TFT_Item_ChainVest.png",
+  ""
 );
 export const NEGATRON_CLOAK = generateItem(
   4,
   "음전자 망토",
   ["마법저항력 +20"],
-  "TFT_Item_NegatronCloak.png"
+  "TFT_Item_NegatronCloak.png",
+  ""
 );
 export const NEEDLESSLY_LARGE_ROD = generateItem(
   5,
   "쓸데없이 큰 지팡이",
   ["주문력 +10"],
-  "TFT_Item_NeedlesslyLargeRod.png"
+  "TFT_Item_NeedlesslyLargeRod.png",
+  ""
 );
 export const TEAR_OF_THE_GADDESS = generateItem(
   6,
   "여신의 눈물",
   ["마나 +15"],
-  "TFT_Item_TearOfTheGoddess.png"
+  "TFT_Item_TearOfTheGoddess.png",
+  ""
 );
 export const GIANTS_BELT = generateItem(
   7,
   "거인의 허리띠",
   ["체력 +150"],
-  "TFT_Item_GiantsBelt.png"
+  "TFT_Item_GiantsBelt.png",
+  ""
 );
 export const SPARRINGS_GLOVES = generateItem(
   8,
   "싸움꾼의 장갑",
   ["치명타 확률 20%"],
-  "TFT_Item_SparringGloves.png"
+  "TFT_Item_SparringGloves.png",
+  ""
 );
 export const SPATULA = generateItem(
   100,
   "뒤집개",
   ["-"],
-  "TFT_Item_Spatula.png"
+  "TFT_Item_Spatula.png",
+  ""
 );
 
 export const COMBINATION_ITEM_LIST = [
