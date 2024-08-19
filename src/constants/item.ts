@@ -155,9 +155,9 @@ const GIANTS_SLAYER = generateItem(
 const HAND_OF_JUSTICE = generateItem(
   11,
   "정의의 손길",
-  ["마나 +15", "치명 확률 +20%"],
+  ["마나 +15", "치명타 확률 +20%"],
   "TFT_Item_UnstableConcoction.png",
-  "2가지 효과를 획득:\n- 공격력 15%, 주문력 15\n- 모든 피해 흡혈 15%\n\n라인드마다 위 효과 중 1개 무작위로 2배 증가",
+  "2가지 효과를 획득:\n- 공격력 15%, 주문력 15\n- 모든 피해 흡혈 15%\n\n라운드마다 위 효과 중 1개 무작위로 2배 증가",
   [
     { requireItem: TEAR_OF_THE_GADDESS, qty: 1 },
     { requireItem: SPARRINGS_GLOVES, qty: 1 },
@@ -387,8 +387,8 @@ const HEARTSTEEL = generateItem(
   31,
   "굳건한 심장",
   ["체력 +250", "방어력 +20", "치명타 확률 +20%"],
-  "내구력 8% 획득. 체력이 50%를 넘으면 대신 내구력 15% 획득",
   "TFT_Item_NightHarvester.png",
+  "내구력 8% 획득. 체력이 50%를 넘으면 대신 내구력 15% 획득",
   [
     { requireItem: CHAIN_VEST, qty: 1 },
     { requireItem: SPARRINGS_GLOVES, qty: 1 },
