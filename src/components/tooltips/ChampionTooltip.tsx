@@ -21,19 +21,19 @@ function ChampionTooltip(props: ChampionTooltipProps) {
     <div>
       <div className="flex items-center gap-xs z-[2000]">
         <span className={cn(shapeStyles[champion.tier])} />
-        <span className="text-base">{champion.name}</span>
+        <span className="text-sm">{champion.name}</span>
       </div>
       <div className="flex flex-col mt-xs gap-xxs">
         {champion.synergy.map((synergy) => (
-          <div key={synergy.name} className="flex gap-xs">
+          <div key={synergy.name} className="flex gap-xxs items-center">
             <Image
-              width={22}
-              height={22}
+              width={18}
+              height={12}
               src={`/images/synergy/${synergy.src[0]}.png`}
               alt={synergy.name}
               className="filter brightness-0"
             />
-            <span>{synergy.name}</span>
+            <span className="text-xs">{synergy.name}</span>
           </div>
         ))}
       </div>
