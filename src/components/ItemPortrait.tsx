@@ -62,8 +62,10 @@ function ItemPortrait(props: ItemPortraitProps) {
             <p className="mt-sm text-gray-500 whitespace-pre-line">{desc}</p>
           )}
           <div className="mt-sm text-gray-500">
-            {effect.map((ef) => (
-              <p className="text-xs">{ef}</p>
+            {effect.map((ef, idx) => (
+              <p key={`${name}-effect-${idx}`} className="text-xs">
+                {ef}
+              </p>
             ))}
           </div>
         </div>

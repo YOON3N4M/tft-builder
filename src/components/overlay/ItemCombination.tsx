@@ -210,6 +210,7 @@ function ItemCombination(props: ItemCombinationProps) {
             <div className="mt-sm max-w-[210px] grid grid-cols-4 gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
               {EMBLEM_ITEM_LIST.map((i, idx) => (
                 <ItemPortrait
+                  key={i.name}
                   onDragStart={() => handleCoreItemDrag(i)}
                   onDragEnd={handleCoreItemDragEnd}
                   item={i}
