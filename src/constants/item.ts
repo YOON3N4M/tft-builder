@@ -692,7 +692,7 @@ const INCANTOR_EMBLEM = generateItem(
 );
 const MAGE_EMBLEM = generateItem(
   114,
-  "마도사 상징",
+  "요술사 상징",
   ["체력 +150"],
   "mage",
   "장착 시 요술사 특성 획득",
