@@ -249,6 +249,12 @@ export default function BuilderContainer() {
               </div>
             </div>
           </div>
+          <div className="flex pc:hidden ">
+            <p className="text-sm p-sm bg-white text-gray-500 border rounded-md">
+              현재 모바일 환경에서 조작이 원활하지 않으므로, 뷰어로써의 이용을
+              권장합니다.
+            </p>
+          </div>
         </div>
         {/* 중앙 영역 */}
         <div className="flex inner bg-default-bg py-md mo:flex-col">
