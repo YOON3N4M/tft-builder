@@ -233,7 +233,7 @@ export default function BuilderContainer() {
                     </li>
                   </ul>
                 </div>
-                <div className="mt-md">
+                {/* <div className="mt-md">
                   <span className="font-semibold">미구현</span>
                   <ul className="pl-sm mt-xxs bg-default-bg p-sm rounded-md">
                     <li>
@@ -245,7 +245,7 @@ export default function BuilderContainer() {
                       </span>
                     </li>
                   </ul>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
