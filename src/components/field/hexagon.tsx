@@ -259,10 +259,11 @@ export default function Hexagon(props: HexagonProps) {
                 }
                 alt={placedChampion.champion.name}
                 className={cn(
-                  "absolute center w-full h-full ",
+                  "absolute center w-full h-full",
                   !isTrainingBot &&
-                    "object-cover object-[-87px_0px] mo:object-[-37px_0px]"
+                    "object-cover object-[-86px_0px] mo:object-[-37px_0px]"
                 )}
+                quality={90}
               />
               <div className="absolute pointer-events-none flex flex-col bottom-[15%] text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
                 <p className="mo:text-[8px]">{placedChampion.champion.name}</p>
