@@ -183,7 +183,12 @@ export const BASTION = generateSynergy(
   ["bronze", "silver", "gold", "gold"],
   ["bastion"],
   "아군이 방어력과 마법 저항력을 10 얻습니다.\n\n요새는 능력치를 더 얻습니다. 전투 시작 후 10초 동안, 요새는 추가 수치를 2배로 얻습니다.",
-  []
+  [
+    "방어력 및 마법 저항력 15",
+    "방어력 및 마법 저항력 40",
+    "방어력 및 마법 저항력 70",
+    "방어력 및 마법 저항력 120, 요새 유닛 4명이 처치될 때까지 후방 가로 2열에서 전투를 시작한 챔피언 2명이 무적이 됨",
+  ]
 );
 export const BAT_QUEEN = generateSynergy(
   "박쥐여왕",
@@ -281,7 +286,7 @@ export const SCHOLAR = generateSynergy(
 );
 export const SHAPESHIFTER = generateSynergy(
   "형상변환자",
-  [2, 4, 6],
+  [2, 4, 6, 8],
   ["bronze", "silver", "gold"],
   ["shapeshifter"],
   "형상변환자가 최대 체력을 얻습니다. 스킬을 처음으로 사용하면 이 효과가 3배가 됩니다.",

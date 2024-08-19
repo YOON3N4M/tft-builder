@@ -120,8 +120,23 @@ function SynergyListItem(props: SyenrgyListItemProps) {
         ""
       )}
     >
-      <ToolTip isOn={isTooltipOn} x={pos.x} y={pos.y}>
-        <div className="font-semibold">{synergyItem.name}</div>
+      <ToolTip
+        className="whitespace-pre-line max-w-[400px]"
+        isOn={isTooltipOn}
+        x={pos.x}
+        y={pos.y}
+      >
+        <div>
+          <p className="font-semibold">{synergyItem.name}</p>
+          <p className="text-gray-500 mt-sm">{synergyItem.desc}</p>
+          <ul className="mt-sm text-gray-500">
+            {synergyItem.effect.map((ef, idx) => (
+              <li key={`${synergyItem.name}-effect-${idx}`}>
+                ({synergyItem.requirQty[idx]}) {ef}
+              </li>
+            ))}
+          </ul>
+        </div>
         <div className="mt-sm flex gap-xxs">
           {sortByTier.map((champion) => (
             <ChampionPortrait
