@@ -51,7 +51,8 @@ export default function BuilderContainer() {
 
   const router = useRouter();
 
-  const { pos, isTooltipOn, tooltipOff, tooltipOn } = useToolTip();
+  const { tooltipContainerRef, pos, isTooltipOn, tooltipOff, tooltipOn } =
+    useToolTip();
 
   const [placedChampions, setPlacedChampions] =
     useState<(IndexedChampion | null)[]>(INITIAL_FIELD_ARRAY);
@@ -163,7 +164,7 @@ export default function BuilderContainer() {
             >
               배치 초기화
             </button>
-            <div className="ml-auto relative">
+            <div ref={tooltipContainerRef} className="ml-auto relative">
               <Question
                 onMouseEnter={tooltipOn}
                 onMouseLeave={tooltipOff}

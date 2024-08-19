@@ -8,6 +8,7 @@ interface ChampionTooltipProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const shapeStyles: { [key: string]: string } = {
+  "0": "bg-tier-1 rounded-full size-[8px]",
   "1": "bg-tier-1 rounded-full size-[8px]",
   "2": "bg-tier-2 rounded-full size-[8px]",
   "3": "border-b-tier-3 triangle ",
@@ -18,7 +19,7 @@ const shapeStyles: { [key: string]: string } = {
 function ChampionTooltip(props: ChampionTooltipProps) {
   const { champion } = props;
   return (
-    <div>
+    <div className="">
       <div className="flex items-center gap-xs z-[2000]">
         <span className={cn(shapeStyles[champion.tier])} />
         <span className="text-sm">{champion.name}</span>

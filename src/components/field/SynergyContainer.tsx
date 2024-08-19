@@ -93,7 +93,8 @@ interface SyenrgyListItemProps {
 
 function SynergyListItem(props: SyenrgyListItemProps) {
   const { indexedChampionList, synergy } = props;
-  const { isTooltipOn, tooltipOff, tooltipOn, pos } = useToolTip();
+  const { tooltipContainerRef, isTooltipOn, tooltipOff, tooltipOn, pos } =
+    useToolTip();
 
   const synergyItem = synergy[0];
   const synergyChampions = SET_12_CHAMPIONS.filter((champion) =>
@@ -112,12 +113,12 @@ function SynergyListItem(props: SyenrgyListItemProps) {
 
   return (
     <div
+      ref={tooltipContainerRef}
       key={synergyItem.name}
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
       className={cn(
-        "relative flex items-center border p-xs text-sm pc:min-w-[205px] bg-white rounded-md",
-        ""
+        "relative flex items-center border p-xs text-sm pc:min-w-[205px] bg-white rounded-md"
       )}
     >
       <ToolTip
@@ -125,6 +126,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
         isOn={isTooltipOn}
         x={pos.x}
         y={pos.y}
+        position="right"
       >
         <div>
           <p className="font-semibold">{synergyItem.name}</p>

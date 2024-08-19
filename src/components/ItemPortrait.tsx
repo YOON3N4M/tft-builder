@@ -5,7 +5,7 @@ import { ITEM_ICON_URL } from "@/constants/url";
 import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes, useState } from "react";
-import { useToolTip } from "./tooltips/ToolTip";
+import { ToolTip, useToolTip } from "./tooltips/ToolTip";
 
 interface ItemPortraitProps extends HTMLAttributes<HTMLImageElement> {
   item: CoreItem | CombinationItem;
@@ -34,10 +34,12 @@ function ItemPortrait(props: ItemPortraitProps) {
     ...(onDragEnd && { onDragEnd: onDragEnd }),
   };
 
-  const { isTooltipOn, tooltipOn, tooltipOff } = useToolTip();
+  const { isTooltipOn, tooltipOn, tooltipOff, tooltipContainerRef, pos } =
+    useToolTip();
 
   return (
     <div
+      ref={tooltipContainerRef}
       onContextMenu={onContextMenu}
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
@@ -50,26 +52,20 @@ function ItemPortrait(props: ItemPortraitProps) {
         height={height}
         alt={name}
       />
-      {isTooltipOn && (
-        <div
-          className={cn(
-            "text-sm block text-start translate-y-[10px] absolute min-w-[180px] border bg-white rounded-md shadow-md z-[9500] px-sm py-sm",
-            noTooltip && "hidden"
-          )}
-        >
-          <p className="font-semibold">{name}</p>
-          {desc && (
-            <p className="mt-sm text-gray-500 whitespace-pre-line">{desc}</p>
-          )}
-          <div className="mt-sm text-gray-500">
-            {effect.map((ef, idx) => (
-              <p key={`${name}-effect-${idx}`} className="text-xs">
-                {ef}
-              </p>
-            ))}
-          </div>
+
+      <ToolTip x={pos.x} y={pos.y} isOn={isTooltipOn}>
+        <p className="font-semibold">{name}</p>
+        {desc && (
+          <p className="mt-sm text-gray-500 whitespace-pre-line">{desc}</p>
+        )}
+        <div className="mt-sm text-gray-500">
+          {effect.map((ef, idx) => (
+            <p key={`${name}-effect-${idx}`} className="text-xs">
+              {ef}
+            </p>
+          ))}
         </div>
-      )}
+      </ToolTip>
     </div>
   );
 }

@@ -146,7 +146,8 @@ interface ChampionListItemProps {
 function ChampionListItem(props: ChampionListItemProps) {
   const { champion, handleIconDragStart } = props;
 
-  const { pos, isTooltipOn, tooltipOn, tooltipOff } = useToolTip();
+  const { tooltipContainerRef, pos, isTooltipOn, tooltipOn, tooltipOff } =
+    useToolTip();
 
   function drageStart(e: any, champion: any) {
     handleIconDragStart(e, champion);
@@ -158,6 +159,7 @@ function ChampionListItem(props: ChampionListItemProps) {
       onMouseLeave={tooltipOff}
       onDragStart={(e) => drageStart(e, champion)}
       className="relative cursor-pointer"
+      ref={tooltipContainerRef}
     >
       <ToolTip isOn={isTooltipOn} x={pos.x} y={pos.y}>
         <ChampionTooltip champion={champion} />

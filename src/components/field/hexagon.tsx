@@ -53,7 +53,8 @@ export default function Hexagon(props: HexagonProps) {
   const { setDraggingCoreItem, setDraggingTarget, setDraggingIndexedChampion } =
     useDragActions();
 
-  const { pos, isTooltipOn, tooltipOn, tooltipOff } = useToolTip();
+  const { tooltipContainerRef, pos, isTooltipOn, tooltipOn, tooltipOff } =
+    useToolTip();
   const draggingChampion = useDraggingTarget();
   const draggingIndexedChampion = useDraggingIndexedChampion();
   const draggingCoreItem = useDraggingCoreItem();
@@ -240,6 +241,7 @@ export default function Hexagon(props: HexagonProps) {
           onDragLeave={handleDragLeave}
           onDrop={handleDragDrop}
           className="hexagon size-[90%] relative"
+          ref={tooltipContainerRef}
         >
           {placedChampion?.champion && placedChampion && (
             <div onMouseEnter={tooltipOn} onMouseLeave={tooltipOff}>
