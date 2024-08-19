@@ -53,7 +53,7 @@ function ItemPortrait(props: ItemPortraitProps) {
       {isTooltipOn && (
         <div
           className={cn(
-            "text-sm block text-start absolute min-w-[180px] border bg-white rounded-md shadow-md z-[9500] px-sm py-sm",
+            "text-sm block text-start translate-y-[10px] absolute min-w-[180px] border bg-white rounded-md shadow-md z-[9500] px-sm py-sm",
             noTooltip && "hidden"
           )}
         >
