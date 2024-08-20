@@ -96,7 +96,6 @@ export default function Hexagon(props: HexagonProps) {
   }
 
   function handleDragEnd(event: MouseEvent<HTMLDivElement>) {
-    handleIndexItem(index, null);
     setDraggingTarget(null);
     setDraggingIndexedChampion(null);
   }
@@ -169,6 +168,7 @@ export default function Hexagon(props: HexagonProps) {
 
     // 이미 배치된 챔피언을 이동 시킬때
     if (draggingIndexedChampion) {
+      handleIndexItem(draggingIndexedChampion.index, null);
       const newIndex = { ...draggingIndexedChampion, index };
 
       handleIndexItem(index, newIndex);
