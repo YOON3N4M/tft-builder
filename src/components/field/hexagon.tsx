@@ -296,6 +296,7 @@ export default function Hexagon(props: HexagonProps) {
               className={cn("rounded-md cursor-pointer", "mo:size-[13px]")}
               width={20}
               height={20}
+              rightClickGuide="해제"
             />
           ))}
       </div>
