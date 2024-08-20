@@ -48,7 +48,7 @@ function ChampionList(props: ChampionListProps) {
 
   const { setDraggingTarget } = useDragActions();
 
-  const [currentSortType, setCurrentSortType] = useState<SortType>("korean");
+  const [currentSortType, setCurrentSortType] = useState<SortType>("tier");
   const [championList, setChampionList] = useState(
     sortByKorean(SET_12_CHAMPIONS, "name")
   );
@@ -117,18 +117,17 @@ function ChampionList(props: ChampionListProps) {
       <OverlayTab className="flex pc:min-w-[465px] !px-md gap-sm">
         <SortButton
           currentSortType={currentSortType}
-          sortType="korean"
-          onClickFn={() => sortChampionList("korean")}
-        >
-          가나다순
-        </SortButton>
-
-        <SortButton
-          currentSortType={currentSortType}
           sortType="tier"
           onClickFn={() => sortChampionList("tier")}
         >
           등급순
+        </SortButton>
+        <SortButton
+          currentSortType={currentSortType}
+          sortType="korean"
+          onClickFn={() => sortChampionList("korean")}
+        >
+          가나다순
         </SortButton>
         <input
           onChange={onChange}
