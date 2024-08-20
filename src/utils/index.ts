@@ -1,3 +1,5 @@
+import { IndexedChampion } from "@/components/field/Field";
+import { Champion } from "@/constants/champions";
 import { Synergy } from "@/constants/synergy";
 
 export const cn = (...classNames: (string | false | undefined | null)[]) => {
@@ -98,4 +100,14 @@ export function copyClipboard(text: string) {
 export function filterNull<T>(arr: T[]): T[] {
   const result = arr.filter((item) => item !== null);
   return result;
+}
+
+export function generateIndexdChampion(champion: Champion, index: number) {
+  const newIndexedChampion: IndexedChampion = {
+    index,
+    champion,
+    itemList: [],
+  };
+
+  return newIndexedChampion;
 }

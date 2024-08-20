@@ -287,7 +287,7 @@ export const SCHOLAR = generateSynergy(
 export const SHAPESHIFTER = generateSynergy(
   "형상변환자",
   [2, 4, 6, 8],
-  ["bronze", "silver", "gold"],
+  ["bronze", "silver", "gold", "prism"],
   ["shapeshifter"],
   "형상변환자가 최대 체력을 얻습니다. 스킬을 처음으로 사용하면 이 효과가 3배가 됩니다.",
   ["체력 10%", "체력 15%", "체력 21%", "체력 30%"]

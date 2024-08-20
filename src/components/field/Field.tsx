@@ -22,6 +22,8 @@ function Field(props: FieldProps) {
     return (idx > 6 && idx < 14) || idx > 20;
   }
 
+  const isEmptyField = filterNull(placedChampions).length === 0;
+
   return (
     <>
       <div className="text-black basis-[20%] flex-shrink-0 flex pc:min-w-[216px]">
@@ -46,9 +48,9 @@ function Field(props: FieldProps) {
               ).length
             }
           </span>
-          {placedChampions.length === 0 && (
+          {isEmptyField && (
             <div className="absolute x-center y-center z-[500] p-sm bg-white border rounded-md opacity-70">
-              드래그해서 챔피언 배치
+              챔피언을 클릭, 드래그해서 배치
             </div>
           )}
           {placedChampions.map((item, idx) => (

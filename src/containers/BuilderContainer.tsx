@@ -278,7 +278,10 @@ export default function BuilderContainer() {
         >
           <div className="basis-[20%]"></div>
           <div className="flex self-start basis-[40%] mo:w-full">
-            <ChampionList hidden={!option.champion} />
+            <ChampionList
+              setPlacedChampions={setPlacedChampions}
+              hidden={!option.champion}
+            />
           </div>
           <div className="flex self-start mo:w-full">
             <RerollPercentage hidden={!option.reroll} />

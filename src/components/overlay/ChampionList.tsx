@@ -6,16 +6,31 @@ import {
   TRAINING_BOT,
 } from "@/constants/champions";
 import { useDragActions } from "@/store/dragStore";
-import { cn, sortByKorean, sortByNumber } from "@/utils";
-import { ChangeEvent, HTMLAttributes, useEffect, useState } from "react";
+import {
+  cn,
+  generateIndexdChampion,
+  sortByKorean,
+  sortByNumber,
+} from "@/utils";
+import {
+  ChangeEvent,
+  Dispatch,
+  HTMLAttributes,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import ChampionPortrait from "../ChampionPortrait";
 import { Token } from "../svgs";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import { getChoseong } from "es-hangul";
+import { IndexedChampion } from "../field/Field";
 
-interface ChampionListProps extends OverlayProps {}
+interface ChampionListProps extends OverlayProps {
+  setPlacedChampions: Dispatch<SetStateAction<(IndexedChampion | null)[]>>;
+}
 
 type SortType = "korean" | "tier";
 
@@ -29,7 +44,7 @@ export const borderColorStyles: { [key: string]: string } = {
 };
 
 function ChampionList(props: ChampionListProps) {
-  const { hidden } = props;
+  const { hidden, setPlacedChampions } = props;
 
   const { setDraggingTarget } = useDragActions();
 
@@ -78,6 +93,17 @@ function ChampionList(props: ChampionListProps) {
     return filtered;
   }
 
+  function addPlacedChampionViaClick(champion: Champion) {
+    setPlacedChampions((prev) => {
+      const clonedList = [...prev];
+      const targetIndex = prev.indexOf(null);
+
+      clonedList[targetIndex] = generateIndexdChampion(champion, targetIndex);
+
+      return clonedList;
+    });
+  }
+
   useEffect(() => {
     if (keyword === "") {
       sortChampionList(currentSortType);
@@ -120,9 +146,10 @@ function ChampionList(props: ChampionListProps) {
         >
           {championList.map((champion, idx) => (
             <ChampionListItem
-              key={champion.name}
+              key={`championList-${champion.name}`}
               champion={champion}
               handleIconDragStart={handleIconDragStart}
+              addPlacedChampionViaClick={addPlacedChampionViaClick}
             />
           ))}
           {keyword !== "" && championList.length === 0 && (
@@ -141,10 +168,11 @@ export default ChampionList;
 interface ChampionListItemProps {
   champion: Champion;
   handleIconDragStart: (e: any, champion: Champion) => void;
+  addPlacedChampionViaClick: (champion: Champion) => void;
 }
 
 function ChampionListItem(props: ChampionListItemProps) {
-  const { champion, handleIconDragStart } = props;
+  const { champion, handleIconDragStart, addPlacedChampionViaClick } = props;
 
   const { tooltipContainerRef, pos, isTooltipOn, tooltipOn, tooltipOff } =
     useToolTip();
@@ -155,6 +183,7 @@ function ChampionListItem(props: ChampionListItemProps) {
   }
   return (
     <div
+      onClick={() => addPlacedChampionViaClick(champion)}
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
       onDragStart={(e) => drageStart(e, champion)}
