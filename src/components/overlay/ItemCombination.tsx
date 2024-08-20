@@ -129,7 +129,14 @@ function ItemCombination(props: ItemCombinationProps) {
         tabs={["아이템", "상징"]}
         tabRightContents={
           <div ref={tooltipContainerRef} className="relative flex gap-sm">
-            <Question onMouseEnter={tooltipOn} onMouseLeave={tooltipOff} />
+            <button onClick={resetInventory}>
+              <Reset className="stroke-gray-500 hover:stroke-black" />
+            </button>
+            <Question
+              className="fill-gray-500 hover:fill-black"
+              onMouseEnter={tooltipOn}
+              onMouseLeave={tooltipOff}
+            />
             <ToolTip
               className="min-w-[200px] text-gray-500"
               position="bottom"
@@ -140,13 +147,11 @@ function ItemCombination(props: ItemCombinationProps) {
               <p className="!text-wrap">
                 현재 보유 조합 아이템을 6개 이상 입력하면 경우의 수가 일부
                 누락되는 버그가 있습니다.
-                <br /><br/> 6개 이상이 된다면 우선도가 높은 아이템을 미리 조합하며
+                <br />
+                <br /> 6개 이상이 된다면 우선도가 높은 아이템을 미리 조합하며
                 6개 미만을 유지하는 것을 권장합니다.
               </p>
             </ToolTip>
-            <button onClick={resetInventory}>
-              <Reset />
-            </button>
           </div>
         }
       >

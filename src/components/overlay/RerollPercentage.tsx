@@ -17,7 +17,7 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { Reset, Token } from "../svgs";
+import { Question, Reset, Token } from "../svgs";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import Tab from "../tab/Tab";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
@@ -52,6 +52,9 @@ function RerollPercentage(props: RerollPercentageProps) {
   const [currentPercentage, setCurrentPercentage] = useState<number[]>(
     REROLL_PERCENTAGE.find((item) => item.level === currentLevel)?.percentage!
   );
+
+  const { isTooltipOn, tooltipOn, tooltipOff, pos, tooltipContainerRef } =
+    useToolTip();
 
   function increaseLevel() {
     if (currentLevel === 10) return;
@@ -125,11 +128,40 @@ function RerollPercentage(props: RerollPercentageProps) {
     >
       <Tab
         className="pt-md"
-        tabs={["기물 확률", "확률표"]}
+        tabs={["기물 등장 확률", "확률표"]}
         tabRightContents={
-          <button onClick={reset} className="ml-auto">
-            <Reset />
-          </button>
+          <div
+            className="relative gap-sm items-center flex "
+            ref={tooltipContainerRef}
+          >
+            <button onClick={reset} className="ml-auto">
+              <Reset className="stroke-gray-500 hover:stroke-black" />
+            </button>
+            <Question
+              onMouseEnter={tooltipOn}
+              onMouseLeave={tooltipOff}
+              className="fill-gray-500 hover:fill-black"
+            />
+            <ToolTip position="bottom" isOn={isTooltipOn} x={pos.x} y={pos.y}>
+              <p className="text-gray-500">
+                <span className="font-semibold">기물 등장 확률</span>
+                <br />
+                레벨에 따른 특정 기물의 상점 등장 확률을 제공합니다. <br />
+                <br />
+                추적 기물의 현재 게임 내 존재 개수를 입력하면 보다 근접한 확률을
+                추적 할 수 있습니다.
+                <br />
+                <br /> 제공되는 확률은 실제 인게임 확률과 오차가 있습니다.
+                <br />
+              </p>
+              <br />
+              <p className="text-gray-500">
+                <span className="font-semibold">확률표</span>
+                <br />
+                정확한 수치의 확률표 입니다.
+              </p>
+            </ToolTip>
+          </div>
         }
       >
         <div className="pc:min-w-[500px] p-md text-sm">
@@ -202,7 +234,7 @@ export default RerollPercentage;
 
 function RerollTable() {
   return (
-    <table className="w-full [&_th]:p-xxs [&_td]:p-xxs rounded-md">
+    <table className="w-full [&_th]:text-[12px] [&_th]:p-xxs [&_td]:p-xxs [&_td]:text-[12px] rounded-md">
       <thead>
         <tr className="bg-default-bg">
           <th>레벨</th>
@@ -212,7 +244,6 @@ function RerollTable() {
               className={cn("", idx !== 0 && colorStyles[(idx + 1).toString()])}
             >
               <span className="flex items-center gap-xxs text-center justify-center">
-                <Token />
                 {idx + 1}
               </span>
             </th>
@@ -342,8 +373,12 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
                   x={pos.x}
                   y={pos.y}
                 >
+                  <p className="text-gray-500">
+                    현재 게임 내 존재하는
+                    <br /> 해당 기물의 개수
+                  </p>
                   <MouseGuide
-                    className="!mt-0"
+                    className=""
                     leftClickGuide="+"
                     rightClickGuide="-"
                   />
