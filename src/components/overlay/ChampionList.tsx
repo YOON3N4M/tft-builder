@@ -9,6 +9,7 @@ import { useDragActions } from "@/store/dragStore";
 import {
   cn,
   generateIndexdChampion,
+  setItemToindex,
   sortByKorean,
   sortByNumber,
 } from "@/utils";
@@ -94,14 +95,13 @@ function ChampionList(props: ChampionListProps) {
   }
 
   function addPlacedChampionViaClick(champion: Champion) {
-    setPlacedChampions((prev) => {
-      const clonedList = [...prev];
-      const targetIndex = prev.indexOf(null);
-
-      clonedList[targetIndex] = generateIndexdChampion(champion, targetIndex);
-
-      return clonedList;
-    });
+    setPlacedChampions((prev) =>
+      setItemToindex(
+        prev,
+        prev.indexOf(null),
+        generateIndexdChampion(champion, prev.indexOf(null))
+      )
+    );
   }
 
   useEffect(() => {

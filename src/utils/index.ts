@@ -111,3 +111,15 @@ export function generateIndexdChampion(champion: Champion, index: number) {
 
   return newIndexedChampion;
 }
+
+export function setItemToindex<T>(
+  prevState: T[],
+  targetIndex: number,
+  newItem: T
+): T[] {
+  const clonedList = [...prevState];
+
+  clonedList[targetIndex] = newItem;
+
+  return clonedList;
+}
