@@ -137,10 +137,11 @@ function ItemCombination(props: ItemCombinationProps) {
               x={pos.x}
               y={pos.y}
             >
-              <p>
-                현재 보유 조합 아이템을 6개 이상 입력하면 경우의 수가 누락되는
-                버그가 있습니다. 6개 이상이 된다면 꼭 만들어야할 아이템을
-                우클릭으로 미리 조합하며 6개 미만을 유지하는 것을 권장합니다.
+              <p className="!text-wrap">
+                현재 보유 조합 아이템을 6개 이상 입력하면 경우의 수가 일부
+                누락되는 버그가 있습니다.
+                <br /><br/> 6개 이상이 된다면 우선도가 높은 아이템을 미리 조합하며
+                6개 미만을 유지하는 것을 권장합니다.
               </p>
             </ToolTip>
             <button onClick={resetInventory}>
@@ -161,7 +162,7 @@ function ItemCombination(props: ItemCombinationProps) {
                   key={idx}
                   className="flex items-center cursor-pointer"
                 >
-                  <ItemPortrait item={i} />
+                  <ItemPortrait dragGuide="장착" item={i} />
                 </li>
               ))}
             </ul>
@@ -184,7 +185,11 @@ function ItemCombination(props: ItemCombinationProps) {
                     onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
                   >
                     <div className="flex gap-xs p-xxxs">
-                      <ItemPortrait item={item} />
+                      <ItemPortrait
+                        leftClickGuide="+"
+                        rightClickGuide="-"
+                        item={item}
+                      />
                       <div className="text-gray-500 mt-xxs text-sm">
                         {inventory[item.name]}
                       </div>
@@ -215,7 +220,7 @@ function ItemCombination(props: ItemCombinationProps) {
                             handleCoreItemRightClick(event, i)
                           }
                         >
-                          <ItemPortrait item={i} />
+                          <ItemPortrait rightClickGuide="조합" item={i} />
                         </button>
                       </li>
                     ))}
@@ -234,6 +239,7 @@ function ItemCombination(props: ItemCombinationProps) {
                   onDragStart={() => handleCoreItemDrag(i)}
                   onDragEnd={handleCoreItemDragEnd}
                   item={i}
+                  dragGuide="장착"
                 />
                 // <div
                 //   onDragStart={() => handleCoreItemDrag(i)}

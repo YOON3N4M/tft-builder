@@ -252,7 +252,11 @@ export default function Hexagon(props: HexagonProps) {
                 x={pos.x}
                 y={pos.y}
               >
-                <ChampionTooltip champion={placedChampion.champion} />
+                <ChampionTooltip
+                  rightClickGuide="제거"
+                  dragGuide="재배치"
+                  champion={placedChampion.champion}
+                />
               </ToolTip>
               <Image
                 onDragOver={onDragOver}

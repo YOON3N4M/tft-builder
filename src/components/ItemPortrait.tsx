@@ -6,12 +6,17 @@ import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes, useState } from "react";
 import { ToolTip, useToolTip } from "./tooltips/ToolTip";
+import { LeftClick, RightClick } from "./svgs";
+import MouseGuide from "./MouseGuide";
 
 interface ItemPortraitProps extends HTMLAttributes<HTMLImageElement> {
   item: CoreItem | CombinationItem;
   width?: number;
   height?: number;
   noTooltip?: boolean;
+  rightClickGuide?: string;
+  leftClickGuide?: string;
+  dragGuide?: string;
 }
 
 function ItemPortrait(props: ItemPortraitProps) {
@@ -24,7 +29,11 @@ function ItemPortrait(props: ItemPortraitProps) {
     height = 30,
     noTooltip = false,
     onContextMenu,
+    rightClickGuide,
+    leftClickGuide,
+    dragGuide,
   } = props;
+
   const { name, src, desc, effect } = item as CoreItem;
 
   const isEmblem = name.includes("상징");
@@ -53,7 +62,7 @@ function ItemPortrait(props: ItemPortraitProps) {
         alt={name}
       />
 
-      <ToolTip x={pos.x} y={pos.y} isOn={isTooltipOn}>
+      <ToolTip className="!bg-none" x={pos.x} y={pos.y} isOn={isTooltipOn}>
         <p className="font-semibold">{name}</p>
         {desc && (
           <p className="mt-sm text-gray-500 whitespace-pre-line">{desc}</p>
@@ -64,6 +73,14 @@ function ItemPortrait(props: ItemPortraitProps) {
               {ef}
             </p>
           ))}
+        </div>
+        {/* click guide */}
+        <div>
+          <MouseGuide
+            leftClickGuide={leftClickGuide}
+            rightClickGuide={rightClickGuide}
+            dragGuide={dragGuide}
+          />
         </div>
       </ToolTip>
     </div>

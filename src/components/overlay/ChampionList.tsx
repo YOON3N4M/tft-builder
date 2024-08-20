@@ -190,7 +190,11 @@ function ChampionListItem(props: ChampionListItemProps) {
       ref={tooltipContainerRef}
     >
       <ToolTip isOn={isTooltipOn} x={pos.x} y={pos.y}>
-        <ChampionTooltip champion={champion} />
+        <ChampionTooltip
+          leftClickGuide="배치"
+          dragGuide="배치"
+          champion={champion}
+        />
       </ToolTip>
       <ChampionPortrait
         key={champion.id}

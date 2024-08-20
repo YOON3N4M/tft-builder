@@ -20,6 +20,8 @@ import {
 import { Reset, Token } from "../svgs";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import Tab from "../tab/Tab";
+import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+import MouseGuide from "../MouseGuide";
 
 interface RerollPercentageProps extends OverlayProps {}
 
@@ -250,6 +252,8 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
   const { champion, currentLevel, setTargetChampions } = props;
 
   const [placedPiecesQty, setPlacesPieces] = useState(0);
+  const { isTooltipOn, tooltipOn, tooltipOff, pos, tooltipContainerRef } =
+    useToolTip();
 
   const pieceQty = PIECES_QTY[champion.tier - 1];
 
@@ -300,7 +304,7 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
 
   return (
     <div
-      className={cn(`w-full h-[128px] max-w-[466px] relative  cursor-pointer`)}
+      className={cn(`w-full h-[128px] max-w-[466px] relative cursor-pointer`)}
     >
       <div
         onContextMenu={removeChampion}
@@ -326,7 +330,24 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
                   </span>
                 ))}
               </div>
-              <div className="px-lg mt-lg flex items-center">
+              <div
+                onMouseEnter={tooltipOn}
+                onMouseLeave={tooltipOff}
+                ref={tooltipContainerRef}
+                className="px-lg mt-lg relative flex items-center"
+              >
+                <ToolTip
+                  className="translate-x-[50%]"
+                  isOn={isTooltipOn}
+                  x={pos.x}
+                  y={pos.y}
+                >
+                  <MouseGuide
+                    className="!mt-0"
+                    leftClickGuide="+"
+                    rightClickGuide="-"
+                  />
+                </ToolTip>
                 <button
                   onClick={increaseQty}
                   onContextMenu={decreaseQty}

@@ -2,8 +2,11 @@ import { Champion } from "@/constants/champions";
 import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
+import MouseGuide, { MouseGuideProps } from "../MouseGuide";
 
-interface ChampionTooltipProps extends HTMLAttributes<HTMLDivElement> {
+interface ChampionTooltipProps
+  extends HTMLAttributes<HTMLDivElement>,
+    MouseGuideProps {
   champion: Champion;
 }
 
@@ -17,7 +20,7 @@ const shapeStyles: { [key: string]: string } = {
 };
 
 function ChampionTooltip(props: ChampionTooltipProps) {
-  const { champion } = props;
+  const { champion, dragGuide, leftClickGuide, rightClickGuide } = props;
   return (
     <div className="">
       <div className="flex items-center gap-xs z-[2000]">
@@ -38,6 +41,11 @@ function ChampionTooltip(props: ChampionTooltipProps) {
           </div>
         ))}
       </div>
+      <MouseGuide
+        dragGuide={dragGuide}
+        leftClickGuide={leftClickGuide}
+        rightClickGuide={rightClickGuide}
+      />
     </div>
   );
 }

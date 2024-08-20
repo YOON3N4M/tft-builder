@@ -57,7 +57,7 @@ function Field(props: FieldProps) {
             <Hexagon
               placedChampion={item}
               setPlacedChampions={setPlacedChampions}
-              key={idx}
+              key={`${idx}-${item?.champion.name}`}
               index={idx}
               isEvenRow={isEvenRow(idx)}
             ></Hexagon>
