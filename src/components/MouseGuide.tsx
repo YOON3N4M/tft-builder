@@ -11,8 +11,6 @@ export interface MouseGuideProps extends HTMLAttributes<HTMLDivElement> {
 function MouseGuide(props: MouseGuideProps) {
   const { leftClickGuide, rightClickGuide, dragGuide, className } = props;
 
-  console.log(dragGuide);
-
   return (
     <>
       {(dragGuide || leftClickGuide || rightClickGuide) && (

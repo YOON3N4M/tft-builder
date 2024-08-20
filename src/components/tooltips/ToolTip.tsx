@@ -62,7 +62,7 @@ export function useToolTip() {
 
   function tooltipOn(event: MouseEvent<any>) {
     if (!tooltipContainerRef.current) return;
-    console.log("hover");
+
     setIsToolTipOn(true);
 
     const rect = tooltipContainerRef.current.getBoundingClientRect();

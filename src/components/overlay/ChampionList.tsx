@@ -88,7 +88,6 @@ function ChampionList(props: ChampionListProps) {
   }
 
   function filteringByKeyword() {
-    console.log(keyword);
     const filtered = SET_12_CHAMPIONS.filter(
       (item) =>
         item.name.includes(keyword) ||
@@ -101,7 +100,6 @@ function ChampionList(props: ChampionListProps) {
       // )
     );
 
-    console.log(filtered);
     return filtered;
   }
 
