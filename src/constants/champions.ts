@@ -37,6 +37,8 @@ export interface Champion {
   src: string;
 }
 
+export const CHAMPION_TIER = [0, 1, 2, 3, 4, 5];
+
 function generateChampion(
   id: number,
   name: string,

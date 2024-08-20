@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  CHAMPION_TIER,
   Champion,
   SET_12_CHAMPIONS,
   TRAINING_BOT,
@@ -50,9 +51,7 @@ function ChampionList(props: ChampionListProps) {
   const { setDraggingTarget } = useDragActions();
 
   const [currentSortType, setCurrentSortType] = useState<SortType>("tier");
-  const [championList, setChampionList] = useState(
-    sortByKorean(SET_12_CHAMPIONS, "name")
-  );
+  const [championList, setChampionList] = useState(sortbyTierAndKorean);
   const [keyword, setKeyword] = useState("");
 
   function sortChampionList(sortType: SortType) {
@@ -63,8 +62,20 @@ function ChampionList(props: ChampionListProps) {
 
         break;
       case "tier":
-        setChampionList(sortByNumber(SET_12_CHAMPIONS, "tier"));
+        setChampionList(sortbyTierAndKorean());
     }
+  }
+
+  function sortbyTierAndKorean() {
+    const result: Champion[] = [];
+    CHAMPION_TIER.forEach((tier) =>
+      sortByKorean(
+        SET_12_CHAMPIONS.filter((cham) => cham.tier === tier),
+        "name"
+      ).forEach((item) => result.push(item))
+    );
+
+    return result;
   }
 
   function handleIconDragStart(e: any, champion: Champion) {
