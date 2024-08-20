@@ -22,11 +22,12 @@ import Image from "next/image";
 
 import { useDragActions } from "@/store/dragStore";
 import { MouseEvent, useEffect, useState } from "react";
-import { Reset, WindowMaxi, WindowMini } from "../svgs";
+import { Question, Reset, WindowMaxi, WindowMini } from "../svgs";
 
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import Tab from "../tab/Tab";
 import ItemPortrait from "../ItemPortrait";
+import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -52,6 +53,9 @@ function ItemCombination(props: ItemCombinationProps) {
   const [foldCase, setFoldCase] = useState(false);
 
   const { setDraggingCoreItem } = useDragActions();
+
+  const { isTooltipOn, tooltipOn, tooltipOff, tooltipContainerRef, pos } =
+    useToolTip();
 
   function increaseItem(itemName: string) {
     setInventory((prev) => ({
@@ -124,9 +128,25 @@ function ItemCombination(props: ItemCombinationProps) {
         className="text-sm mt-sm"
         tabs={["아이템", "상징"]}
         tabRightContents={
-          <button onClick={resetInventory}>
-            <Reset />
-          </button>
+          <div ref={tooltipContainerRef} className="relative flex gap-sm">
+            <Question onMouseEnter={tooltipOn} onMouseLeave={tooltipOff} />
+            <ToolTip
+              className="min-w-[200px] text-gray-500"
+              position="bottom"
+              isOn={isTooltipOn}
+              x={pos.x}
+              y={pos.y}
+            >
+              <p>
+                현재 보유 조합 아이템을 6개 이상 입력하면 경우의 수가 누락되는
+                버그가 있습니다. 6개 이상이 된다면 꼭 만들어야할 아이템을
+                우클릭으로 미리 조합하며 6개 미만을 유지하는 것을 권장합니다.
+              </p>
+            </ToolTip>
+            <button onClick={resetInventory}>
+              <Reset />
+            </button>
+          </div>
         }
       >
         {/* 아이템  */}

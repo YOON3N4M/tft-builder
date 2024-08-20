@@ -14,12 +14,13 @@ interface ToolTipProps extends HTMLAttributes<HTMLDivElement> {
   isOn: boolean;
   x: null | number;
   y: null | number;
-  position?: "top" | "right";
+  position?: "top" | "right" | "bottom";
 }
 
 const toolTipPositionStyles = {
   top: "translate-y-[-120%]",
   right: "translate-x-[50%] translate-y-[15%]",
+  bottom: "translate-y-[40px] translate-x-[-50%]",
 };
 
 export function ToolTip(props: ToolTipProps) {
