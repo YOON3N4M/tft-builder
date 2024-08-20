@@ -23,7 +23,7 @@ const config: Config = {
       },
       screens: {
         mo: { max: "769px" },
-        pc: "1200px",
+        pc: "770px",
       },
       colors: {
         "border-gray": "#dadce0",

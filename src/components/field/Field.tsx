@@ -24,7 +24,7 @@ function Field(props: FieldProps) {
 
   return (
     <>
-      <div className="text-black basis-[20%] flex pc:min-w-[216px]">
+      <div className="text-black basis-[20%] flex-shrink-0 flex pc:min-w-[216px]">
         <SynergyContainer indexedChampionList={placedChampions} />
       </div>
       <div className={cn("flex relative flex-grow justify-center", "mo:mt-md")}>

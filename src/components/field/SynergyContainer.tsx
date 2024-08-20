@@ -164,7 +164,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
           height={22}
           src={`/images/synergy/${synergyItem.src[0]}.png`}
           alt={synergyItem.name}
-          className="filter"
+          className="filter w-[22px] h-[22px]"
         />
       </div>
       <div
