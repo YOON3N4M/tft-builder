@@ -148,8 +148,9 @@ function ChampionList(props: ChampionListProps) {
       <div className="p-md drag-unable">
         <div
           className={cn(
-            "relative grid grid-cols-6 gap-xs p-md bg-default-bg max-h-[400px] rounded-[4px] overflow-auto",
-            "mo:grid-cols-8 mo:max-h-[200px] "
+            "relative grid pc:grid-cols-6 gap-xs p-md bg-default-bg max-h-[400px] rounded-[4px] overflow-auto",
+            "mo:grid-cols-8 mo:max-h-[200px] ",
+            "tab:grid-cols-5  "
           )}
         >
           {championList.map((champion, idx) => (
@@ -207,7 +208,7 @@ function ChampionListItem(props: ChampionListItemProps) {
       </ToolTip>
       <ChampionPortrait
         key={champion.id}
-        className="size-[64px] mo:size-[40px]"
+        className="pc:size-[64px] mo:size-[40px] tab:size-[56px]"
         champion={champion}
         objectPosition={
           champion.name === TRAINING_BOT.name

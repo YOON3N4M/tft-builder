@@ -306,7 +306,7 @@ function LocalBuild(props: LocalBuildProps) {
               </div>
             ))}
             {buildList?.length === 0 && (
-              <p className="text-sm bg-default-bg p-md rounded-md">
+              <p className="text-sm bg-default-bg text-gray-500 p-md rounded-md">
                 저장된 빌드가 없습니다.
               </p>
             )}
