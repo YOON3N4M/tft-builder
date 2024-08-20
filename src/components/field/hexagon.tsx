@@ -222,13 +222,15 @@ export default function Hexagon(props: HexagonProps) {
       className={cn(
         "relative pc:w-[84px]",
         "mo:w-[40px]",
+        "tab:w-[60px]",
         isEvenRow && "translate-x-[55%]"
       )}
     >
       <div
         className={cn(
-          "hexagon w-[84px] cursor-pointer h-[96px] bg-[#d0d2d5] relative flex justify-center items-center",
-          "mo:w-[40px] mo:h-[45px] ",
+          "hexagon pc:w-[84px] cursor-pointer pc:h-[96px] bg-[#d0d2d5] relative flex justify-center items-center",
+          "tab:w-[60px] tab:h-[65px]",
+          "mo:w-[40px] mo:h-[45px]",
           isDragEnter && "bg-blue-300",
           placedChampion &&
             backgroundColorStyles[placedChampion.champion.tier.toString()]
@@ -274,7 +276,7 @@ export default function Hexagon(props: HexagonProps) {
                 className={cn(
                   "absolute center w-full h-full",
                   !isTrainingBot &&
-                    "object-cover object-[-86px_0px] mo:object-[-37px_0px]"
+                    "object-cover pc:object-[-86px_0px] tab:object-[-60px_0px] mo:object-[-37px_0px]"
                 )}
                 quality={90}
               />

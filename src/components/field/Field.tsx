@@ -26,13 +26,14 @@ function Field(props: FieldProps) {
 
   return (
     <>
-      <div className="text-black basis-[20%] flex-shrink-0 flex pc:min-w-[216px]">
+      <div className="text-black basis-[20%] flex-shrink-0 flex tab:min-w-[165px] pc:min-w-[216px]">
         <SynergyContainer indexedChampionList={placedChampions} />
       </div>
       <div className={cn("flex relative flex-grow justify-center", "mo:mt-md")}>
         <div
           className={cn(
-            "relative grid grid-cols-7 gap-xs w-[700px] gap-y-0 h-min",
+            "relative grid grid-cols-7 gap-xs pc:w-[700px] gap-y-0 h-min",
+            "tab:w-[500px]",
             "mo:ml-[-20px] mo:max-w-[440px]"
           )}
         >
