@@ -69,7 +69,7 @@ function ItemPortrait(props: ItemPortraitProps) {
         y={pos.y}
         isOn={isTooltipOn}
       >
-        <p className="font-semibold">{name}</p>
+        <p className="font-semibold text-main-text">{name}</p>
         {desc && (
           <p className="mt-sm text-[#888] whitespace-pre-line">{desc}</p>
         )}

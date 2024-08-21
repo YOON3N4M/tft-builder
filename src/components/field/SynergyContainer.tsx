@@ -132,7 +132,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
         position="right"
       >
         <div>
-          <p className="font-semibold">{synergyItem.name}</p>
+          <p className="text-main-text font-semibold">{synergyItem.name}</p>
           <p className="text-[#888] mt-sm">{synergyItem.desc}</p>
           <ul className="mt-sm text-[#888]">
             {synergyItem.effect.map((ef, idx) => (
