@@ -1,4 +1,4 @@
-import { Champion } from "@/constants/champions";
+import { Champion, SET_12_CHAMPIONS } from "@/constants/champions";
 import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
@@ -30,7 +30,19 @@ const borderStyles: { [key: string]: string } = {
 };
 
 function ChampionTooltip(props: ChampionTooltipProps) {
-  const { champion, dragGuide, leftClickGuide, rightClickGuide } = props;
+  const {
+    champion: placedChampion,
+    dragGuide,
+    leftClickGuide,
+    rightClickGuide,
+  } = props;
+
+  const champion = SET_12_CHAMPIONS.find(
+    (cham) => cham.id === placedChampion.id
+  );
+
+  if (!champion) return;
+
   return (
     <div>
       <div
