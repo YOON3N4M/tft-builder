@@ -16,7 +16,7 @@ function MouseGuide(props: MouseGuideProps) {
       {(dragGuide || leftClickGuide || rightClickGuide) && (
         <div
           className={cn(
-            "flex text-[12px] mt-sm gap-sm items-center text-[#888]",
+            "flex text-[12px] mt-sm gap-sm items-center text-[#888] w-max",
             className
           )}
         >

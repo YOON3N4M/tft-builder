@@ -248,7 +248,7 @@ export default function Hexagon(props: HexagonProps) {
           {placedChampion?.champion && placedChampion && (
             <div onMouseEnter={tooltipOn} onMouseLeave={tooltipOff}>
               <ToolTip
-                className="!translate-x-0 !translate-y-[100px]"
+                className="!translate-x-0 !p-0 !border-none !bg-[#00000000] !translate-y-[100px]"
                 isOn={isTooltipOn}
                 x={pos.x}
                 y={pos.y}

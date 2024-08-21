@@ -199,7 +199,12 @@ function ChampionListItem(props: ChampionListItemProps) {
       className="relative cursor-pointer"
       ref={tooltipContainerRef}
     >
-      <ToolTip isOn={isTooltipOn} x={pos.x} y={pos.y}>
+      <ToolTip
+        className="!p-0 !border-none !bg-[#00000000]"
+        isOn={isTooltipOn}
+        x={pos.x}
+        y={pos.y}
+      >
         <ChampionTooltip
           leftClickGuide="배치"
           dragGuide="배치"
