@@ -231,7 +231,7 @@ export default RerollPercentage;
 
 function RerollTable() {
   return (
-    <table className="w-full [&_th]:text-[12px] [&_th]:p-xxs [&_td]:p-xxs [&_td]:text-[12px] rounded-md">
+    <table className="w-full text-[#888] [&_th]:text-[12px] [&_th]:p-xxs [&_td]:p-xxs [&_td]:text-[12px] rounded-md">
       <thead>
         <tr className="bg-default-bg">
           <th>레벨</th>
