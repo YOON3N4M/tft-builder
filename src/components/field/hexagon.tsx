@@ -118,9 +118,11 @@ export default function Hexagon(props: HexagonProps) {
       return;
     }
 
+    const cloned = structuredClone(placedChampion);
+
     const championWithItem = {
-      ...placedChampion,
-      itemList: [...placedChampion.itemList, draggingCoreItem],
+      ...cloned,
+      itemList: [...cloned.itemList, draggingCoreItem],
     };
 
     //상징인 경우
