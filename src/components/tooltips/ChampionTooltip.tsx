@@ -21,12 +21,12 @@ const shapeStyles: { [key: string]: string } = {
 };
 
 const borderStyles: { [key: string]: string } = {
-  "0": "border-tier-1",
-  "1": "border-tier-1",
-  "2": "border-tier-2",
-  "3": "border-tier-3",
-  "4": "border-tier-4",
-  "5": "border-tier-5",
+  "0": " border border-tier-1",
+  "1": " border border-tier-1",
+  "2": " border border-tier-2",
+  "3": " border border-tier-3",
+  "4": " border border-tier-4",
+  "5": " border border-tier-5",
 };
 
 function ChampionTooltip(props: ChampionTooltipProps) {
@@ -43,12 +43,14 @@ function ChampionTooltip(props: ChampionTooltipProps) {
 
   if (!champion) return;
 
+  const noTooltipImageChampion = champion.name.includes("훈련");
+
   return (
     <div>
       <div
         className={cn(
-          "relative border rounded-md overflow-hidden",
-          borderStyles[champion.tier.toString()]
+          "relative rounded-md overflow-hidden",
+          !noTooltipImageChampion && borderStyles[champion.tier.toString()]
         )}
       >
         <div className="absolute top-0 bg-gradient-to-r from-[#00000080] from-[5%] to-[#fff0] size-full z-[10]">
@@ -72,13 +74,15 @@ function ChampionTooltip(props: ChampionTooltipProps) {
             </div>
           </div>
         </div>
-        <Image
-          width={256}
-          height={128}
-          alt={champion.name}
-          src={CHAMPION_ICON_URL(champion.src)}
-          className="object-cover"
-        ></Image>
+        {!noTooltipImageChampion && (
+          <Image
+            width={256}
+            height={128}
+            alt={champion.name}
+            src={CHAMPION_ICON_URL(champion.src)}
+            className="object-cover"
+          ></Image>
+        )}
 
         {/* <div className="flex items-center gap-xs z-[2000]">
         <span className={cn(shapeStyles[champion.tier])} />
