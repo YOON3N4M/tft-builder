@@ -65,9 +65,9 @@ function ItemPortrait(props: ItemPortraitProps) {
       <ToolTip className="!bg-none" x={pos.x} y={pos.y} isOn={isTooltipOn}>
         <p className="font-semibold">{name}</p>
         {desc && (
-          <p className="mt-sm text-gray-500 whitespace-pre-line">{desc}</p>
+          <p className="mt-sm text-[#888] whitespace-pre-line">{desc}</p>
         )}
-        <div className="mt-sm text-gray-500">
+        <div className="mt-sm text-[#888]">
           {effect.map((ef, idx) => (
             <p key={`${name}-effect-${idx}`} className="text-xs">
               {ef}

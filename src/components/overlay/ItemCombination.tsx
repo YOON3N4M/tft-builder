@@ -123,149 +123,149 @@ function ItemCombination(props: ItemCombinationProps) {
   }, [inventory]);
 
   return (
-    <Overlay className="!z-[600]" hidden={hidden}>
-      <Tab
-        className="text-sm mt-sm"
-        tabs={["아이템", "상징"]}
-        tabRightContents={
-          <div ref={tooltipContainerRef} className="relative flex gap-sm">
-            <button onClick={resetInventory}>
-              <Reset className="stroke-gray-500 hover:stroke-black" />
-            </button>
-            <Question
-              className="fill-gray-500 hover:fill-black"
-              onMouseEnter={tooltipOn}
-              onMouseLeave={tooltipOff}
-            />
-            <ToolTip
-              className="min-w-[200px] text-gray-500"
-              position="bottom"
-              isOn={isTooltipOn}
-              x={pos.x}
-              y={pos.y}
-            >
-              <p className="!text-wrap">
-                현재 보유 조합 아이템을 6개 이상 입력하면 경우의 수가 일부
-                누락되는 버그가 있습니다.
-                <br />
-                <br /> 6개 이상이 된다면 우선도가 높은 아이템을 미리 조합하며
-                6개 미만을 유지하는 것을 권장합니다.
-              </p>
-            </ToolTip>
-          </div>
-        }
-      >
-        {/* 아이템  */}
-        <div>
-          <div className="px-md text-sm">
-            <p>보유 완성 아이템</p>
-            <ul className="mt-sm flex w-[210px] max-w-[210px] flex-wrap gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
-              {coreInventory.map((i, idx) => (
-                <li
-                  onDragStart={() => handleCoreItemDrag(i)}
-                  onDragEnd={handleCoreItemDragEnd}
-                  key={idx}
-                  className="flex items-center cursor-pointer"
-                >
-                  <ItemPortrait dragGuide="장착" item={i} />
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* inventory */}
-          <div className="pt-[16px] px-[16px] text-sm">
-            <div className="flex">
-              <p>보유 조합 아이템</p>
-              <button className="ml-auto" onClick={handleCaseFold}>
-                {foldCase ? <WindowMaxi /> : <WindowMini />}
-              </button>
-            </div>
-            <div className="grid w-[210px] max-w-[210px] grid-cols-3 mt-sm gap-[8px] flex-wrap">
-              {COMBINATION_ITEM_LIST.map((item) => (
-                <div key={item.name} className="flex flex-col items-center">
-                  <button
-                    className="p-xxs bg-default-bg rounded-md"
-                    onClick={() => increaseItem(item.name)}
-                    onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
-                  >
-                    <div className="flex gap-xs p-xxxs">
-                      <ItemPortrait
-                        leftClickGuide="+"
-                        rightClickGuide="-"
-                        item={item}
-                      />
-                      <div className="text-gray-500 mt-xxs text-sm">
-                        {inventory[item.name]}
-                      </div>
-                    </div>
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* case list */}
-          <div
-            className={cn(
-              "flex flex-col gap-[10px] max-h-[50vh] overflow-x-hidden overflow-y-auto px-[16px] pb-[16px] mt-lg ",
-              foldCase && "h-0 !p-0"
-            )}
+    <Tab
+      className="text-sm mt-sm w-full"
+      tabs={["아이템", "상징"]}
+      tabRightContents={
+        <div
+          ref={tooltipContainerRef}
+          className="relative text-wihte flex gap-sm"
+        >
+          <button onClick={resetInventory}>
+            <Reset className="stroke-[#888] hover:stroke-black" />
+          </button>
+          <Question
+            className="fill-[#888] hover:fill-black"
+            onMouseEnter={tooltipOn}
+            onMouseLeave={tooltipOff}
+          />
+          <ToolTip
+            className="min-w-[200px] text-[#888]"
+            position="bottom"
+            isOn={isTooltipOn}
+            x={pos.x}
+            y={pos.y}
           >
-            {combinationCase[0] &&
-              combinationCase[0].length > 0 &&
-              combinationCase.map((c, idx) => (
-                <div key={idx}>
-                  <span className="text-xs text-gray-500">{idx}.</span>
-                  <ul className="mt-xxxs flex flex-wrap w-[210px] max-w-[210px] gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
-                    {c.map((i, idx) => (
-                      <li key={idx} className="flex items-center">
-                        <button
-                          onContextMenu={(event) =>
-                            handleCoreItemRightClick(event, i)
-                          }
-                        >
-                          <ItemPortrait rightClickGuide="조합" item={i} />
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+            <p className="!text-wrap">
+              현재 보유 조합 아이템을 6개 이상 입력하면 경우의 수가 일부
+              누락되는 버그가 있습니다.
+              <br />
+              <br /> 6개 이상이 된다면 우선도가 높은 아이템을 미리 조합하며 6개
+              미만을 유지하는 것을 권장합니다.
+            </p>
+          </ToolTip>
+        </div>
+      }
+    >
+      {/* 아이템  */}
+      <div className="text-main-text">
+        <div className="px-md text-sm">
+          <p className="text-[#7a7b7d]">보유 완성 아이템</p>
+          <ul className="mt-sm flex max-w-[210px] bg-[#19191b] flex-wrap gap-[10px] p-xs rounded-[4px]">
+            {coreInventory.map((i, idx) => (
+              <li
+                onDragStart={() => handleCoreItemDrag(i)}
+                onDragEnd={handleCoreItemDragEnd}
+                key={idx}
+                className="flex items-center cursor-pointer"
+              >
+                <ItemPortrait dragGuide="장착" item={i} />
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* inventory */}
+        <div className="pt-[16px] px-[16px] text-sm">
+          <div className="flex">
+            <p className="text-[#7a7b7d]">보유 조합 아이템</p>
+          </div>
+          <div className="grid w-[210px] max-w-[210px] grid-cols-3 mt-sm gap-[8px] flex-wrap">
+            {COMBINATION_ITEM_LIST.map((item) => (
+              <div key={item.name} className="flex flex-col items-center">
+                <button
+                  className="p-xxs bg-[#19191b] rounded-md"
+                  onClick={() => increaseItem(item.name)}
+                  onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
+                >
+                  <div className="flex gap-xs p-xxxs items-center">
+                    <ItemPortrait
+                      width={20}
+                      height={20}
+                      leftClickGuide="+"
+                      rightClickGuide="-"
+                      item={item}
+                    />
+                    <div className="text-[#888] text-sm">
+                      {inventory[item.name]}
+                    </div>
+                  </div>
+                </button>
+              </div>
+            ))}
           </div>
         </div>
-        {/* 상징 */}
-        <div>
-          <div className="w-[210px] max-w-[210px] !pt-0 p-md">
-            <div className="mt-sm max-w-[210px] grid grid-cols-4 gap-[10px] bg-[#f0f2f5] p-xs rounded-[4px]">
-              {EMBLEM_ITEM_LIST.map((i, idx) => (
-                <ItemPortrait
-                  key={i.name}
-                  onDragStart={() => handleCoreItemDrag(i)}
-                  onDragEnd={handleCoreItemDragEnd}
-                  item={i}
-                  dragGuide="장착"
-                />
-                // <div
-                //   onDragStart={() => handleCoreItemDrag(i)}
-                //   onDragEnd={handleCoreItemDragEnd}
-                //   key={idx}
-                //   className="flex items-center cursor-pointer"
-                // >
-                //   <Image
-                //     className="rounded-[4px]"
-                //     src={`/images/emblem/${i.src}.png`}
-                //     width={30}
-                //     height={30}
-                //     alt={i.name}
-                //   />
-                // </div>
-              ))}
-            </div>
+
+        {/* case list */}
+        <div
+          className={cn(
+            "flex flex-col gap-[10px] max-h-[100px] overflow-x-hidden overflow-y-auto px-[16px] pb-[16px] mt-lg ",
+            foldCase && "h-0 !p-0"
+          )}
+        >
+          {combinationCase[0] &&
+            combinationCase[0].length > 0 &&
+            combinationCase.map((c, idx) => (
+              <div key={idx}>
+                {/* <span className="text-xs text-[#888]">{idx}.</span> */}
+                <ul className="mt-xxxs flex flex-wrap w-[210px] max-w-[210px] gap-[10px] bg-[#19191b] p-xs rounded-[4px]">
+                  {c.map((i, idx) => (
+                    <li key={idx} className="flex items-center">
+                      <button
+                        onContextMenu={(event) =>
+                          handleCoreItemRightClick(event, i)
+                        }
+                      >
+                        <ItemPortrait rightClickGuide="조합" item={i} />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+        </div>
+      </div>
+      {/* 상징 */}
+      <div>
+        <div className="!pt-0 p-md">
+          <div className="mt-sm max-w-[210px] grid grid-cols-5 gap-[10px] p-xs rounded-[4px]">
+            {EMBLEM_ITEM_LIST.map((i, idx) => (
+              <ItemPortrait
+                key={i.name}
+                onDragStart={() => handleCoreItemDrag(i)}
+                onDragEnd={handleCoreItemDragEnd}
+                item={i}
+                dragGuide="장착"
+              />
+              // <div
+              //   onDragStart={() => handleCoreItemDrag(i)}
+              //   onDragEnd={handleCoreItemDragEnd}
+              //   key={idx}
+              //   className="flex items-center cursor-pointer"
+              // >
+              //   <Image
+              //     className="rounded-[4px]"
+              //     src={`/images/emblem/${i.src}.png`}
+              //     width={30}
+              //     height={30}
+              //     alt={i.name}
+              //   />
+              // </div>
+            ))}
           </div>
         </div>
-      </Tab>
-    </Overlay>
+      </div>
+    </Tab>
   );
 }
 

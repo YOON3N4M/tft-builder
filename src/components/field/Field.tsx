@@ -22,24 +22,22 @@ function Field(props: FieldProps) {
     return (idx > 6 && idx < 14) || idx > 20;
   }
 
-  const isEmptyField = filterNull(placedChampions).length === 0;
-
   return (
     <>
       <div className="text-black basis-[20%] flex-shrink-0 flex tab:min-w-[165px] pc:min-w-[216px]">
         <SynergyContainer indexedChampionList={placedChampions} />
       </div>
-      <div className={cn("flex relative flex-grow justify-center", "mo:mt-md")}>
+      <div className={cn("flex relative flex-grow justify-start", "mo:mt-md")}>
         <div
           className={cn(
-            "relative grid grid-cols-7 gap-xs pc:w-[700px] gap-y-0 h-min",
+            "relative grid grid-cols-7 gap-xs pc:w-[650px] gap-y-0 h-min",
             "tab:w-[500px]",
             "mo:ml-[-20px] mo:max-w-[440px]"
           )}
         >
           <span
             className={cn(
-              "absolute left-2 text-gray-500 top-[33%] text-3xl",
+              "absolute left-2 text-[#888] top-[33%] text-3xl",
               "mo:top-[27%] mo:left-0 mo:text-2xl "
             )}
           >
@@ -49,11 +47,7 @@ function Field(props: FieldProps) {
               ).length
             }
           </span>
-          {isEmptyField && (
-            <div className="absolute x-center y-center z-[500] p-sm bg-white border rounded-md opacity-70">
-              챔피언을 클릭, 드래그해서 배치
-            </div>
-          )}
+
           {placedChampions.map((item, idx) => (
             <Hexagon
               placedChampion={item}

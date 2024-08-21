@@ -34,7 +34,7 @@ export function ToolTip(props: ToolTipProps) {
         createPortal(
           <div
             className={cn(
-              "absolute z-[1500] p-md text-sm bg-white shadow-md rounded-md",
+              "absolute z-[1500] p-md text-sm shadow-md contents-box",
               className,
               toolTipPositionStyles[position]
             )}

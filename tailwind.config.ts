@@ -28,7 +28,9 @@ const config: Config = {
       },
       colors: {
         "border-gray": "#dadce0",
-        "default-bg": "#f0f2f5",
+        "default-bg": "#1D1E20",
+
+        "main-text": "#e6e6e6",
 
         //tier
         "tier-1": "#848999",
@@ -65,6 +67,9 @@ const config: Config = {
         ".hexagon": {},
         ".pentagon": {},
         ".triangle": {},
+        //
+        ".button": {},
+        ".contents-box": {},
       });
     }),
   ],

@@ -122,8 +122,8 @@ function ChampionList(props: ChampionListProps) {
   }, [keyword]);
 
   return (
-    <Overlay className="mo:w-full " hidden={hidden}>
-      <OverlayTab className="flex pc:min-w-[465px] !px-md gap-sm">
+    <div className="bg-[#ffffff05] rounded-md border-[#222] border">
+      <OverlayTab className="flex !px-md gap-sm">
         <SortButton
           currentSortType={currentSortType}
           sortType="tier"
@@ -141,14 +141,14 @@ function ChampionList(props: ChampionListProps) {
         <input
           onChange={onChange}
           placeholder="챔피언, 시너지..."
-          className="bg-default-bg text-sm ml-auto border rounded-md pt-xxxs px-xxs"
+          className="bg-default-bg text-[#888] bg-inherit text-sm ml-auto border border-[#888] rounded-md pt-xxxs px-xxs"
           value={keyword}
         ></input>
       </OverlayTab>
       <div className="p-md drag-unable">
         <div
           className={cn(
-            "relative grid pc:grid-cols-6 gap-xs p-md bg-default-bg max-h-[400px] rounded-[4px] overflow-auto",
+            "relative grid pc:grid-cols-9 gap-xs p-md max-h-[400px] rounded-[4px] overflow-auto",
             "mo:grid-cols-8 mo:max-h-[200px] ",
             "tab:grid-cols-5  "
           )}
@@ -162,13 +162,13 @@ function ChampionList(props: ChampionListProps) {
             />
           ))}
           {keyword !== "" && championList.length === 0 && (
-            <p className="absolute y-center x-center text-gray-500 text-sm">
+            <p className="absolute y-center x-center text-[#888] text-sm">
               일치하는 챔피언이 없습니다.
             </p>
           )}
         </div>
       </div>
-    </Overlay>
+    </div>
   );
 }
 
@@ -219,12 +219,12 @@ function ChampionListItem(props: ChampionListItemProps) {
         <div className="z-[100] pointer-events-none absolute w-full top-0 flex justify-end ">
           <div className="mo:hidden pointer-events-none flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">
             <Token size={10} className="fill-white" />{" "}
-            <span className="text-white text-[11px]">{champion.tier}</span>
+            <span className="text-main-text text-[11px]">{champion.tier}</span>
           </div>
         </div>
         <p
           className={cn(
-            "pointer-events-none absolute bottom-0 text-center w-full text-white font-semibold text-[11px] bg-[#00000099]",
+            "pointer-events-none absolute bottom-0 text-center w-full text-main-text font-semibold text-[11px] bg-[#00000099]",
             "mo:text-[8px]"
           )}
         >
@@ -255,8 +255,8 @@ function SortButton(props: SortButtonProps) {
     <button
       className={cn(
         className,
-        "text-sm py-xxs px-xs rounded-md",
-        sortType === currentSortType && "font-semibold bg-gray-200"
+        "text-sm button",
+        sortType === currentSortType && "font-semibold button-active"
       )}
       onClick={() => onClickFn(sortType)}
     >

@@ -15,13 +15,13 @@ function Tab(props: TabProps) {
 
   return (
     <>
-      <div className={cn("flex px-md", className)}>
+      <div className={cn("flex px-md text-[#7a7b7d]", className)}>
         <div className="flex gap-sm text-sm">
           {tabs.map((tab, idx) => (
             <button
               className={cn(
-                "py-xxs px-xs rounded-md",
-                activeIndex === idx && "bg-gray-200 font-semibold"
+                "button",
+                activeIndex === idx && "font-semibold !bg-[#3f4043]"
               )}
               key={idx}
               onClick={() => handleTabsClick(idx)}

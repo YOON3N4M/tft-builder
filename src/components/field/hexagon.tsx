@@ -38,11 +38,11 @@ interface HexagonProps {
 }
 
 const backgroundColorStyles: { [key: string]: string } = {
-  "1": "bg-tier-1",
-  "2": "bg-tier-2",
-  "3": "bg-tier-3",
-  "4": "bg-tier-4",
-  "5": "bg-tier-5",
+  "1": "!bg-tier-1",
+  "2": "!bg-tier-2",
+  "3": "!bg-tier-3",
+  "4": "!bg-tier-4",
+  "5": "!bg-tier-5",
 };
 
 export default function Hexagon(props: HexagonProps) {
@@ -220,7 +220,7 @@ export default function Hexagon(props: HexagonProps) {
   return (
     <div
       className={cn(
-        "relative pc:w-[84px]",
+        "relative pc:w-[84px] ",
         "mo:w-[40px]",
         "tab:w-[60px]",
         isEvenRow && "translate-x-[55%]"
@@ -228,7 +228,7 @@ export default function Hexagon(props: HexagonProps) {
     >
       <div
         className={cn(
-          "hexagon pc:w-[84px] cursor-pointer pc:h-[96px] bg-[#d0d2d5] relative flex justify-center items-center",
+          "hexagon pc:w-[84px] cursor-pointer pc:h-[96px] bg-[#19191b] border-[##19191b] relative flex justify-center items-center",
           "tab:w-[60px] tab:h-[65px]",
           "mo:w-[40px] mo:h-[45px]",
           isDragEnter && "bg-blue-300",
@@ -279,7 +279,7 @@ export default function Hexagon(props: HexagonProps) {
                 )}
                 quality={90}
               />
-              <div className="absolute pointer-events-none flex flex-col bottom-[15%] text-center w-full text-white font-semibold text-[11px] bg-[#00000099]">
+              <div className="absolute pointer-events-none flex flex-col bottom-[15%] text-center w-full text-main-text font-semibold text-[11px] bg-[#00000099]">
                 <p className="mo:text-[8px]">{placedChampion.champion.name}</p>
               </div>
             </div>

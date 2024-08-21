@@ -61,17 +61,20 @@ function SynergyContainer(props: SynergyContainerProps) {
     });
   }
 
+  const isSynergyOn = sortByLength.length > 0;
+
   return (
     <div
       className={cn(
-        "flex flex-col gap-sm py-md max-h-[400px] w-[90%] ",
-        "mo:grid grid-cols-2 mo:w-full mo:max-h-[200px] mo:overflow-auto mo:py-0"
+        "flex flex-col overflow-y-auto gap-sm p-md max-h-[400px] w-[90%] bg-[#ffffff05] border-[#222] border rounded-md",
+        "mo:grid grid-cols-2 mo:w-full mo:max-h-[200px] mo:overflow-auto mo:py-0",
+        !isSynergyOn && "justify-center"
       )}
     >
-      {sortByLength.length === 0 && (
-        <div className="mo:hidden w-[95%] p-sm bg-white border rounded-md opacity-70">
-          챔피언 배치시 시너지가 활성화 됩니다{" "}
-        </div>
+      {!isSynergyOn && (
+        <p className="text-[#888] text-xs place-self-center">
+          챔피언 배치시 특성이 활성화 됩니다.
+        </p>
       )}
       {sortByLength.map((synergy) => (
         <SynergyListItem
@@ -118,7 +121,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
       className={cn(
-        "relative flex items-center border p-xs text-sm pc:min-w-[205px] bg-white rounded-md"
+        "relative flex items-center p-xs text-xs text-main-text rounded-md"
       )}
     >
       <ToolTip
@@ -130,8 +133,8 @@ function SynergyListItem(props: SyenrgyListItemProps) {
       >
         <div>
           <p className="font-semibold">{synergyItem.name}</p>
-          <p className="text-gray-500 mt-sm">{synergyItem.desc}</p>
-          <ul className="mt-sm text-gray-500">
+          <p className="text-[#888] mt-sm">{synergyItem.desc}</p>
+          <ul className="mt-sm text-[#888]">
             {synergyItem.effect.map((ef, idx) => (
               <li key={`${synergyItem.name}-effect-${idx}`}>
                 ({synergyItem.requirQty[idx]}) {ef}
@@ -169,7 +172,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
       </div>
       <div
         className={cn(
-          "px-xs ml-[-5px] text-white",
+          "px-xs py-xxxs ml-[-5px] text-main-text",
           synergyBgStyles[checkGrade(synergy)?.gradeText]
         )}
       >
@@ -184,14 +187,14 @@ function SynergyListItem(props: SyenrgyListItemProps) {
             <>
               <span
                 className={cn(
-                  "text-gray-500 text-xs",
-                  checkGrade(synergy)?.gradeNumber === qty && "!text-black"
+                  "text-[#888] text-xs",
+                  checkGrade(synergy)?.gradeNumber === qty && "!text-main-text"
                 )}
               >
                 {qty}
               </span>
               {idx + 1 !== synergyItem.requirQty.length && (
-                <Arrow size={10} className="inline fill-gray-300" />
+                <Arrow size={10} className="inline fill-gray-600" />
               )}
             </>
           ))}

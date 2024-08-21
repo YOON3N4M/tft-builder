@@ -154,51 +154,45 @@ export default function BuilderContainer() {
             "mo:flex-col mo:gap-md"
           )}
         >
-          <div className="semi-bold basis-[20%]">TFT HELPER</div>
+          <div className="semi-bold text-main-text basis-[20%]">TFT HELPER</div>
           <div className="flex gap-sm items-center text-sm basis-[80%]">
             <LocalBuild buildList={buildList} setBuildList={setBuildList} />
             <BuildSave saveFn={saveBuild} />
-            <button
-              onClick={resetBuilder}
-              className="bg-white py-xxs px-xs border rounded-md"
-            >
+            <button onClick={resetBuilder} className="button">
               배치 초기화
             </button>
           </div>
           <div className="flex pc:hidden tab:hidden">
-            <p className="text-sm p-sm bg-white text-gray-500 border rounded-md">
+            <p className="text-sm p-sm bg-white text-[#888] border rounded-md">
               현재 모바일 환경에서 조작이 원활하지 않으므로, 뷰어로써의 이용을
               권장합니다.
             </p>
           </div>
         </div>
         {/* 중앙 영역 */}
-        <div className="flex inner bg-default-bg py-md mo:flex-col">
+        <div className="flex inner py-md mo:flex-col bg-[#27282b] rounded-md">
           <Field
             placedChampions={placedChampions}
             setPlacedChampions={setPlacedChampions}
           />
-          <div className="basis-[10%]">
-            <div className="absolute mo:hidden">
-              <ItemCombination hidden={!option.item} />
-            </div>
+          <div className="bg-[#ffffff05] rounded-md basis-[20%] border-[#222] border">
+            <ItemCombination hidden={!option.item} />
           </div>
         </div>
         {/* 하단 영역 */}
         <div
           className={cn(
-            "flex pc:inner bg-default-bg pc:!pt-xxxl pc:min-h-[800px]",
+            "flex pc:inner bg-[#27282b] pc:!pt-xxxl pc:min-h-[800px]",
             "mo:flex-col"
           )}
         >
-          <div className="basis-[20%]"></div>
-          <div className="flex self-start basis-[40%] mo:w-full">
+          <div className="basis-[60%]">
             <ChampionList
               setPlacedChampions={setPlacedChampions}
               hidden={!option.champion}
             />
           </div>
-          <div className="flex self-start mo:w-full">
+          <div className="basis-[40%] mo:w-full">
             <RerollPercentage hidden={!option.reroll} />
           </div>
         </div>
@@ -255,37 +249,34 @@ function LocalBuild(props: LocalBuildProps) {
 
   return (
     <div className="relative">
-      <button
-        onClick={handleOpen}
-        className="bg-white py-xxs px-xs border rounded-md"
-      >
+      <button onClick={handleOpen} className="button">
         내 빌드
       </button>
       {isOpen && (
-        <div className="absolute bg-white z-[2000] top-[40px] border p-md shadow-md">
+        <div className="absolute bg-[#26272A] z-[2000] top-[40px] border border-[#222] p-md shadow-md">
           <div className="max-h-[460px] overflow-auto flex flex-col gap-sm  min-w-[200px] ">
             {unOptimized?.map((build) => (
               <div
                 key={build.buildName}
-                className="p-xs border bg-white rounded-md"
+                className="p-xs text-[#888] rounded-md"
               >
                 <div className="flex items-center">
                   <span>{build.buildName.replace("-tft-build", "")}</span>
                   <div className="flex ml-auto gap-xs">
                     <button onClick={() => loadBuild(build.buildName)}>
-                      <LoadIcon className="fill-gray-500" />
+                      <LoadIcon className="fill-[#888]" />
                     </button>
                     <button
                       onClick={() => copyBuildUrl(build.buildName)}
                       className="cursor-pointer"
                     >
-                      <Clipboard className="fill-gray-500" />
+                      <Clipboard className="fill-[#888]" />
                     </button>
                     <button
                       onClick={() => deleteBuild(build.buildName)}
                       className="cursor-pointer"
                     >
-                      <Trash className="fill-gray-500" />
+                      <Trash className="fill-[#888]" />
                     </button>
                   </div>
                 </div>
@@ -306,7 +297,7 @@ function LocalBuild(props: LocalBuildProps) {
               </div>
             ))}
             {buildList?.length === 0 && (
-              <p className="text-sm bg-default-bg text-gray-500 p-md rounded-md">
+              <p className="text-sm bg-default-bg text-[#888] p-md rounded-md">
                 저장된 빌드가 없습니다.
               </p>
             )}
@@ -340,25 +331,22 @@ function BuildSave(props: BuildSaveProps) {
 
   return (
     <div className="relative">
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="bg-white py-xxs px-xs border rounded-md"
-      >
+      <button onClick={() => setIsOpen((prev) => !prev)} className="button">
         빌드 저장
       </button>
       {isOpen && (
-        <div className="absolute p-md bg-white border shadow-md z-[2000] min-w-[200px] top-[40px] rounded-md">
+        <div className="absolute p-md bg-[#26272A] border-[#222] border z-[2000] min-w-[200px] top-[40px] rounded-md">
           <div className="flex items-center">
-            <p>빌드 이름</p>
+            <p className="text-[#888]">빌드 이름</p>
           </div>
           <div>
             <form onSubmit={onSubmit} className="flex items-center mt-xs">
               <input
                 value={buildName}
                 onChange={onChnage}
-                className="bg-default-bg p-xxs"
+                className="bg-[#19191b] text-[#888] p-xxs"
               ></input>
-              <button className="p-xxs bg-default-bg rounded-md ml-xxs text-gray-500 hover:text-gray-600">
+              <button className="p-xxs bg-default-bg rounded-md ml-xxs text-[#888] hover:text-gray-600">
                 저장
               </button>
             </form>

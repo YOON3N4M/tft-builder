@@ -2,8 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  border-radius: 4px;
+  cursor: pointer !important;
+  height: 6px;
+  width: 10px;
+}
+::-webkit-scrollbar-corner {
+  background: #ffffff0d;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff0d;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb {
+  background: #ffffff14;
+  border-radius: 4px;
+  cursor: pointer;
+}
 body {
-  @apply bg-gray-200 break-keep font-pretendard;
+  @apply bg-default-bg break-keep font-pretendard;
 }
 
 @layer utilities {
@@ -38,6 +57,12 @@ body {
 }
 
 @layer components {
+  .button {
+    @apply bg-[#2f3033] text-[#888] py-[2px] px-[5px] rounded-md hover:!bg-[#3f4043];
+  }
+  .button-active {
+    @apply !bg-[#3f4043];
+  }
   .hexagon {
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   }
@@ -48,5 +73,8 @@ body {
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-bottom: 10px solid;
+  }
+  .contents-box {
+    @apply bg-[#26272A] border-[#222] text-[#888] border rounded-md;
   }
 }
