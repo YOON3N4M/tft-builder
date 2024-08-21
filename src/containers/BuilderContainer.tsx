@@ -154,7 +154,9 @@ export default function BuilderContainer() {
             "mo:flex-col mo:gap-md"
           )}
         >
-          <div className="semi-bold text-main-text basis-[20%]">TFT HELPER</div>
+          <div className="semi-bold text-main-text basis-[20%]">
+            TFT BUILDER
+          </div>
           <div className="flex gap-sm items-center text-sm basis-[80%]">
             <LocalBuild buildList={buildList} setBuildList={setBuildList} />
             <BuildSave saveFn={saveBuild} />
