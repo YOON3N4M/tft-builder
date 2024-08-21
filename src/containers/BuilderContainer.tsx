@@ -145,7 +145,7 @@ export default function BuilderContainer() {
 
   return (
     <div>
-      <div className="relative">
+      <div className="relative pb-xxxl">
         {/* 상단영역 */}
 
         <div
@@ -184,7 +184,7 @@ export default function BuilderContainer() {
         {/* 하단 영역 */}
         <div
           className={cn(
-            "flex pc:inner bg-[#27282b] pc:!pt-xxxl pc:min-h-[800px]",
+            "flex pc:inner bg-[#27282b] pc:!pt-xxxl pc:min-h-[800px] rounded-b-md",
             "mo:flex-col"
           )}
         >

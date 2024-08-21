@@ -125,7 +125,7 @@ function RerollPercentage(props: RerollPercentageProps) {
     <div className="bg-[#ffffff05] rounded-md border-[#222] border">
       <Tab
         className="pt-md"
-        tabs={["기물 등장 확률", "확률표"]}
+        tabs={["상점 등장 확률", "확률표"]}
         tabRightContents={
           <div
             className="relative gap-sm items-center flex "
@@ -195,7 +195,7 @@ function RerollPercentage(props: RerollPercentageProps) {
             onDrop={onDragDrop}
             onDragOver={onDragOver}
             className={cn(
-              "pc:w-full flex min-h-[100px] border border-[#888] bg-default-bg mt-md flex-col rounded-md",
+              "pc:w-full flex min-h-[100px] overflow-hidden border border-[#888] bg-default-bg mt-md flex-col rounded-md",
               "",
               isDragEnter && "border-blue-300 border-2"
             )}
