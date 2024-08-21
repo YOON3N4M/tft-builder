@@ -121,6 +121,8 @@ function RerollPercentage(props: RerollPercentageProps) {
     setCurrentLevel(6);
   }
 
+  const isEmpty = targetChampions.length < 1;
+
   return (
     <div className="bg-[#ffffff05] rounded-md border-[#222] border">
       <Tab
@@ -195,12 +197,13 @@ function RerollPercentage(props: RerollPercentageProps) {
             onDrop={onDragDrop}
             onDragOver={onDragOver}
             className={cn(
-              "pc:w-full flex min-h-[100px] overflow-hidden border border-[#888] bg-default-bg mt-md flex-col rounded-md",
+              "pc:w-full max-w-[466px] flex min-h-[100px] overflow-hidden border border-[#888] bg-default-bg mt-md flex-col rounded-md",
               "",
+              !isEmpty && "bg-black",
               isDragEnter && "border-blue-300 border-2"
             )}
           >
-            {targetChampions.length < 1 ? (
+            {isEmpty ? (
               <p className="m-auto pointer-events-none text-[#888]">
                 상점 등장 확률을 알고 싶은 챔피언을 여기에 드래그 해보세요!
               </p>

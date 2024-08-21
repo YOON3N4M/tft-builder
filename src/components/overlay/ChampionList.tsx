@@ -145,12 +145,12 @@ function ChampionList(props: ChampionListProps) {
           value={keyword}
         ></input>
       </OverlayTab>
-      <div className="p-md drag-unable">
+      <div className="p-md">
         <div
           className={cn(
-            "relative grid pc:grid-cols-9 gap-xs p-md max-h-[400px] rounded-[4px] overflow-auto",
-            "mo:grid-cols-8 mo:max-h-[200px] ",
-            "tab:grid-cols-5  "
+            "grid gap-xxs p-md max-h-[400px] rounded-[4px] overflow-auto grid-cols-[repeat(auto-fill,minmax(64px,1fr))]",
+            "mo:max-h-[200px] mo:gap-xxs mo:grid-cols-[repeat(auto-fill,minmax(45px,1fr))]",
+            ""
           )}
         >
           {championList.map((champion, idx) => (

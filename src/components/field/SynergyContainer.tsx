@@ -66,7 +66,7 @@ function SynergyContainer(props: SynergyContainerProps) {
   return (
     <div
       className={cn(
-        "flex flex-col overflow-y-auto gap-sm pc:p-md tab:p-xs pc:max-h-[400px] w-[90%] bg-[#ffffff05] border-[#222] border rounded-md",
+        "pc:flex flex-col overflow-y-auto gap-sm pc:p-md tab:p-xs pc:max-h-[400px] w-[90%] bg-[#ffffff05] border-[#222] border rounded-md",
         "pc:block mo:grid tab:grid mo:w-full mo:max-h-[200px] mo:overflow-auto mo:py-0",
         "tab:max-h-[300px]",
         !isSynergyOn ? "justify-center" : "tab:grid-cols-3 mo:grid-cols-2"
@@ -159,7 +159,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
       </ToolTip>
       <div
         className={cn(
-          "p-xxs hexagon pc:w-[34px] pc:h-[36px]  tab:w-[26px] tab:h-[24px] flex items-center justify-center",
+          "p-xxs hexagon w-[34px] h-[36px] flex items-center justify-center",
           synergyBgStyles[checkGrade(synergy)?.gradeText]
         )}
       >
@@ -168,7 +168,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
           height={22}
           src={`/images/synergy/${synergyItem.src[0]}.png`}
           alt={synergyItem.name}
-          className="filter pc:w-[22px] pc:h-[22px] tab:w-[15px] tab:h-[15px]"
+          className="filter pc:w-[22px] pc:h-[22px]"
         />
       </div>
       <div

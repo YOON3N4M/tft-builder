@@ -184,7 +184,7 @@ export default function BuilderContainer() {
         {/* 하단 영역 */}
         <div
           className={cn(
-            "flex inner tab:flex-col pc:flex-row bg-[#27282b] pc:!pt-xxxl pc:min-h-[800px] rounded-b-md",
+            "flex inner tab:flex-col pc:flex-row bg-[#27282b] pc:!pt-xxxl pb-md rounded-b-md",
             "mo:flex-col"
           )}
         >

@@ -37,7 +37,7 @@ function Field(props: FieldProps) {
           className={cn(
             "relative grid grid-cols-7 gap-xs pc:w-[90%] pc:!pr-xl gap-y-0 h-min pc:translate-x-0",
             "tab:w-[60%] translate-x-[-27px]",
-            "mo:ml-[-20px] mo:max-w-[440px]"
+            "mo:max-w-[440px] mo:translate-x-[-18px]"
           )}
         >
           <span

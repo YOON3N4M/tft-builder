@@ -77,4 +77,8 @@ body {
   .popover-box {
     @apply bg-black border-[#222] text-[#888] border rounded-md;
   }
+  .list::after {
+    content: "";
+    flex: auto;
+  }
 }

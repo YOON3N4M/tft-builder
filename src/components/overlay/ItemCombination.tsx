@@ -180,7 +180,7 @@ function ItemCombination(props: ItemCombinationProps) {
           <div className="flex">
             <p className="text-[#7a7b7d]">보유 조합 아이템</p>
           </div>
-          <div className="grid w-full grid-cols-3 mt-sm gap-[8px] flex-wrap">
+          <div className="grid w-full grid-cols-3 mt-sm gap-[8px] max-w-[180px]">
             {COMBINATION_ITEM_LIST.map((item) => (
               <div key={item.name} className="flex flex-col items-center">
                 <button
