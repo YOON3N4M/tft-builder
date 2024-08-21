@@ -124,7 +124,7 @@ function ItemCombination(props: ItemCombinationProps) {
 
   return (
     <Tab
-      className="text-sm pt-sm w-full"
+      className="text-sm pt-sm w-full items-center"
       tabs={["아이템", "상징"]}
       tabRightContents={
         <div
