@@ -143,7 +143,9 @@ function RerollPercentage(props: RerollPercentageProps) {
             />
             <ToolTip position="bottom" isOn={isTooltipOn} x={pos.x} y={pos.y}>
               <p className="text-[#888]">
-                <span className="font-semibold">기물 등장 확률</span>
+                <span className="font-semibold text-main-text">
+                  기물 등장 확률
+                </span>
                 <br />
                 레벨에 따른 특정 기물의 상점 등장 확률을 제공합니다. <br />
                 <br />
@@ -155,7 +157,7 @@ function RerollPercentage(props: RerollPercentageProps) {
               </p>
               <br />
               <p className="text-[#888]">
-                <span className="font-semibold">확률표</span>
+                <span className="font-semibold text-main-text">확률표</span>
                 <br />
                 정확한 수치의 확률표 입니다.
               </p>
