@@ -74,7 +74,7 @@ body {
     border-right: 5px solid transparent;
     border-bottom: 10px solid;
   }
-  .contents-box {
-    @apply bg-[#26272A] border-[#222] text-[#888] border rounded-md;
+  .popover-box {
+    @apply bg-black border-[#222] text-[#888] border rounded-md;
   }
 }

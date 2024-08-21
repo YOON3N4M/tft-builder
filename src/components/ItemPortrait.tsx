@@ -62,7 +62,13 @@ function ItemPortrait(props: ItemPortraitProps) {
         alt={name}
       />
 
-      <ToolTip className="!bg-none" x={pos.x} y={pos.y} isOn={isTooltipOn}>
+      <ToolTip
+        position="bottom"
+        className="!bg-none"
+        x={pos.x}
+        y={pos.y}
+        isOn={isTooltipOn}
+      >
         <p className="font-semibold">{name}</p>
         {desc && (
           <p className="mt-sm text-[#888] whitespace-pre-line">{desc}</p>

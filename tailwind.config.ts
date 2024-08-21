@@ -69,7 +69,7 @@ const config: Config = {
         ".triangle": {},
         //
         ".button": {},
-        ".contents-box": {},
+        ".popover-box": {},
       });
     }),
   ],

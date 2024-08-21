@@ -253,7 +253,7 @@ function LocalBuild(props: LocalBuildProps) {
         내 빌드
       </button>
       {isOpen && (
-        <div className="absolute bg-[#26272A] z-[2000] top-[40px] border border-[#222] p-md shadow-md">
+        <div className="absolute popover-box z-[2000] top-[40px] p-md">
           <div className="max-h-[460px] overflow-auto flex flex-col gap-sm  min-w-[200px] ">
             {unOptimized?.map((build) => (
               <div
@@ -280,7 +280,7 @@ function LocalBuild(props: LocalBuildProps) {
                     </button>
                   </div>
                 </div>
-                <div className="flex gap-xxs mt-xxs bg-default-bg p-xs rounded-md">
+                <div className="flex gap-xxs mt-xxs bg-[#19191b] p-xs rounded-md">
                   {build.build?.map((indexed) => (
                     <ChampionPortrait
                       key={indexed.champion.name}
@@ -297,7 +297,7 @@ function LocalBuild(props: LocalBuildProps) {
               </div>
             ))}
             {buildList?.length === 0 && (
-              <p className="text-sm bg-default-bg text-[#888] p-md rounded-md">
+              <p className="text-sm bg-[#19191b] text-[#888] p-md rounded-md">
                 저장된 빌드가 없습니다.
               </p>
             )}
@@ -335,7 +335,7 @@ function BuildSave(props: BuildSaveProps) {
         빌드 저장
       </button>
       {isOpen && (
-        <div className="absolute p-md bg-[#26272A] border-[#222] border z-[2000] min-w-[200px] top-[40px] rounded-md">
+        <div className="absolute p-md popover-box z-[2000] min-w-[200px] top-[40px]">
           <div className="flex items-center">
             <p className="text-[#888]">빌드 이름</p>
           </div>
