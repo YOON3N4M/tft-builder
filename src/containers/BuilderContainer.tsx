@@ -2,7 +2,14 @@ import Field, { IndexedChampion } from "@/components/field/Field";
 import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
-import { Clipboard, LoadIcon, Question, Trash } from "@/components/svgs";
+import {
+  Clipboard,
+  LeftClick,
+  LoadIcon,
+  Question,
+  RightClick,
+  Trash,
+} from "@/components/svgs";
 import { useToolTip } from "@/components/tooltips/ToolTip";
 import { cn, copyClipboard, filterNull } from "@/utils";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
@@ -196,6 +203,27 @@ export default function BuilderContainer() {
           </div>
           <div className="basis-[40%] mo:w-full">
             <RerollPercentage hidden={!option.reroll} />
+          </div>
+        </div>
+
+        <div className="inner !mt-md text-[#888] text-sm bg-black !py-sm rounded-md">
+          <div>
+            <span className="font-semibold text-main-text">빌더 사용법</span>
+            <p className="mt-sm">
+              상호작용이 가능한 요소들은 툴팁 하단에 조작법이 안내되어 있습니다.
+              <br />
+              일반적인 조작법은 다음과 같습니다.
+            </p>
+            <ul className="list-disc pl-xl mt-xs">
+              <li className="">
+                <LeftClick className="inline" /> : 챔피언 배치 / 카운트 증가
+              </li>
+              <li className="">
+                <RightClick className="inline" /> : 챔피언 제거 / 아이템 장착
+                해제 / 카운트 감소
+              </li>
+              <li className="">드래그&드롭 : 챔피언 배치, 아이템 장착</li>
+            </ul>
           </div>
         </div>
       </div>
