@@ -16,7 +16,7 @@ function Tab(props: TabProps) {
   return (
     <>
       <div className={cn("flex px-md text-[#7a7b7d]", className)}>
-        <div className="flex gap-sm text-sm">
+        <div className="flex gap-sm text-sm items-center">
           {tabs.map((tab, idx) => (
             <button
               className={cn(

@@ -154,7 +154,7 @@ export default function BuilderContainer() {
             "mo:flex-col mo:gap-md"
           )}
         >
-          <div className="semi-bold text-main-text basis-[20%]">
+          <div className="semi-bold text-main-text text-nowrap basis-[20%]">
             TFT BUILDER
           </div>
           <div className="flex gap-sm items-center text-sm basis-[80%]">
@@ -164,27 +164,27 @@ export default function BuilderContainer() {
               배치 초기화
             </button>
           </div>
-          <div className="flex pc:hidden tab:hidden">
-            <p className="text-sm p-sm bg-white text-[#888] border rounded-md">
+          <div className="flex pc:hidden">
+            <p className="text-sm text-[#888]">
               현재 모바일 환경에서 조작이 원활하지 않으므로, 뷰어로써의 이용을
               권장합니다.
             </p>
           </div>
         </div>
         {/* 중앙 영역 */}
-        <div className="flex inner py-md mo:flex-col bg-[#27282b] rounded-md">
+        <div className="flex inner py-md tab:flex-col pc:flex-row  mo:flex-col bg-[#27282b] rounded-md">
           <Field
             placedChampions={placedChampions}
             setPlacedChampions={setPlacedChampions}
           />
-          <div className="bg-[#ffffff05] rounded-md basis-[20%] border-[#222] border">
+          <div className="bg-[#ffffff05] tab:mt-md pc:mt-0 mo:mt-md rounded-md basis-[20%] border-[#222] border">
             <ItemCombination hidden={!option.item} />
           </div>
         </div>
         {/* 하단 영역 */}
         <div
           className={cn(
-            "flex pc:inner bg-[#27282b] pc:!pt-xxxl pc:min-h-[800px] rounded-b-md",
+            "flex inner tab:flex-col pc:flex-row bg-[#27282b] pc:!pt-xxxl pc:min-h-[800px] rounded-b-md",
             "mo:flex-col"
           )}
         >

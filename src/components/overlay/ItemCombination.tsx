@@ -22,12 +22,12 @@ import Image from "next/image";
 
 import { useDragActions } from "@/store/dragStore";
 import { MouseEvent, useEffect, useState } from "react";
-import { Question, Reset, WindowMaxi, WindowMini } from "../svgs";
+import { Question, Reset } from "../svgs";
 
-import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
-import Tab from "../tab/Tab";
 import ItemPortrait from "../ItemPortrait";
+import Tab from "../tab/Tab";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+import { OverlayProps } from "./Overlay";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -124,7 +124,7 @@ function ItemCombination(props: ItemCombinationProps) {
 
   return (
     <Tab
-      className="text-sm mt-sm w-full"
+      className="text-sm pt-sm w-full"
       tabs={["아이템", "상징"]}
       tabRightContents={
         <div
@@ -161,7 +161,7 @@ function ItemCombination(props: ItemCombinationProps) {
       <div className="text-main-text">
         <div className="px-md text-sm">
           <p className="text-[#7a7b7d]">보유 완성 아이템</p>
-          <ul className="mt-sm flex max-w-[210px] bg-[#19191b] flex-wrap gap-[10px] p-xs rounded-[4px]">
+          <ul className="mt-sm flex bg-[#19191b] flex-wrap gap-[10px] p-xs rounded-[4px]">
             {coreInventory.map((i, idx) => (
               <li
                 onDragStart={() => handleCoreItemDrag(i)}
@@ -176,11 +176,11 @@ function ItemCombination(props: ItemCombinationProps) {
         </div>
 
         {/* inventory */}
-        <div className="pt-[16px] px-[16px] text-sm">
+        <div className="w-full pt-[16px] px-[16px] text-sm">
           <div className="flex">
             <p className="text-[#7a7b7d]">보유 조합 아이템</p>
           </div>
-          <div className="grid w-[210px] max-w-[210px] grid-cols-3 mt-sm gap-[8px] flex-wrap">
+          <div className="grid w-full grid-cols-3 mt-sm gap-[8px] flex-wrap">
             {COMBINATION_ITEM_LIST.map((item) => (
               <div key={item.name} className="flex flex-col items-center">
                 <button
@@ -218,7 +218,7 @@ function ItemCombination(props: ItemCombinationProps) {
             combinationCase.map((c, idx) => (
               <div key={idx}>
                 {/* <span className="text-xs text-[#888]">{idx}.</span> */}
-                <ul className="mt-xxxs flex flex-wrap w-[210px] max-w-[210px] gap-[10px] bg-[#19191b] p-xs rounded-[4px]">
+                <ul className="mt-xxxs flex flex-wrap w-full gap-[10px] bg-[#19191b] p-xs rounded-[4px]">
                   {c.map((i, idx) => (
                     <li key={idx} className="flex items-center">
                       <button
@@ -238,7 +238,7 @@ function ItemCombination(props: ItemCombinationProps) {
       {/* 상징 */}
       <div>
         <div className="!pt-0 p-md">
-          <div className="mt-sm max-w-[210px] grid grid-cols-5 gap-[10px] p-xs rounded-[4px]">
+          <div className="mt-sm grid grid-cols-5 tab:grid-cols-4 gap-[10px] p-xs rounded-[4px]">
             {EMBLEM_ITEM_LIST.map((i, idx) => (
               <ItemPortrait
                 key={i.name}

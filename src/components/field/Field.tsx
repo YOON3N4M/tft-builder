@@ -24,21 +24,27 @@ function Field(props: FieldProps) {
 
   return (
     <>
-      <div className="text-black basis-[20%] flex-shrink-0 flex tab:min-w-[165px] pc:min-w-[216px]">
+      <div className="text-black basis-[20%] flex tab:min-w-[165px] pc:min-w-[216px]">
         <SynergyContainer indexedChampionList={placedChampions} />
       </div>
-      <div className={cn("flex relative flex-grow justify-start", "mo:mt-md")}>
+      <div
+        className={cn(
+          "flex relative flex-grow pc:justify-start",
+          "mo:mt-md tab:mt-md mo:justify-center tab:justify-center tab:items-center"
+        )}
+      >
         <div
           className={cn(
-            "relative grid grid-cols-7 gap-xs pc:w-[650px] gap-y-0 h-min",
-            "tab:w-[500px]",
+            "relative grid grid-cols-7 gap-xs pc:w-[90%] pc:!pr-xl gap-y-0 h-min pc:translate-x-0",
+            "tab:w-[60%] translate-x-[-27px]",
             "mo:ml-[-20px] mo:max-w-[440px]"
           )}
         >
           <span
             className={cn(
-              "absolute left-2 text-[#888] top-[33%] text-3xl",
-              "mo:top-[27%] mo:left-0 mo:text-2xl "
+              "absolute pc:left-2 text-[#888] pcLtop-[33%] text-3xl",
+              "mo:top-[27%] mo:left-0 mo:text-2xl",
+              "tab:left-1 tab:top-[30%]"
             )}
           >
             {
