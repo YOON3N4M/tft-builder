@@ -73,7 +73,7 @@ function SynergyContainer(props: SynergyContainerProps) {
       )}
     >
       {!isSynergyOn && (
-        <p className="text-[#888] text-xs place-self-center">
+        <p className="text-[#888] text-xs place-self-center text-center">
           챔피언 배치시 특성이 활성화 됩니다.
         </p>
       )}

@@ -157,11 +157,12 @@ export default function BuilderContainer() {
 
         <div
           className={cn(
-            "pc:h-[100px] py-md flex bg-default-bg inner",
-            "mo:flex-col mo:gap-md"
+            "pc:h-[100px] pc:flex-row py-md flex pc:gap-0 pc:items-start bg-default-bg inner",
+            "mo:flex-col mo:gap-md",
+            "tab:flex-col tab:gap-sm"
           )}
         >
-          <div className="semi-bold text-main-text text-nowrap basis-[20%]">
+          <div className="semi-bold text-main-text text-nowrap basis-[15%]">
             TFT BUILDER
           </div>
           <div className="flex gap-sm items-center text-sm basis-[80%]">
@@ -219,6 +220,7 @@ export default function BuilderContainer() {
                 <LeftClick className="inline" /> : 챔피언 배치 / 카운트 증가
               </li>
               <li className="">
+                ''
                 <RightClick className="inline" /> : 챔피언 제거 / 아이템 장착
                 해제 / 카운트 감소
               </li>

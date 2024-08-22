@@ -180,11 +180,14 @@ function ItemCombination(props: ItemCombinationProps) {
           <div className="flex">
             <p className="text-[#7a7b7d]">보유 조합 아이템</p>
           </div>
-          <div className="flex flex-wrap w-full mt-sm gap-[8px] max-w-[180px]">
+          <div className="grid grid-cols-3 w-full mt-sm gap-[8px]">
             {COMBINATION_ITEM_LIST.map((item) => (
-              <div key={item.name} className="flex flex-col items-center">
+              <div
+                key={item.name}
+                className="flex w-full flex-col items-center"
+              >
                 <button
-                  className="p-xxs bg-[#19191b] rounded-md"
+                  className="p-xxs bg-[#19191b] rounded-md w-full justify-center flex"
                   onClick={() => increaseItem(item.name)}
                   onContextMenu={(e) => onRightClickItemIcon(e, item.name)}
                 >
