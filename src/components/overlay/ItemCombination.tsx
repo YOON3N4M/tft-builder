@@ -240,8 +240,8 @@ function ItemCombination(props: ItemCombinationProps) {
       </div>
       {/* 상징 */}
       <div>
-        <div className="!pt-0 p-md">
-          <div className="mt-sm grid grid-cols-5 tab:grid-cols-4 gap-[10px] p-xs rounded-[4px]">
+        <div className="!pt-0 p-md ">
+          <div className="mt-sm grid grid-cols-5 bg-default-bg tab:grid-cols-4 gap-[10px] p-xs max-w-[205px] rounded-[4px]">
             {EMBLEM_ITEM_LIST.map((i, idx) => (
               <ItemPortrait
                 key={i.name}

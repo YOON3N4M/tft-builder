@@ -220,7 +220,6 @@ export default function BuilderContainer() {
                 <LeftClick className="inline" /> : 챔피언 배치 / 카운트 증가
               </li>
               <li className="">
-                ''
                 <RightClick className="inline" /> : 챔피언 제거 / 아이템 장착
                 해제 / 카운트 감소
               </li>
