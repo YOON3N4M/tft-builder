@@ -68,7 +68,7 @@ function SynergyContainer(props: SynergyContainerProps) {
       className={cn(
         "pc:flex flex-col overflow-y-auto gap-sm pc:p-md tab:p-xs pc:max-h-[400px] tab:w-full pc:w-[90%] bg-[#ffffff05] border-[#222] border rounded-md",
         "pc:block mo:grid tab:grid mo:w-full mo:max-h-[200px] mo:overflow-auto mo:py-0",
-        "tab:max-h-[300px]",
+        "tab:max-h-[200px]",
         !isSynergyOn ? "justify-center" : "tab:grid-cols-3 mo:grid-cols-2"
       )}
     >

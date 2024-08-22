@@ -23,8 +23,8 @@ const config: Config = {
       },
       screens: {
         mo: { max: "769px" },
-        tab: "770px",
-        pc: "1024px",
+        tab: { min: "770px", max: "1240px" },
+        pc: "1241px",
       },
       colors: {
         "border-gray": "#dadce0",
