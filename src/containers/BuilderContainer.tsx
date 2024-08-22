@@ -279,7 +279,7 @@ function LocalBuild(props: LocalBuildProps) {
 
   function copyBuildUrl(key: string) {
     const build = buildList?.find((item) => item.buildName === `${key}`);
-    const baseUrl = "https://tft-helper-zeta.vercel.app/";
+    const baseUrl = "https://tft-build-simulator.vercel.app/";
     const resultUrl = `${baseUrl}?field=${build?.build}`;
 
     copyClipboard(resultUrl);
