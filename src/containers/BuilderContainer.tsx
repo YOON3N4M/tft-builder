@@ -2,31 +2,22 @@ import Field, { IndexedChampion } from "@/components/field/Field";
 import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
-import {
-  Clipboard,
-  LeftClick,
-  LoadIcon,
-  Question,
-  RightClick,
-  Trash,
-} from "@/components/svgs";
+import { LeftClick, RightClick } from "@/components/svgs";
 import { useToolTip } from "@/components/tooltips/ToolTip";
-import { cn, copyClipboard, filterNull } from "@/utils";
+import { cn, filterNull } from "@/utils";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
-import ChampionPortrait from "@/components/ChampionPortrait";
 import { PlacedChampion } from "@/components/field/hexagon";
+import { SYNERGY_LIST, Synergy } from "@/constants/synergy";
+import useOutsideClickEvent from "@/hooks/useOutsideEvent";
 import {
   getlocalAll,
-  localStorageDelete,
   unOptimizedBuild,
   uploadToLocalstorage,
 } from "@/utils/localstorage";
 import { useRouter, useSearchParams } from "next/navigation";
-import { SYNERGY_LIST, Synergy } from "@/constants/synergy";
-import { TRAINING_BOT } from "@/constants/champions";
-import useOutsideClickEvent from "@/hooks/useOutsideEvent";
-import Link from "next/link";
+import LocalBuild from "@/components/LocalBuild";
+import LocalBuildSave from "@/components/LocalBuildSave";
 
 type OptionItem = "item" | "reroll" | "champion";
 
@@ -59,9 +50,6 @@ export default function BuilderContainer() {
   });
 
   const router = useRouter();
-
-  const { tooltipContainerRef, pos, isTooltipOn, tooltipOff, tooltipOn } =
-    useToolTip();
 
   const [placedChampions, setPlacedChampions] =
     useState<(IndexedChampion | null)[]>(INITIAL_FIELD_ARRAY);
@@ -154,38 +142,30 @@ export default function BuilderContainer() {
 
   return (
     <>
-      <header>
-        <div
-          className={cn(
-            "pc:h-[100px] pc:flex-row py-md flex pc:gap-0 pc:items-start bg-default-bg inner",
-            "mo:flex-col mo:gap-md",
-            "tab:flex-col tab:gap-sm"
-          )}
-        >
-          <div className="semi-bold text-main-text text-nowrap basis-[15%]">
-            <Link className="" href={"/"}>
-              <h1>TFT BUILDER</h1>
-            </Link>
-          </div>
-          <div className="flex gap-sm items-center text-sm basis-[80%]">
-            <LocalBuild buildList={buildList} setBuildList={setBuildList} />
-            <BuildSave saveFn={saveBuild} />
-            <button onClick={resetBuilder} className="button">
-              배치 초기화
-            </button>
-          </div>
-          <div className="flex pc:hidden">
-            <p className="text-sm text-[#888]">
-              현재 모바일 환경에서 조작이 원활하지 않으므로, 뷰어로써의 이용을
-              권장합니다.
-            </p>
-          </div>
+      {/* 내 빌드, 빌드 저장, 배치 초기화 */}
+      <div
+        className={cn(
+          "pc:flex-row !mt-lg flex pc:gap-0 pc:items-start bg-default-bg inner",
+          "mo:flex-col mo:gap-md",
+          "tab:flex-col tab:gap-sm"
+        )}
+      >
+        <div className="flex gap-sm items-center text-sm basis-[80%]">
+          <LocalBuild buildList={buildList} setBuildList={setBuildList} />
+          <LocalBuildSave saveFn={saveBuild} />
+          <button onClick={resetBuilder} className="button">
+            배치 초기화
+          </button>
         </div>
-      </header>
-      <div className="relative pb-xxxl">
-        {/* 상단영역 */}
-
-        {/* 중앙 영역 */}
+        <div className="flex pc:hidden">
+          <p className="text-sm text-[#888]">
+            현재 모바일 환경에서 조작이 원활하지 않으므로, 뷰어로써의 이용을
+            권장합니다.
+          </p>
+        </div>
+      </div>
+      {/* 배치 영역(필드)*/}
+      <div className="relative pt-md pb-xxxl">
         <div className="flex pc:min-h-[450px] inner py-md tab:flex-col pc:flex-row  mo:flex-col bg-[#27282b] rounded-md">
           <h2 className="blind">배치 영역</h2>
           <Field
@@ -213,7 +193,7 @@ export default function BuilderContainer() {
             <RerollPercentage hidden={!option.reroll} />
           </div>
         </div>
-
+        {/* 빌더 사용법 */}
         <div className="inner !mt-md text-[#888] text-sm bg-black !py-sm rounded-md">
           <div>
             <h2 className="font-semibold text-main-text">빌더 사용법</h2>
@@ -236,176 +216,5 @@ export default function BuilderContainer() {
         </div>
       </div>
     </>
-  );
-}
-
-interface LocalBuildProps {
-  buildList:
-    | {
-        buildName: string;
-        build: string | null;
-      }[]
-    | undefined;
-  setBuildList: any;
-}
-
-function LocalBuild(props: LocalBuildProps) {
-  const { buildList, setBuildList } = props;
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const ref = useOutsideClickEvent(() => {
-    setIsOpen(false);
-  });
-
-  const router = useRouter();
-
-  const unOptimized = buildList?.map((build) => ({
-    buildName: build.buildName,
-    build: unOptimizedBuild(build.build!),
-  }));
-
-  function handleOpen() {
-    setIsOpen((prev) => !prev);
-  }
-
-  function loadBuild(key: string) {
-    const build = buildList?.find((item) => item.buildName === `${key}`);
-    router.push(`?field=${build?.build}`);
-  }
-
-  function deleteBuild(key: string) {
-    if (!confirm("빌드를 삭제합니다.")) return;
-    localStorageDelete(key);
-    setBuildList(getlocalAll);
-  }
-
-  function copyBuildUrl(key: string) {
-    const build = buildList?.find((item) => item.buildName === `${key}`);
-    const baseUrl = "https://tft-build-simulator.vercel.app/";
-    const resultUrl = `${baseUrl}?field=${build?.build}`;
-
-    copyClipboard(resultUrl);
-    alert("클립보드에 링크가 복사되었습니다.");
-  }
-
-  return (
-    <div className="relative">
-      <button onClick={handleOpen} className="button">
-        내 빌드
-      </button>
-      {isOpen && (
-        <div
-          ref={ref}
-          className="absolute popover-box z-[2000] top-[40px] p-md"
-        >
-          <div className="max-h-[460px] overflow-auto flex flex-col gap-sm  min-w-[200px] ">
-            {unOptimized?.map((build) => (
-              <div
-                key={build.buildName}
-                className="p-xs text-[#888] rounded-md"
-              >
-                <div className="flex items-center">
-                  <span>{build.buildName.replace("-tft-build", "")}</span>
-                  <div className="flex ml-auto gap-xs">
-                    <button onClick={() => loadBuild(build.buildName)}>
-                      <LoadIcon className="fill-[#888]" />
-                    </button>
-                    <button
-                      onClick={() => copyBuildUrl(build.buildName)}
-                      className="cursor-pointer"
-                    >
-                      <Clipboard className="fill-[#888]" />
-                    </button>
-                    <button
-                      onClick={() => deleteBuild(build.buildName)}
-                      className="cursor-pointer"
-                    >
-                      <Trash className="fill-[#888]" />
-                    </button>
-                  </div>
-                </div>
-                <div className="flex gap-xxs mt-xxs bg-[#19191b] p-xs rounded-md">
-                  {build.build?.map((indexed) => (
-                    <ChampionPortrait
-                      key={indexed.champion.name}
-                      champion={indexed.champion}
-                      className={cn("size-[40px]")}
-                      objectPosition={
-                        indexed.champion.name !== TRAINING_BOT.name
-                          ? "object-[-35px_0px]"
-                          : ""
-                      }
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-            {buildList?.length === 0 && (
-              <p className="text-sm bg-[#19191b] text-[#888] p-md rounded-md">
-                저장된 빌드가 없습니다.
-              </p>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-interface BuildSaveProps {
-  saveFn: (buildName: string) => void;
-}
-
-function BuildSave(props: BuildSaveProps) {
-  const { saveFn } = props;
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [buildName, setBuildName] = useState("");
-
-  const ref = useOutsideClickEvent(() => {
-    setIsOpen(false);
-  });
-
-  function onChange(event: ChangeEvent<HTMLInputElement>) {
-    setBuildName(event.target.value);
-  }
-
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (buildName === "") {
-      alert("빌드 이름을 입력해주세요.");
-      return;
-    }
-    saveFn(`${buildName}-tft-build`);
-    setIsOpen(false);
-    setBuildName("");
-  }
-
-  return (
-    <div ref={ref} className="relative">
-      <button onClick={() => setIsOpen((prev) => !prev)} className="button">
-        빌드 저장
-      </button>
-      {isOpen && (
-        <div className="absolute p-md popover-box z-[2000] min-w-[200px] top-[40px]">
-          <div className="flex items-center">
-            <p className="text-[#888]">빌드 이름</p>
-          </div>
-          <div>
-            <form onSubmit={onSubmit} className="flex items-center mt-xs">
-              <input
-                value={buildName}
-                onChange={onChange}
-                className="bg-[#19191b] text-[#888] p-xxs"
-              ></input>
-              <button className="p-xxs bg-default-bg rounded-md ml-xxs text-[#888] hover:text-gray-600">
-                저장
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-    </div>
   );
 }

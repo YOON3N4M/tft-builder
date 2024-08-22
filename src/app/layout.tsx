@@ -4,6 +4,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "./globals.css";
 import GoogleAdsense from "@/components/GoogleAdsense";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "전략적 팀 전투 빌더",
@@ -29,6 +30,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${pretendard.variable}`}>
       <body>
+        <header>
+          <div className="inner py-sm semi-bold text-main-text text-nowrap">
+            <Link className="" href={"/"}>
+              <h1>TFT BUILDER</h1>
+            </Link>
+          </div>
+        </header>
         <main>{children}</main>
       </body>
       <GoogleAnalytics gaId={GA_ID} />
