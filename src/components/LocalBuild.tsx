@@ -1,7 +1,7 @@
 import useClickOutside from "@/hooks/useOutsideEvent";
 import { cn, copyClipboard } from "@/utils";
 import {
-  getlocalAll,
+  getlocalBuildAll,
   localStorageDelete,
   unOptimizedBuild,
 } from "@/utils/localstorage";
@@ -49,7 +49,7 @@ export default function LocalBuild(props: LocalBuildProps) {
   function deleteBuild(key: string) {
     if (!confirm("빌드를 삭제합니다.")) return;
     localStorageDelete(key);
-    setBuildList(getlocalAll);
+    setBuildList(getlocalBuildAll);
   }
 
   function copyBuildUrl(key: string) {

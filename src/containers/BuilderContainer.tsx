@@ -3,35 +3,25 @@ import ChampionList from "@/components/overlay/ChampionList";
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
 import { LeftClick, RightClick } from "@/components/svgs";
-import { useToolTip } from "@/components/tooltips/ToolTip";
 import { cn, filterNull } from "@/utils";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
+import LocalBuild from "@/components/LocalBuild";
+import LocalBuildSave from "@/components/LocalBuildSave";
 import { PlacedChampion } from "@/components/field/hexagon";
 import { SYNERGY_LIST, Synergy } from "@/constants/synergy";
-import useOutsideClickEvent from "@/hooks/useOutsideEvent";
 import {
-  getlocalAll,
+  getlocalBuildAll,
   unOptimizedBuild,
   uploadToLocalstorage,
 } from "@/utils/localstorage";
 import { useRouter, useSearchParams } from "next/navigation";
-import LocalBuild from "@/components/LocalBuild";
-import LocalBuildSave from "@/components/LocalBuildSave";
-
-type OptionItem = "item" | "reroll" | "champion";
 
 export interface OptimizedIndexedChampion {
   name: string;
   itemList: string[];
   index: number;
 }
-
-interface LocalBuildType {
-  buildName: string;
-  build: string | null;
-}
-[];
 
 interface Option {
   item: boolean;
@@ -53,7 +43,7 @@ export default function BuilderContainer() {
 
   const [placedChampions, setPlacedChampions] =
     useState<(IndexedChampion | null)[]>(INITIAL_FIELD_ARRAY);
-  const [buildList, setBuildList] = useState(getlocalAll);
+  const [buildList, setBuildList] = useState(getlocalBuildAll);
   const params = useSearchParams();
 
   function resetBuilder() {
@@ -80,7 +70,7 @@ export default function BuilderContainer() {
     //  const encode = encodeURI(pureURL);
 
     uploadToLocalstorage(buildName, encoded);
-    setBuildList(getlocalAll);
+    setBuildList(getlocalBuildAll);
     alert("저장 되었습니다.");
     // copyClipboard(encode);
   }

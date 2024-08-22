@@ -2,7 +2,6 @@ import { SET_12_CHAMPIONS } from "@/constants/champions";
 import { CORE_ITEM_LIST, EMBLEM_ITEM_LIST } from "@/constants/item";
 import { OptimizedIndexedChampion } from "@/containers/BuilderContainer";
 import { filterNull } from ".";
-import { SYNERGY_LIST } from "@/constants/synergy";
 
 export function uploadToLocalstorage(key: string, data: string) {
   localStorage.setItem(key, data);
@@ -14,7 +13,7 @@ export function getLocalStorageByKey(key: string) {
   return result;
 }
 
-export function getlocalAll() {
+export function getlocalBuildAll() {
   if (typeof window === "undefined") return;
 
   const keyArr: string[] = [];
@@ -31,12 +30,13 @@ export function getlocalAll() {
 
   const result = filteredKey.map((key) => ({
     buildName: key,
-    build: localStorage.getItem(key),
+    build: getLocalStorageByKey(key),
   }));
 
   return result;
 }
 
+// url 길이 단축을 위해 간소화 했던 urL을 다시 유효한 데이터로 변경하는 함수
 export function unOptimizedBuild(optimizedString: string) {
   if (!optimizedString) return;
 
