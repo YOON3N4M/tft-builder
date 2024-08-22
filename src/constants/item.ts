@@ -143,7 +143,7 @@ const DEATH_BLADE = generateItem(
 const GIANTS_SLAYER = generateItem(
   10,
   "거인 학살자",
-  ["공격력 +30%", "주문력 +20"],
+  ["공격력 +30%", "주문력 +20", "공격속도 10%"],
   "TFT_Item_MadredsBloodrazor.png",
   "최대 체력이 1750 이상인 적을 상대로 피해 증폭을 25% 획득",
   [
