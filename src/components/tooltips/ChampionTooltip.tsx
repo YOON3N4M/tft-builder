@@ -49,7 +49,7 @@ function ChampionTooltip(props: ChampionTooltipProps) {
     <div>
       <div
         className={cn(
-          "relative rounded-md overflow-hidden",
+          "relative rounded-md overflow-hidden bg-black",
           !noTooltipImageChampion && borderStyles[champion.tier.toString()]
         )}
       >
