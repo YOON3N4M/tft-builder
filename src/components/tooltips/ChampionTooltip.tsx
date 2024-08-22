@@ -81,6 +81,7 @@ function ChampionTooltip(props: ChampionTooltipProps) {
             alt={champion.name}
             src={CHAMPION_ICON_URL(champion.src)}
             className="object-cover"
+            quality={95}
           ></Image>
         )}
 
@@ -110,7 +111,7 @@ function ChampionTooltip(props: ChampionTooltipProps) {
       </div>
       <div>
         <MouseGuide
-          // className="bg-default-bg rounded-md px-xxs py-xxxs"
+          className="bg-black rounded-md px-xs py-xxxs"
           dragGuide={dragGuide}
           leftClickGuide={leftClickGuide}
           rightClickGuide={rightClickGuide}
