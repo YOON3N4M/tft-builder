@@ -6,7 +6,7 @@ import "./globals.css";
 import GoogleAdsense from "@/components/GoogleAdsense";
 
 export const metadata: Metadata = {
-  title: "롤체 빌더",
+  title: "전략적 팀 전투 빌더",
   description: "전략적팀전투(롤토체스) 플레이에 도움을 주는 빌더입니다.",
 };
 
