@@ -26,6 +26,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { SYNERGY_LIST, Synergy } from "@/constants/synergy";
 import { TRAINING_BOT } from "@/constants/champions";
 import useOutsideClickEvent from "@/hooks/useOutsideEvent";
+import Link from "next/link";
 
 type OptionItem = "item" | "reroll" | "champion";
 
@@ -164,7 +165,9 @@ export default function BuilderContainer() {
           )}
         >
           <div className="semi-bold text-main-text text-nowrap basis-[15%]">
-            TFT BUILDER
+            <Link className="" href={"/"}>
+              TFT BUILDER
+            </Link>
           </div>
           <div className="flex gap-sm items-center text-sm basis-[80%]">
             <LocalBuild buildList={buildList} setBuildList={setBuildList} />
@@ -181,7 +184,7 @@ export default function BuilderContainer() {
           </div>
         </div>
         {/* 중앙 영역 */}
-        <div className="flex inner py-md tab:flex-col pc:flex-row  mo:flex-col bg-[#27282b] rounded-md">
+        <div className="flex pc:min-h-[450px] inner py-md tab:flex-col pc:flex-row  mo:flex-col bg-[#27282b] rounded-md">
           <Field
             placedChampions={placedChampions}
             setPlacedChampions={setPlacedChampions}
