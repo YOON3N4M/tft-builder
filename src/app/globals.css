@@ -26,6 +26,9 @@ body {
 }
 
 @layer utilities {
+  .blind {
+    @apply absolute m-[-1px] size-[1px] overflow-hidden;
+  }
   .text-balance {
     text-wrap: balance;
   }

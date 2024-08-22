@@ -153,10 +153,8 @@ export default function BuilderContainer() {
   }
 
   return (
-    <div>
-      <div className="relative pb-xxxl">
-        {/* 상단영역 */}
-
+    <>
+      <header>
         <div
           className={cn(
             "pc:h-[100px] pc:flex-row py-md flex pc:gap-0 pc:items-start bg-default-bg inner",
@@ -166,7 +164,7 @@ export default function BuilderContainer() {
         >
           <div className="semi-bold text-main-text text-nowrap basis-[15%]">
             <Link className="" href={"/"}>
-              TFT BUILDER
+              <h1>TFT BUILDER</h1>
             </Link>
           </div>
           <div className="flex gap-sm items-center text-sm basis-[80%]">
@@ -183,8 +181,13 @@ export default function BuilderContainer() {
             </p>
           </div>
         </div>
+      </header>
+      <div className="relative pb-xxxl">
+        {/* 상단영역 */}
+
         {/* 중앙 영역 */}
         <div className="flex pc:min-h-[450px] inner py-md tab:flex-col pc:flex-row  mo:flex-col bg-[#27282b] rounded-md">
+          <h2 className="blind">배치 영역</h2>
           <Field
             placedChampions={placedChampions}
             setPlacedChampions={setPlacedChampions}
@@ -213,7 +216,7 @@ export default function BuilderContainer() {
 
         <div className="inner !mt-md text-[#888] text-sm bg-black !py-sm rounded-md">
           <div>
-            <span className="font-semibold text-main-text">빌더 사용법</span>
+            <h2 className="font-semibold text-main-text">빌더 사용법</h2>
             <p className="mt-sm">
               상호작용이 가능한 요소들은 툴팁 하단에 조작법이 안내되어 있습니다.
               <br />
@@ -232,7 +235,7 @@ export default function BuilderContainer() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
