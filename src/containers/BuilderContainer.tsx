@@ -25,6 +25,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { SYNERGY_LIST, Synergy } from "@/constants/synergy";
 import { TRAINING_BOT } from "@/constants/champions";
+import useOutsideClickEvent from "@/hooks/useOutsideEvent";
 
 type OptionItem = "item" | "reroll" | "champion";
 
@@ -247,6 +248,10 @@ function LocalBuild(props: LocalBuildProps) {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const ref = useOutsideClickEvent(() => {
+    setIsOpen(false);
+  });
+
   const router = useRouter();
 
   const unOptimized = buildList?.map((build) => ({
@@ -284,7 +289,10 @@ function LocalBuild(props: LocalBuildProps) {
         내 빌드
       </button>
       {isOpen && (
-        <div className="absolute popover-box z-[2000] top-[40px] p-md">
+        <div
+          ref={ref}
+          className="absolute popover-box z-[2000] top-[40px] p-md"
+        >
           <div className="max-h-[460px] overflow-auto flex flex-col gap-sm  min-w-[200px] ">
             {unOptimized?.map((build) => (
               <div
@@ -349,19 +357,27 @@ function BuildSave(props: BuildSaveProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [buildName, setBuildName] = useState("");
 
-  function onChnage(event: ChangeEvent<HTMLInputElement>) {
+  const ref = useOutsideClickEvent(() => {
+    setIsOpen(false);
+  });
+
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
     setBuildName(event.target.value);
   }
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (buildName === "") {
+      alert("빌드 이름을 입력해주세요.");
+      return;
+    }
     saveFn(`${buildName}-tft-build`);
     setIsOpen(false);
     setBuildName("");
   }
 
   return (
-    <div className="relative">
+    <div ref={ref} className="relative">
       <button onClick={() => setIsOpen((prev) => !prev)} className="button">
         빌드 저장
       </button>
@@ -374,7 +390,7 @@ function BuildSave(props: BuildSaveProps) {
             <form onSubmit={onSubmit} className="flex items-center mt-xs">
               <input
                 value={buildName}
-                onChange={onChnage}
+                onChange={onChange}
                 className="bg-[#19191b] text-[#888] p-xxs"
               ></input>
               <button className="p-xxs bg-default-bg rounded-md ml-xxs text-[#888] hover:text-gray-600">
