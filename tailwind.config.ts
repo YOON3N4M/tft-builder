@@ -29,9 +29,11 @@ const config: Config = {
       colors: {
         "border-gray": "#dadce0",
         "default-bg": "#1D1E20",
+        "sub-bg": "#27282b",
+        "content-bg": "#ffffff05",
 
         "main-text": "#e6e6e6",
-
+        "sub-text": "#888",
         //tier
         "tier-1": "#848999",
         "tier-2": "#11b288",

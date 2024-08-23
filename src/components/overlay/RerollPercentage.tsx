@@ -124,7 +124,7 @@ function RerollPercentage(props: RerollPercentageProps) {
   const isEmpty = targetChampions.length < 1;
 
   return (
-    <div className="bg-[#ffffff05] rounded-md border-[#222] border">
+    <div className="bg-content-bg rounded-md border-[#222] border">
       <Tab
         className="pt-md"
         tabs={["상점 등장 확률", "확률표"]}
@@ -142,7 +142,7 @@ function RerollPercentage(props: RerollPercentageProps) {
               className="fill-[#888] hover:fill-black"
             />
             <ToolTip position="bottom" isOn={isTooltipOn} x={pos.x} y={pos.y}>
-              <p className="text-[#888]">
+              <p className="text-sub-text">
                 <span className="font-semibold text-main-text">
                   기물 등장 확률
                 </span>
@@ -156,7 +156,7 @@ function RerollPercentage(props: RerollPercentageProps) {
                 <br />
               </p>
               <br />
-              <p className="text-[#888]">
+              <p className="text-sub-text">
                 <span className="font-semibold text-main-text">확률표</span>
                 <br />
                 정확한 수치의 확률표 입니다.
@@ -168,9 +168,9 @@ function RerollPercentage(props: RerollPercentageProps) {
         <div className="pc:min-w-[500px] p-md text-sm">
           <div className="flex gap-xs items-center mo:flex-col">
             <div className="flex gap-xs items-center mo:w-full">
-              <span className="text-[#888]">현재 내 레벨</span>
+              <span className="text-sub-text">현재 내 레벨</span>
               <button
-                className="px-xs py-xxxs hover:bg-default-bg border border-[#888] text-[#888] rounded-md"
+                className="px-xs py-xxxs hover:bg-default-bg border border-[#888] text-sub-text rounded-md"
                 onClick={increaseLevel}
                 onContextMenu={decreaseLevel}
               >
@@ -206,7 +206,7 @@ function RerollPercentage(props: RerollPercentageProps) {
             )}
           >
             {isEmpty ? (
-              <p className="m-auto pointer-events-none text-[#888]">
+              <p className="m-auto pointer-events-none text-sub-text">
                 상점 등장 확률을 알고 싶은 챔피언을 여기에 드래그 해보세요!
               </p>
             ) : (
@@ -236,7 +236,7 @@ export default RerollPercentage;
 
 function RerollTable() {
   return (
-    <table className="w-full text-[#888] [&_th]:text-[12px] [&_th]:p-xxs [&_td]:p-xxs [&_td]:text-[12px] rounded-md">
+    <table className="w-full text-sub-text [&_th]:text-[12px] [&_th]:p-xxs [&_td]:p-xxs [&_td]:text-[12px] rounded-md">
       <thead>
         <tr className="bg-default-bg">
           <th>레벨</th>
@@ -350,10 +350,10 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
                 <span className={cn(shapeStyles[champion.tier])} />
                 <span className="font-bold ml-xs text-xl">
                   {champion.name}{" "}
-                  <span className="text-sm text-[#888]">({pieceQty})</span>
+                  <span className="text-sm text-sub-text">({pieceQty})</span>
                 </span>
               </div>
-              <div className="flex gap-xxs text-[#888] pl-lg">
+              <div className="flex gap-xxs text-sub-text pl-lg">
                 {champion.synergy.map((synergy) => (
                   <span
                     key={`${champion.name}-${synergy.name}`}
@@ -375,7 +375,7 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
                   x={pos.x}
                   y={pos.y}
                 >
-                  <p className="text-[#888]">
+                  <p className="text-sub-text">
                     현재 게임 내 존재하는
                     <br /> 해당 기물의 개수
                   </p>

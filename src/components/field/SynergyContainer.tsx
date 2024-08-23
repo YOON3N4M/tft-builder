@@ -66,14 +66,14 @@ function SynergyContainer(props: SynergyContainerProps) {
   return (
     <div
       className={cn(
-        "pc:flex flex-col overflow-y-auto gap-sm pc:p-md tab:p-xs pc:max-h-[400px] tab:w-full pc:w-[90%] bg-[#ffffff05] border-[#222] border rounded-md",
+        "pc:flex flex-col overflow-y-auto gap-sm pc:p-md tab:p-xs pc:max-h-[400px] tab:w-full pc:w-[90%] bg-content-bg border-[#222] border rounded-md",
         "pc:block mo:grid tab:grid mo:w-full mo:max-h-[200px] mo:overflow-auto mo:py-0",
         "tab:max-h-[200px]",
         !isSynergyOn ? "justify-center" : "tab:grid-cols-3 mo:grid-cols-2"
       )}
     >
       {!isSynergyOn && (
-        <p className="text-[#888] text-xs place-self-center text-center">
+        <p className="text-sub-text text-xs place-self-center text-center">
           챔피언 배치시 특성이 활성화 됩니다.
         </p>
       )}
@@ -134,8 +134,8 @@ function SynergyListItem(props: SyenrgyListItemProps) {
       >
         <div>
           <p className="text-main-text font-semibold">{synergyItem.name}</p>
-          <p className="text-[#888] mt-sm">{synergyItem.desc}</p>
-          <ul className="mt-sm text-[#888]">
+          <p className="text-sub-text mt-sm">{synergyItem.desc}</p>
+          <ul className="mt-sm text-sub-text">
             {synergyItem.effect.map((ef, idx) => (
               <li key={`${synergyItem.name}-effect-${idx}`}>
                 ({synergyItem.requirQty[idx]}) {ef}
@@ -188,7 +188,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
             <>
               <span
                 className={cn(
-                  "text-[#888] text-xs",
+                  "text-sub-text text-xs",
                   checkGrade(synergy)?.gradeNumber === qty && "!text-main-text"
                 )}
               >

@@ -148,7 +148,7 @@ export default function BuilderContainer() {
           </button>
         </div>
         <div className="flex pc:hidden">
-          <p className="text-sm text-[#888]">
+          <p className="text-sm text-sub-text">
             현재 모바일 환경에서 조작이 원활하지 않으므로, 뷰어로써의 이용을
             권장합니다.
           </p>
@@ -156,20 +156,20 @@ export default function BuilderContainer() {
       </div>
       {/* 배치 영역(필드)*/}
       <div className="relative pt-md pb-xxxl">
-        <div className="flex pc:min-h-[450px] inner py-md tab:flex-col pc:flex-row  mo:flex-col bg-[#27282b] rounded-md">
+        <div className="flex pc:min-h-[450px] inner py-md tab:flex-col pc:flex-row  mo:flex-col bg-sub-bg rounded-md">
           <h2 className="blind">배치 영역</h2>
           <Field
             placedChampions={placedChampions}
             setPlacedChampions={setPlacedChampions}
           />
-          <div className="bg-[#ffffff05] tab:mt-md pc:mt-0 mo:mt-md rounded-md basis-[20%] border-[#222] border">
+          <div className="bg-content-bg tab:mt-md pc:mt-0 mo:mt-md rounded-md basis-[20%] border-[#222] border">
             <ItemCombination hidden={!option.item} />
           </div>
         </div>
         {/* 하단 영역 */}
         <div
           className={cn(
-            "flex inner tab:flex-col pc:flex-row bg-[#27282b] pc:!pt-xxxl pb-md rounded-b-md",
+            "flex inner tab:flex-col pc:flex-row bg-sub-bg pc:!pt-xxxl pb-md rounded-b-md",
             "mo:flex-col"
           )}
         >
@@ -184,7 +184,7 @@ export default function BuilderContainer() {
           </div>
         </div>
         {/* 빌더 사용법 */}
-        <div className="inner !mt-md text-[#888] text-sm bg-black !py-sm rounded-md">
+        <div className="inner !mt-md text-sub-text text-sm bg-black !py-sm rounded-md">
           <div>
             <h2 className="font-semibold text-main-text">빌더 사용법</h2>
             <p className="mt-sm">

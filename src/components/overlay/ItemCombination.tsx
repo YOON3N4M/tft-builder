@@ -140,7 +140,7 @@ function ItemCombination(props: ItemCombinationProps) {
             onMouseLeave={tooltipOff}
           />
           <ToolTip
-            className="min-w-[200px] text-[#888]"
+            className="min-w-[200px] text-sub-text"
             position="bottom"
             isOn={isTooltipOn}
             x={pos.x}
@@ -199,7 +199,7 @@ function ItemCombination(props: ItemCombinationProps) {
                       rightClickGuide="-"
                       item={item}
                     />
-                    <div className="text-[#888] text-sm">
+                    <div className="text-sub-text text-sm">
                       {inventory[item.name]}
                     </div>
                   </div>
@@ -220,7 +220,7 @@ function ItemCombination(props: ItemCombinationProps) {
             combinationCase[0].length > 0 &&
             combinationCase.map((c, idx) => (
               <div key={idx}>
-                {/* <span className="text-xs text-[#888]">{idx}.</span> */}
+                {/* <span className="text-xs text-sub-text">{idx}.</span> */}
                 <ul className="mt-xxxs flex flex-wrap w-full gap-[10px] bg-[#19191b] p-xs rounded-[4px]">
                   {c.map((i, idx) => (
                     <li key={idx} className="flex items-center">

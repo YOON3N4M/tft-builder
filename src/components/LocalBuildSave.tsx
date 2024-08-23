@@ -38,16 +38,16 @@ export default function LocalBuildSave(props: BuildSaveProps) {
       {isOpen && (
         <div className="absolute p-md popover-box z-[2000] min-w-[200px] top-[40px]">
           <div className="flex items-center">
-            <p className="text-[#888]">빌드 이름</p>
+            <p className="text-sub-text">빌드 이름</p>
           </div>
           <div>
             <form onSubmit={onSubmit} className="flex items-center mt-xs">
               <input
                 value={buildName}
                 onChange={onChange}
-                className="bg-[#19191b] text-[#888] p-xxs"
+                className="bg-[#19191b] text-sub-text p-xxs"
               ></input>
-              <button className="p-xxs bg-default-bg rounded-md ml-xxs text-[#888] hover:text-gray-600">
+              <button className="p-xxs bg-default-bg rounded-md ml-xxs text-sub-text hover:text-gray-600">
                 저장
               </button>
             </form>

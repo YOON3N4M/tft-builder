@@ -71,9 +71,9 @@ function ItemPortrait(props: ItemPortraitProps) {
       >
         <p className="font-semibold text-main-text">{name}</p>
         {desc && (
-          <p className="mt-sm text-[#888] whitespace-pre-line">{desc}</p>
+          <p className="mt-sm text-sub-text whitespace-pre-line">{desc}</p>
         )}
-        <div className="mt-sm text-[#888]">
+        <div className="mt-sm text-sub-text">
           {effect.map((ef, idx) => (
             <p key={`${name}-effect-${idx}`} className="text-xs">
               {ef}

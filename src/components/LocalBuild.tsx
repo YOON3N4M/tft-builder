@@ -75,7 +75,7 @@ export default function LocalBuild(props: LocalBuildProps) {
             {unOptimized?.map((build) => (
               <div
                 key={build.buildName}
-                className="p-xs text-[#888] rounded-md"
+                className="p-xs text-sub-text rounded-md"
               >
                 <div className="flex items-center">
                   <span>{build.buildName.replace("-tft-build", "")}</span>
@@ -114,7 +114,7 @@ export default function LocalBuild(props: LocalBuildProps) {
               </div>
             ))}
             {buildList?.length === 0 && (
-              <p className="text-sm bg-[#19191b] text-[#888] p-md rounded-md">
+              <p className="text-sm bg-[#19191b] text-sub-text p-md rounded-md">
                 저장된 빌드가 없습니다.
               </p>
             )}

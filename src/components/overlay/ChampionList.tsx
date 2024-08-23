@@ -122,7 +122,7 @@ function ChampionList(props: ChampionListProps) {
   }, [keyword]);
 
   return (
-    <div className="bg-[#ffffff05] rounded-md border-[#222] border">
+    <div className="bg-content-bg rounded-md border-[#222] border">
       <OverlayTab className="flex !px-md gap-sm">
         <SortButton
           currentSortType={currentSortType}
@@ -141,7 +141,7 @@ function ChampionList(props: ChampionListProps) {
         <input
           onChange={onChange}
           placeholder="챔피언, 시너지..."
-          className="bg-default-bg text-[#888] bg-inherit text-sm ml-auto border border-[#888] rounded-md pt-xxxs px-xxs"
+          className="bg-default-bg text-sub-text bg-inherit text-sm ml-auto border border-[#888] rounded-md pt-xxxs px-xxs"
           value={keyword}
         ></input>
       </OverlayTab>
@@ -162,7 +162,7 @@ function ChampionList(props: ChampionListProps) {
             />
           ))}
           {keyword !== "" && championList.length === 0 && (
-            <p className="absolute y-center x-center text-[#888] text-sm">
+            <p className="absolute y-center x-center text-sub-text text-sm">
               일치하는 챔피언이 없습니다.
             </p>
           )}

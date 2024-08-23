@@ -42,7 +42,7 @@ function Field(props: FieldProps) {
         >
           <span
             className={cn(
-              "absolute pc:left-2 text-[#888] pc:top-[33%] text-3xl",
+              "absolute pc:left-2 text-sub-text pc:top-[33%] text-3xl",
               "mo:top-[27%] mo:left-[-5px] mo:text-2xl",
               " tab:top-[30%]"
             )}

@@ -61,7 +61,7 @@ body {
 
 @layer components {
   .button {
-    @apply bg-[#2f3033] text-[#888] py-[2px] px-[5px] rounded-md hover:!bg-[#3f4043];
+    @apply bg-[#2f3033] text-sub-text py-[2px] px-[5px] rounded-md hover:!bg-[#3f4043];
   }
   .button-active {
     @apply !bg-[#3f4043];
@@ -78,7 +78,7 @@ body {
     border-bottom: 10px solid;
   }
   .popover-box {
-    @apply bg-black border-[#222] text-[#888] border rounded-md;
+    @apply bg-black border-[#222] text-sub-text border rounded-md;
   }
   .list::after {
     content: "";
