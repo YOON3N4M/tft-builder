@@ -22,7 +22,7 @@ import Image from "next/image";
 
 import { useDragActions } from "@/store/dragStore";
 import { MouseEvent, useEffect, useState } from "react";
-import { Question, Reset } from "../svgs";
+import { Question, Reset, WindowMaxi, WindowMini } from "../svgs";
 
 import ItemPortrait from "../ItemPortrait";
 import Tab from "../tab/Tab";
@@ -50,7 +50,7 @@ function ItemCombination(props: ItemCombinationProps) {
   const [inventory, setInventory] = useState(initialInventory);
 
   const [combinationCase, setCombinationCase] = useState<CoreItem[][]>([]);
-  const [foldCase, setFoldCase] = useState(false);
+  const [foldCase, setFoldCase] = useState(true);
 
   const { setDraggingCoreItem } = useDragActions();
 
@@ -210,32 +210,47 @@ function ItemCombination(props: ItemCombinationProps) {
         </div>
 
         {/* case list */}
-        <div
-          className={cn(
-            "flex flex-col gap-[10px] max-h-[100px] overflow-x-hidden overflow-y-auto px-[16px] pb-[16px] mt-lg ",
-            foldCase && "h-0 !p-0"
-          )}
-        >
-          {combinationCase[0] &&
-            combinationCase[0].length > 0 &&
-            combinationCase.map((c, idx) => (
-              <div key={idx}>
-                {/* <span className="text-xs text-sub-text">{idx}.</span> */}
-                <ul className="mt-xxxs flex flex-wrap w-full gap-[10px] bg-[#19191b] p-xs rounded-[4px]">
-                  {c.map((i, idx) => (
-                    <li key={idx} className="flex items-center">
-                      <button
-                        onContextMenu={(event) =>
-                          handleCoreItemRightClick(event, i)
-                        }
-                      >
-                        <ItemPortrait rightClickGuide="조합" item={i} />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+        <div className="mt-sm">
+          <div className="flex px-md">
+            <p className="text-sm text-sub-text">경우의 수</p>
+            <button
+              onClick={handleCaseFold}
+              className="ml-auto text-sm text-sub-text"
+            >
+              {foldCase ? "펼치기" : "접기"}
+            </button>
+          </div>
+          <div className="relative mt-xs">
+            <div
+              className={cn(
+                "flex flex-col gap-[10px]  px-[16px] pb-[16px] overflow-x-hidden overflow-y-auto",
+                foldCase
+                  ? "max-h-[100px]"
+                  : "absolute max-h-[500px] bg-[#2B2C2F] rounded-b-md z-[1000] border-[#222] border !border-t-0 w-full"
+              )}
+            >
+              {combinationCase[0] &&
+                combinationCase[0].length > 0 &&
+                combinationCase.map((c, idx) => (
+                  <div key={idx}>
+                    {/* <span className="text-xs text-sub-text">{idx}.</span> */}
+                    <ul className="mt-xxxs flex flex-wrap w-full gap-[10px] bg-[#19191b] p-xs rounded-[4px]">
+                      {c.map((i, idx) => (
+                        <li key={idx} className="flex items-center">
+                          <button
+                            onContextMenu={(event) =>
+                              handleCoreItemRightClick(event, i)
+                            }
+                          >
+                            <ItemPortrait rightClickGuide="조합" item={i} />
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+            </div>
+          </div>
         </div>
       </div>
       {/* 상징 */}
