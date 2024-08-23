@@ -11,7 +11,7 @@ import {
   SPARRINGS_GLOVES,
   SPATULA,
   TEAR_OF_THE_GADDESS,
-} from "@/constants/item";
+} from "@/data/item";
 
 interface Inventory {
   [x: string]: number;

@@ -27,7 +27,7 @@ import {
   VANGUARD,
   WARRIOR,
   WITCHCRAFT,
-} from "./synergy";
+} from "../data/synergy";
 
 export interface Champion {
   id: number;

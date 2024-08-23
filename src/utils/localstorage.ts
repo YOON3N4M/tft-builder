@@ -1,5 +1,5 @@
-import { SET_12_CHAMPIONS } from "@/constants/champions";
-import { CORE_ITEM_LIST, EMBLEM_ITEM_LIST } from "@/constants/item";
+import { SET_12_CHAMPIONS } from "@/data/champions";
+import { CORE_ITEM_LIST, EMBLEM_ITEM_LIST } from "@/data/item";
 import { OptimizedIndexedChampion } from "@/containers/BuilderContainer";
 import { filterNull } from ".";
 

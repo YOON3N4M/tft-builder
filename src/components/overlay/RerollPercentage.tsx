@@ -1,11 +1,11 @@
 "use client";
 
-import { Champion, TRAINING_BOT } from "@/constants/champions";
+import { Champion, TRAINING_BOT } from "@/data/champions";
 import {
   PIECES_QTY,
   REROLL_PERCENTAGE,
   SHOP_PIECES_QTY_ARR,
-} from "@/constants/reroll";
+} from "@/data/reroll";
 import { CHAMPION_ICON_URL } from "@/constants/url";
 import { useDraggingTarget } from "@/store/dragStore";
 import { cn, sortByNumber } from "@/utils";

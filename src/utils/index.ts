@@ -1,6 +1,6 @@
 import { IndexedChampion } from "@/components/field/Field";
-import { Champion } from "@/constants/champions";
-import { Synergy } from "@/constants/synergy";
+import { Champion } from "@/data/champions";
+import { Synergy } from "@/data/synergy";
 
 export const cn = (...classNames: (string | false | undefined | null)[]) => {
   const styledClassNames = [...classNames]

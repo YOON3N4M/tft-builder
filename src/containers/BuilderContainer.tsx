@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import LocalBuild from "@/components/LocalBuild";
 import LocalBuildSave from "@/components/LocalBuildSave";
 import { PlacedChampion } from "@/components/field/hexagon";
-import { SYNERGY_LIST, Synergy } from "@/constants/synergy";
+import { SYNERGY_LIST, Synergy } from "@/data/synergy";
 import {
   getlocalBuildAll,
   unOptimizedBuild,

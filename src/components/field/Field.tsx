@@ -1,5 +1,5 @@
-import { Champion, TRAINING_BOT } from "@/constants/champions";
-import { CoreItem } from "@/constants/item";
+import { Champion, TRAINING_BOT } from "@/data/champions";
+import { CoreItem } from "@/data/item";
 import { cn, filterNull } from "@/utils";
 import { Dispatch, SetStateAction } from "react";
 import SynergyContainer from "./SynergyContainer";

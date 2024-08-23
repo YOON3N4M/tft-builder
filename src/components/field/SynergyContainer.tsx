@@ -1,5 +1,5 @@
-import { Champion, SET_12_CHAMPIONS } from "@/constants/champions";
-import { Synergy } from "@/constants/synergy";
+import { Champion, SET_12_CHAMPIONS } from "@/data/champions";
+import { Synergy } from "@/data/synergy";
 import { checkGrade, cn, filterNull, groupBy, sortByNumber } from "@/utils";
 import Image from "next/image";
 import ChampionPortrait from "../ChampionPortrait";

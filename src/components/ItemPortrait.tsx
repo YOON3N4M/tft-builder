@@ -1,6 +1,6 @@
 "use client";
 
-import { CombinationItem, CoreItem } from "@/constants/item";
+import { CombinationItem, CoreItem } from "@/data/item";
 import { ITEM_ICON_URL } from "@/constants/url";
 import { cn } from "@/utils";
 import Image from "next/image";

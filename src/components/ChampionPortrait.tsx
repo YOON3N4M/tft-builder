@@ -1,4 +1,4 @@
-import { Champion, TRAINING_BOT } from "@/constants/champions";
+import { Champion, TRAINING_BOT } from "@/data/champions";
 import { CHAMPION_ICON_URL, TRAINING_BOT_ICON_URL } from "@/constants/url";
 import { cn } from "@/utils";
 import Image from "next/image";

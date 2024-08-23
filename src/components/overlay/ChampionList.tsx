@@ -5,7 +5,7 @@ import {
   Champion,
   SET_12_CHAMPIONS,
   TRAINING_BOT,
-} from "@/constants/champions";
+} from "@/data/champions";
 import { useDragActions } from "@/store/dragStore";
 import {
   cn,

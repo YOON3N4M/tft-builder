@@ -1,4 +1,4 @@
-import { Champion, SET_12_CHAMPIONS } from "@/constants/champions";
+import { Champion, SET_12_CHAMPIONS } from "@/data/champions";
 import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes } from "react";

@@ -1,4 +1,4 @@
-import { Champion, TRAINING_BOT } from "@/constants/champions";
+import { Champion, TRAINING_BOT } from "@/data/champions";
 import {
   CHAMPION_ICON_URL,
   ITEM_ICON_URL,
@@ -24,7 +24,7 @@ import {
 import ChampionTooltip from "../tooltips/ChampionTooltip";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { IndexedChampion } from "./Field";
-import { SYNERGY_LIST, Synergy } from "@/constants/synergy";
+import { SYNERGY_LIST, Synergy } from "@/data/synergy";
 import ItemPortrait from "../ItemPortrait";
 
 export type PlacedChampion = IndexedChampion | null;

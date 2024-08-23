@@ -14,7 +14,7 @@ import {
   SPARRINGS_GLOVES,
   SPATULA,
   TEAR_OF_THE_GADDESS,
-} from "@/constants/item";
+} from "@/data/item";
 import { ITEM_ICON_URL } from "@/constants/url";
 import { cn } from "@/utils";
 import { calculateAllCombinationCase } from "@/utils/item";

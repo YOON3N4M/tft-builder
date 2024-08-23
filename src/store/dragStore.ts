@@ -1,6 +1,6 @@
 import { IndexedChampion } from "@/components/field/Field";
-import { Champion } from "@/constants/champions";
-import { CoreItem } from "@/constants/item";
+import { Champion } from "@/data/champions";
+import { CoreItem } from "@/data/item";
 import { create } from "zustand";
 
 type DraggingTaget = CoreItem | Champion | null;
