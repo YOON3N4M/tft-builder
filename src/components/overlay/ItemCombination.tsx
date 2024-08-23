@@ -213,12 +213,15 @@ function ItemCombination(props: ItemCombinationProps) {
         <div className="mt-sm">
           <div className="flex px-md">
             <p className="text-sm text-sub-text">경우의 수</p>
-            <button
-              onClick={handleCaseFold}
-              className="ml-auto text-sm text-sub-text"
-            >
-              {foldCase ? "펼치기" : "접기"}
-            </button>
+
+            {combinationCase.length > 1 && (
+              <button
+                onClick={handleCaseFold}
+                className="ml-auto text-sm text-sub-text"
+              >
+                {foldCase ? "펼치기" : "접기"}
+              </button>
+            )}
           </div>
           <div className="relative mt-xs">
             <div
