@@ -5,6 +5,9 @@ const nextConfig = {
     ENV: process.env.ENV,
     ADSENSE_ID: process.env.ADSENSE_ID,
   },
+  async redirects() {
+    return [{ source: "/", destination: "/builder", permanent: false }];
+  },
   images: {
     remotePatterns: [
       {
