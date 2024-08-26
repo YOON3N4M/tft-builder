@@ -1,5 +1,6 @@
 "use client";
 
+import { replaceString } from "@/utils";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
@@ -18,7 +19,10 @@ function SummonerSearchForm(props: SummonerSearchFormProps) {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    router.push(`/summoner/${keyword}`);
+
+    const replacedRiotTag = replaceString(keyword);
+
+    router.push(`/summoner/${replacedRiotTag}`);
   }
 
   return (

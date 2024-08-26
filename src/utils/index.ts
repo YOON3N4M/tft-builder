@@ -1,6 +1,7 @@
 import { IndexedChampion } from "@/components/field/Field";
 import { Champion } from "@/data/champions";
 import { Synergy } from "@/data/synergy";
+import { RiotId } from "@/types/riot";
 
 export const cn = (...classNames: (string | false | undefined | null)[]) => {
   const styledClassNames = [...classNames]
@@ -122,4 +123,45 @@ export function setItemToindex<T>(
   clonedList[targetIndex] = newItem;
 
   return clonedList;
+}
+
+export function replaceString(
+  str: string,
+  target: string = "#",
+  replacement: string = "-"
+) {
+  const regex = new RegExp(target, "g");
+  return str.replace(regex, replacement);
+}
+
+export function handleRiotId(riotId: string, sign: string): RiotId {
+  const parts = riotId.split(sign);
+  const gameName = parts[0];
+  const tagLine = parts[1];
+
+  if (tagLine === undefined) {
+    return {
+      gameName,
+      tagLine: "KR1",
+    };
+  } else {
+    return {
+      gameName,
+      tagLine,
+    };
+  }
+}
+
+// 티어 표기의 로마 숫자를 아랍 숫자로 변환
+export function romeNumToArabNum(rome: string) {
+  switch (rome) {
+    case "I":
+      return 1;
+    case "II":
+      return 2;
+    case "III":
+      return 3;
+    case "IV":
+      return 4;
+  }
 }

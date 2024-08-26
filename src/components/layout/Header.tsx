@@ -12,7 +12,7 @@ function Header(props: HeaderProps) {
         <Link className="" href={"/"}>
           <h1>TFT BUILDER</h1>
         </Link>
-        <div className="ml-auto hidden">
+        <div className="ml-auto">
           <SummonerSearchForm />
         </div>
       </div>
