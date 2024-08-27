@@ -1,6 +1,7 @@
 import useClickOutside from "@/hooks/useOutsideEvent";
 import { cn, copyClipboard } from "@/utils";
 import {
+  copyBuild,
   getlocalBuildAll,
   localStorageDelete,
   unOptimizedBuild,
@@ -54,11 +55,10 @@ export default function LocalBuild(props: LocalBuildProps) {
 
   function copyBuildUrl(key: string) {
     const build = buildList?.find((item) => item.buildName === `${key}`);
-    const baseUrl = "https://tft-build-simulator.vercel.app/builder/";
-    const resultUrl = `${baseUrl}?field=${build?.build}`;
+    if (!build) return;
+    if (!build.build) return;
 
-    copyClipboard(resultUrl);
-    alert("클립보드에 링크가 복사되었습니다.");
+    copyBuild(build.build);
   }
 
   return (

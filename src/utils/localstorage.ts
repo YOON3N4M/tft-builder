@@ -1,7 +1,7 @@
 import { SET_12_CHAMPIONS } from "@/data/champions";
 import { CORE_ITEM_LIST, EMBLEM_ITEM_LIST } from "@/data/item";
 import { OptimizedIndexedChampion } from "@/containers/BuilderContainer";
-import { filterNull } from ".";
+import { copyClipboard, filterNull } from ".";
 import { IndexedChampion } from "@/components/field/Field";
 import { PlacedChampion } from "@/components/field/hexagon";
 
@@ -13,6 +13,14 @@ export function getLocalStorageByKey(key: string) {
   const result = localStorage.getItem(key);
 
   return result;
+}
+
+export function copyBuild(build: string) {
+  const baseUrl = "https://tft-build-simulator.vercel.app/builder/";
+  const resultUrl = `${baseUrl}?field=${build}`;
+
+  copyClipboard(resultUrl);
+  alert("클립보드에 링크가 복사되었습니다.");
 }
 
 export function saveBuildToLocalStorage(
