@@ -51,7 +51,7 @@ function PerformanceOverview(props: PerformanceOverviewProps) {
     findLogestArray(groupBy(filteredNoActive, "name"))[0].name
   );
 
-  console.log(groupBy(filteredNoActive, "name"));
+  //console.log(groupBy(filteredNoActive, "name"));
 
   // console.log(searchedPayersInfoList, "ddd");
   // console.log(placementAvg);

@@ -8,9 +8,10 @@ import {
   RiotTftMatchListRes,
   TacticianRes,
   AccountDto,
+  RiotFailedRes,
 } from "@/types/riot";
-import { apiFetch } from ".";
 import { TACTICIAN_JSON_URL } from "@/constants/url";
+import { filterNull } from "@/utils";
 
 const TEMP_API_KEY = "RGAPI-50271633-fc0c-4d51-a40c-d571fc5b5bc5";
 
@@ -25,77 +26,91 @@ export async function refreshRiotData(riotId: RiotId) {
   };
 
   const accountRes = await getRiotAccount(riotId);
+  if (!accountRes) return riotData;
 
-  if (accountRes.puuid) {
-    riotData.account = accountRes;
-  }
+  riotData.account = accountRes;
+
   const summonerRes = await getTftSummoner(accountRes.puuid);
+  if (!summonerRes) return riotData;
 
-  if (summonerRes.id) {
-    riotData.summoner = summonerRes;
-  }
+  riotData.summoner = summonerRes;
 
   const leagueRes = await getTftLeague(summonerRes.id);
+  if (!leagueRes) return riotData;
 
-  if (leagueRes) {
-    riotData.league = leagueRes;
-  }
+  riotData.league = leagueRes;
 
   const matchIdListRes = await getTftMatchList(accountRes.puuid);
 
-  if (matchIdListRes) {
-    const matchInfoList = await Promise.all(
-      matchIdListRes.map(async (id) => await getTftMatchInfo(id))
-    );
+  if (!matchIdListRes) return riotData;
 
-    riotData.matchInfoList = matchInfoList;
-  }
+  const matchInfoList = await Promise.all(
+    matchIdListRes.map(async (id) => await getTftMatchInfo(id))
+  );
+
+  const filtered = filterNull(matchInfoList) as RiotMatchInfoRes[];
+
+  riotData.matchInfoList = filtered;
 
   return riotData;
 }
 
-export async function getRiotAccount(riotId: RiotId) {
+export async function getRiotAccount(
+  riotId: RiotId
+): Promise<RiotAccountRes | null> {
   const url = `https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${riotId.gameName}/${riotId.tagLine}?api_key=${RIOT_API_KEY}`;
 
-  const data = (await apiFetch(url)) as RiotAccountRes;
+  const data = await riotApiFetch(url);
+
   return data;
 }
-export async function getRiotAccountByPuuid(puuid: string) {
+export async function getRiotAccountByPuuid(
+  puuid: string
+): Promise<AccountDto | null> {
   const url = `https://asia.api.riotgames.com/riot/account/v1/accounts/by-puuid/${puuid}?api_key=${RIOT_API_KEY}`;
 
-  const data = (await apiFetch(url)) as AccountDto;
+  const data = await riotApiFetch(url);
   return data;
 }
-export async function getTftSummoner(puuid: string) {
+export async function getTftSummoner(
+  puuid: string
+): Promise<RiotSummonerRes | null> {
   const url = `https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-puuid/${puuid}?api_key=${RIOT_API_KEY}`;
 
-  const data = (await apiFetch(url)) as RiotSummonerRes;
+  const data = await riotApiFetch(url);
   return data;
 }
 
-export async function getTftLeague(summonerId: string) {
+export async function getTftLeague(
+  summonerId: string
+): Promise<RiotTftLeagueRes[] | null> {
   const url = `https://kr.api.riotgames.com/tft/league/v1/entries/by-summoner/${summonerId}?api_key=${RIOT_API_KEY}`;
 
-  const data = (await apiFetch(url)) as RiotTftLeagueRes[];
+  const data = await riotApiFetch(url);
   return data;
 }
 
-export async function getTftMatchList(puuid: string) {
+export async function getTftMatchList(
+  puuid: string
+): Promise<RiotTftMatchListRes | null> {
   const url = `https://asia.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${RIOT_API_KEY}`;
 
-  const data = (await apiFetch(url)) as RiotTftMatchListRes;
+  const data = await riotApiFetch(url);
+
   return data;
 }
 
-export async function getTftMatchInfo(matchId: string) {
+export async function getTftMatchInfo(
+  matchId: string
+): Promise<RiotMatchInfoRes | null> {
   const url = `https://asia.api.riotgames.com/tft/match/v1/matches/${matchId}?api_key=${RIOT_API_KEY}`;
 
-  const data = (await apiFetch(url)) as RiotMatchInfoRes;
+  const data = await riotApiFetch(url);
   return data;
 }
 
 export async function getTacticianList() {
-  const data = await apiFetch(TACTICIAN_JSON_URL());
+  const data = await riotApiFetch(TACTICIAN_JSON_URL());
   return data;
 }
 
@@ -115,5 +130,20 @@ export async function fetchTacticianData(idToFind: string) {
     }
   } catch (error) {
     //console.error("Error fetching data:", error);
+  }
+}
+
+export async function riotApiFetch(url: string, option?: RequestInit) {
+  try {
+    const res = await fetch(url, option);
+    const result = await res.json();
+
+    if (result.status && result.status.status_code !== 200) {
+      return null;
+    }
+
+    return result;
+  } catch (error) {
+    return null;
   }
 }
