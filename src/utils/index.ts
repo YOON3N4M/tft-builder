@@ -204,3 +204,14 @@ export function findSynergy(trait_name: string) {
 
   return synergy;
 }
+
+export function isChampionExist(
+  indexedChampionList: IndexedChampion[],
+  tartgetChampion: Champion
+) {
+  const exist = indexedChampionList.find(
+    (cham) => cham.champion.name === tartgetChampion.name
+  );
+
+  return exist ? true : false;
+}

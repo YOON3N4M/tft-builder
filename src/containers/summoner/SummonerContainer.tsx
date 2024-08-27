@@ -1,9 +1,7 @@
 import { ParticipanthDto, SummonerData } from "@/types/riot";
+import Match from "./Match";
 import PerformanceOverview from "./PerformanceOverview";
 import Summoner from "./Summoner";
-import { getTacticianList } from "@/app/services/riot";
-import { cn } from "@/utils";
-import Match from "./Match";
 
 interface SummonerContainerProps {
   summonerData: SummonerData;
@@ -14,8 +12,6 @@ function SummonerContainer(props: SummonerContainerProps) {
   const { account, summoner, matchInfoList, league } = summonerData;
 
   const puuid = account?.puuid;
-
-  console.log(matchInfoList);
 
   const searchedPayersInfoList = matchInfoList?.map((matchInfo) =>
     matchInfo.info.participants.find((parti) => parti.puuid === puuid)
@@ -48,6 +44,7 @@ function SummonerContainer(props: SummonerContainerProps) {
             {matchInfoList && puuid && (
               <div className="basis-4/5 max-w-[940px] flex flex-col p-[1px] gap-sm">
                 {matchInfoList.map((match, idx) => {
+                  //if (idx !== 1) return;
                   return (
                     <Match key={`match-${idx}`} puuid={puuid} match={match} />
                   );

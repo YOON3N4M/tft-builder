@@ -1,11 +1,11 @@
 "use client";
 
-import { cn, findSynergy, sortByNumber } from "@/utils";
+import { SET_12_CHAMPIONS } from "@/data/champions";
+import { cn, findSynergy, isChampionExist, sortByNumber } from "@/utils";
+import Image from "next/image";
+import ChampionPortrait from "./ChampionPortrait";
 import { IndexedChampion } from "./field/Field";
 import { ToolTip, useToolTip } from "./tooltips/ToolTip";
-import Image from "next/image";
-import { SET_12_CHAMPIONS } from "@/data/champions";
-import ChampionPortrait from "./ChampionPortrait";
 
 const synergyBgStyles: { [key: string]: string } = {
   "1": "bg-gray-900",
@@ -24,6 +24,7 @@ interface SynergyPortraitProps {
   name: string;
   unitQty: number;
   style: number;
+  tierCurrent: number;
   size?: "md" | "sm";
   noActiveHide?: boolean;
   indexedChampionList?: IndexedChampion[];
@@ -33,6 +34,7 @@ function SynergyPortrait(props: SynergyPortraitProps) {
   const {
     size = "md",
     name,
+    tierCurrent,
     unitQty,
     style,
     indexedChampionList,
@@ -49,9 +51,10 @@ function SynergyPortrait(props: SynergyPortraitProps) {
   );
   const sortByTier = sortByNumber(synergyChampions, "tier");
 
-  console.log(sortByTier);
   //활성화 되지 않았을 경우 숨기기 (ex. 전적 등에서)
   if (noActiveHide && style === 0) return;
+
+  const caculatedStyle = synergy.requirQty.length === 1 ? 3 : style;
 
   return (
     <div
@@ -72,7 +75,10 @@ function SynergyPortrait(props: SynergyPortraitProps) {
           <p className="text-sub-text mt-sm">{synergy.desc}</p>
           <ul className="mt-sm text-sub-text">
             {synergy.effect.map((ef, idx) => (
-              <li key={`${synergy.name}-effect-${idx}`}>
+              <li
+                key={`${synergy.name}-effect-${idx}`}
+                className={cn(idx === tierCurrent - 1 && "text-tier-3")}
+              >
                 ({synergy.requirQty[idx]}) {ef}
               </li>
             ))}
@@ -84,8 +90,10 @@ function SynergyPortrait(props: SynergyPortraitProps) {
               key={champion.name}
               champion={champion}
               className={cn(
-                "size-[40px]"
-                // !championExist(champion) && "!opacity-50"
+                "size-[40px]",
+                indexedChampionList &&
+                  !isChampionExist(indexedChampionList, champion) &&
+                  "!opacity-50"
               )}
               objectPosition="object-[-35px_0px]"
             />
@@ -96,7 +104,7 @@ function SynergyPortrait(props: SynergyPortraitProps) {
         className={cn(
           "p-xxs hexagon flex items-center justify-center",
           sizeStyles[size],
-          synergyBgStyles[(style + 1).toString()]
+          synergyBgStyles[(caculatedStyle + 1).toString()]
         )}
       >
         <Image

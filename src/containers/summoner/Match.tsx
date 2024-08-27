@@ -3,7 +3,13 @@ import ChampionPortrait from "@/components/ChampionPortrait";
 import SynergyPortrait from "@/components/SynergyPortrait";
 import { Champion } from "@/data/champions";
 import { RiotMatchInfoRes } from "@/types/riot";
-import { cn, filterUndefined, findChampion, sortByNumber } from "@/utils";
+import {
+  cn,
+  filterUndefined,
+  findChampion,
+  generateIndexedChampion,
+  sortByNumber,
+} from "@/utils";
 import CompanionPortrait from "./CompanionPortrait";
 
 interface MatchProps {
@@ -61,6 +67,10 @@ async function Match(props: MatchProps) {
 
   const filteredUndefinedUnitList = filterUndefined(unitList!) as Champion[];
 
+  const indexedChampionList = filteredUndefinedUnitList.map((champion, idx) =>
+    generateIndexedChampion(champion, idx)
+  );
+
   const playerNameList = await Promise.all(
     match.metadata.participants.map(
       async (puuid) => await getRiotAccountByPuuid(puuid)
@@ -68,8 +78,8 @@ async function Match(props: MatchProps) {
   );
 
   if (!searchedPlayerInfo) return;
+  console.log(traits);
 
-  console.log(playerNameList);
   return (
     <div className="flex rounded-md overflow-hidden">
       {/* 좌측 외곽선 */}
@@ -104,8 +114,10 @@ async function Match(props: MatchProps) {
                 key={`${matchId}-${trait.name}`}
                 name={trait.name}
                 unitQty={trait.num_units}
+                tierCurrent={trait.tier_current}
                 style={trait.style}
                 noActiveHide={true}
+                indexedChampionList={indexedChampionList}
               />
             ))}
           </div>

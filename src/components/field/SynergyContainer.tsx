@@ -1,6 +1,13 @@
-import { Champion, SET_12_CHAMPIONS } from "@/data/champions";
+import { SET_12_CHAMPIONS } from "@/data/champions";
 import { Synergy } from "@/data/synergy";
-import { checkGrade, cn, filterNull, groupBy, sortByNumber } from "@/utils";
+import {
+  checkGrade,
+  cn,
+  filterNull,
+  groupBy,
+  isChampionExist,
+  sortByNumber,
+} from "@/utils";
 import Image from "next/image";
 import ChampionPortrait from "../ChampionPortrait";
 import { Arrow } from "../svgs";
@@ -107,14 +114,6 @@ function SynergyListItem(props: SyenrgyListItemProps) {
 
   const sortByTier = sortByNumber(synergyChampions, "tier");
 
-  function championExist(champion: Champion) {
-    const exist = indexedChampionList.find(
-      (cham) => cham.champion.name === champion.name
-    );
-
-    return exist ? true : false;
-  }
-
   return (
     <div
       ref={tooltipContainerRef}
@@ -150,7 +149,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
               champion={champion}
               className={cn(
                 "size-[40px]",
-                !championExist(champion) && "!opacity-50"
+                !isChampionExist(indexedChampionList, champion) && "!opacity-50"
               )}
               objectPosition="object-[-35px_0px]"
             />
