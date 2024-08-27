@@ -5,6 +5,7 @@ import { Champion } from "@/data/champions";
 import { RiotMatchInfoRes } from "@/types/riot";
 import {
   cn,
+  filterNull,
   filterUndefined,
   findChampion,
   generateIndexedChampion,
@@ -76,9 +77,11 @@ async function Match(props: MatchProps) {
 
   const url = generateSaveUrl(indexedChampionList);
 
-  const playerNameList = await Promise.all(
-    match.metadata.participants.map(
-      async (puuid) => await getRiotAccountByPuuid(puuid)
+  const playerNameList = filterNull(
+    await Promise.all(
+      match.metadata.participants.map(
+        async (puuid) => await getRiotAccountByPuuid(puuid)
+      )
     )
   );
 
