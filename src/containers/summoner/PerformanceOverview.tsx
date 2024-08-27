@@ -38,14 +38,20 @@ function PerformanceOverview(props: PerformanceOverviewProps) {
   const allSynergyList = searchedPayersInfoList
     .map((info) => info.traits)
     .flat(Infinity) as TraitDto[];
+  //시너지 중 활성화 되지 않은 시너지 필터링
+  const filteredNoActive = allSynergyList.filter(
+    (synergy) => synergy.tier_current !== 0
+  );
 
   const mostChampion = findChampion(
     findLogestArray(groupBy(allChampionList, "character_id"))[0].character_id
   );
 
   const mostSynergy = findSynergy(
-    findLogestArray(groupBy(allSynergyList, "name"))[0].name
+    findLogestArray(groupBy(filteredNoActive, "name"))[0].name
   );
+
+  console.log(groupBy(filteredNoActive, "name"));
 
   // console.log(searchedPayersInfoList, "ddd");
   // console.log(placementAvg);
@@ -62,7 +68,9 @@ function PerformanceOverview(props: PerformanceOverviewProps) {
           </div>
           <div className="py-xs px-sm flex gap-xxs">
             <OverviewItem text="평균 등수">
-              <span className="text-2xl text-main-text">{placementAvg}</span>
+              <span className="text-2xl text-main-text">
+                #{Math.round(placementAvg)}
+              </span>
             </OverviewItem>
 
             <OverviewItem text="최애 챔피언">
