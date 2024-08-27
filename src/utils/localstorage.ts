@@ -2,6 +2,8 @@ import { SET_12_CHAMPIONS } from "@/data/champions";
 import { CORE_ITEM_LIST, EMBLEM_ITEM_LIST } from "@/data/item";
 import { OptimizedIndexedChampion } from "@/containers/BuilderContainer";
 import { filterNull } from ".";
+import { IndexedChampion } from "@/components/field/Field";
+import { PlacedChampion } from "@/components/field/hexagon";
 
 export function uploadToLocalstorage(key: string, data: string) {
   localStorage.setItem(key, data);
@@ -11,6 +13,25 @@ export function getLocalStorageByKey(key: string) {
   const result = localStorage.getItem(key);
 
   return result;
+}
+
+export function saveBuildToLocalStorage(
+  buildName: string,
+  indexedChampionList: IndexedChampion[]
+) {
+  const url = generateSaveUrl(indexedChampionList);
+  uploadToLocalstorage(buildName, url);
+  alert("저장 되었습니다.");
+}
+
+export function generateSaveUrl(indexedChampionList: IndexedChampion[]) {
+  const optimized = optimizeIndexedChampion(indexedChampionList);
+
+  const fieldToString = JSON.stringify(optimized);
+
+  const encoded = encodeURI(fieldToString);
+
+  return encoded;
 }
 
 export function getlocalBuildAll() {
@@ -67,4 +88,18 @@ export function unOptimizedBuild(optimizedString: string) {
 
 export function localStorageDelete(key: string) {
   localStorage.removeItem(key);
+}
+
+export function optimizeIndexedChampion(arr: IndexedChampion[]) {
+  const optimized = arr.map((item) => {
+    if (!item) return;
+
+    return {
+      name: item.champion.name,
+      index: item.index,
+      itemList: item.itemList.map((tem) => tem.name),
+    };
+  });
+
+  return optimized;
 }

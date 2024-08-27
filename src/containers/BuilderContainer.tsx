@@ -11,7 +11,9 @@ import LocalBuildSave from "@/components/LocalBuildSave";
 import { PlacedChampion } from "@/components/field/hexagon";
 import { SYNERGY_LIST, Synergy } from "@/data/synergy";
 import {
+  generateSaveUrl,
   getlocalBuildAll,
+  saveBuildToLocalStorage,
   unOptimizedBuild,
   uploadToLocalstorage,
 } from "@/utils/localstorage";
@@ -58,20 +60,13 @@ export default function BuilderContainer() {
       alert("배치된 챔피언이 없습니다.");
       return;
     }
-    const filteredNull = filterNull(placedChampions);
+    const filteredNull = filterNull(placedChampions) as IndexedChampion[];
 
-    const optimized = optimizeIndexedChampion(filteredNull);
-
-    const fieldToString = JSON.stringify(optimized);
-
-    const encoded = encodeURI(fieldToString);
+    saveBuildToLocalStorage(buildName, filteredNull);
     // addParams("field", fieldToString);
     //  const pureURL = `https://tft-helper-zeta.vercel.app/?field=${fieldToString}`;
     //  const encode = encodeURI(pureURL);
-
-    uploadToLocalstorage(buildName, encoded);
     setBuildList(getlocalBuildAll);
-    alert("저장 되었습니다.");
     // copyClipboard(encode);
   }
 
@@ -80,20 +75,6 @@ export default function BuilderContainer() {
     if (!params) return;
     getBuildFromUrl();
   }, [params]);
-
-  function optimizeIndexedChampion(arr: PlacedChampion[]) {
-    const optimized = arr.map((item) => {
-      if (!item) return;
-
-      return {
-        name: item.champion.name,
-        index: item.index,
-        itemList: item.itemList.map((tem) => tem.name),
-      };
-    });
-
-    return optimized;
-  }
 
   function getBuildFromUrl() {
     const fieldParams = params.get("field") as string;
