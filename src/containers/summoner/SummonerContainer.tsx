@@ -2,6 +2,7 @@ import { ParticipanthDto, SummonerData } from "@/types/riot";
 import Match from "./Match";
 import PerformanceOverview from "./PerformanceOverview";
 import Summoner from "./Summoner";
+import RecentlyGameResult from "./RecentlyGameResult";
 
 interface SummonerContainerProps {
   summonerData: SummonerData;
@@ -39,7 +40,11 @@ function SummonerContainer(props: SummonerContainerProps) {
           </div>
           {/* 전적 리스트 부분 */}
           <div className="flex py-lg pc:gap-lg">
-            <div className="basis-1/5">d</div>
+            <div className="basis-1/5">
+              <RecentlyGameResult
+                searchedPayersInfoList={searchedPayersInfoList}
+              />
+            </div>
             {/* 전적리스트 */}
             {matchInfoList && puuid && (
               <div className="basis-4/5 max-w-[940px] flex flex-col p-[1px] gap-sm">
