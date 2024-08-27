@@ -161,6 +161,13 @@ export function romeNumToArabNum(rome: string) {
   }
 }
 
+export function findLogestArray<T>(arr: T[][]): T[] {
+  const result = arr.reduce((longest, current) => {
+    return current.length > longest.length ? current : longest;
+  }, []);
+  return result;
+}
+
 export function generateIndexedChampion(
   champion: Champion,
   index: number,

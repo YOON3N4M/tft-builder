@@ -1,5 +1,17 @@
-import { ParticipanthDto, RiotMatchInfoRes, SummonerData } from "@/types/riot";
+"use client";
+
+import {
+  ParticipanthDto,
+  RiotMatchInfoRes,
+  SummonerData,
+  TraitDto,
+  UnitDto,
+} from "@/types/riot";
 import CompanionPortrait from "./CompanionPortrait";
+import { findChampion, findLogestArray, findSynergy, groupBy } from "@/utils";
+import ChampionPortrait from "@/components/ChampionPortrait";
+import { ReactNode } from "react";
+import Image from "next/image";
 
 interface PerformanceOverviewProps {
   summonerData: SummonerData;
@@ -19,6 +31,22 @@ function PerformanceOverview(props: PerformanceOverviewProps) {
     searchedPayersInfoList.reduce((sum, item) => sum + item?.placement, 0) /
     searchedPayersInfoList.length;
 
+  const allChampionList = searchedPayersInfoList
+    .map((info) => info.units)
+    .flat(Infinity) as UnitDto[];
+
+  const allSynergyList = searchedPayersInfoList
+    .map((info) => info.traits)
+    .flat(Infinity) as TraitDto[];
+
+  const mostChampion = findChampion(
+    findLogestArray(groupBy(allChampionList, "character_id"))[0].character_id
+  );
+
+  const mostSynergy = findSynergy(
+    findLogestArray(groupBy(allSynergyList, "name"))[0].name
+  );
+
   // console.log(searchedPayersInfoList, "ddd");
   // console.log(placementAvg);
 
@@ -30,30 +58,38 @@ function PerformanceOverview(props: PerformanceOverviewProps) {
         <>
           {" "}
           <div className="px-sm py-xs border-[#222] text-main-text border-b-[1px] text-xs font-semibold">
-            20게임 종합
+            10게임 종합
           </div>
           <div className="py-xs px-sm flex gap-xxs">
-            <div className="flex-1  bg-default-bg py-xxxl flex flex-col items-center justify-end">
+            <OverviewItem text="평균 등수">
               <span className="text-2xl text-main-text">{placementAvg}</span>
-              <span>평균 등수</span>
-            </div>
-            <div className="flex-1  bg-default-bg py-xxxl flex flex-col items-center justify-end">
-              <span>최애 아이템</span>
-            </div>
-            <div className="flex-1  bg-default-bg py-xxxl flex flex-col items-center justify-end">
-              <span className="text-2xl text-main-text">4</span>
-              <span>최애 챔피언</span>
-            </div>
-            <div className="flex-1  bg-default-bg py-xxxl flex flex-col items-center justify-end">
-              <span className="text-2xl text-main-text">
-                <CompanionPortrait id="1" />
-              </span>
-              <span>최애 전설이</span>
-            </div>
-            <div className="flex-1  bg-default-bg py-xxxl flex flex-col items-center justify-end">
-              <span className="text-2xl text-main-text">4</span>
-              <span>아아무거나</span>
-            </div>
+            </OverviewItem>
+
+            <OverviewItem text="최애 챔피언">
+              {mostChampion && (
+                <ChampionPortrait
+                  tooltip
+                  className="!rounded-full !size-[70px]"
+                  objectPosition="object-[-60px_0px]"
+                  champion={mostChampion}
+                />
+              )}
+            </OverviewItem>
+
+            <OverviewItem text="최애 특성">
+              {mostSynergy && (
+                <Image
+                  width={40}
+                  height={4}
+                  src={`/images/synergy/${mostSynergy.src[0]}.png`}
+                  alt={mostSynergy.name}
+                  className="filter"
+                />
+              )}
+            </OverviewItem>
+            <OverviewItem text="최애 증강체">
+              <></>
+            </OverviewItem>
           </div>
         </>
       )}
@@ -62,3 +98,18 @@ function PerformanceOverview(props: PerformanceOverviewProps) {
 }
 
 export default PerformanceOverview;
+
+interface OverviewItemProps {
+  text: string;
+  children: ReactNode;
+}
+
+function OverviewItem(props: OverviewItemProps) {
+  const { text, children } = props;
+  return (
+    <div className="flex-1 bg-default-bg py-xxxl flex flex-col items-center justify-end gap-sm">
+      {children}
+      <span>{text}</span>
+    </div>
+  );
+}
