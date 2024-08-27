@@ -11,6 +11,9 @@ import {
   sortByNumber,
 } from "@/utils";
 import CompanionPortrait from "./CompanionPortrait";
+import { Clipboard } from "@/components/svgs";
+import { copyBuild, generateSaveUrl } from "@/utils/localstorage";
+import BuildCopyButton from "@/components/BuildCopyButton";
 
 interface MatchProps {
   puuid: string;
@@ -71,6 +74,8 @@ async function Match(props: MatchProps) {
     generateIndexedChampion(champion, idx)
   );
 
+  const url = generateSaveUrl(indexedChampionList);
+
   const playerNameList = await Promise.all(
     match.metadata.participants.map(
       async (puuid) => await getRiotAccountByPuuid(puuid)
@@ -90,7 +95,7 @@ async function Match(props: MatchProps) {
         )}
       ></div>
       <div className="bg-content-bg flex-1 border-[#222]">
-        <div className="px-sm py-xxs">
+        <div className="flex px-sm py-xxs w-full">
           <span
             className={cn(
               "font-semibold !bg-none",
@@ -99,7 +104,11 @@ async function Match(props: MatchProps) {
           >
             #{searchedPlayerInfo.placement}
           </span>
+          <div className="ml-auto">
+            <BuildCopyButton url={url} />
+          </div>
         </div>
+
         <div className="border-t flex items-center border-[#222] px-sm py-xs">
           <div className="py-sm">
             <CompanionPortrait
