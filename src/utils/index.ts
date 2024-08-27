@@ -98,8 +98,8 @@ export function copyClipboard(text: string) {
   navigator.clipboard.writeText(text);
 }
 
-export function filterNull<T>(arr: T[]): T[] {
-  const result = arr.filter((item) => item !== null);
+export function filterNull<T>(arr: (T | null)[]): T[] {
+  const result = arr.filter((item) => item !== null) as T[];
   return result;
 }
 
