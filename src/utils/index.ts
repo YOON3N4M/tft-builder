@@ -1,6 +1,6 @@
 import { IndexedChampion } from "@/components/field/Field";
-import { Champion } from "@/data/champions";
-import { Synergy } from "@/data/synergy";
+import { Champion, SET_12_CHAMPIONS } from "@/data/champions";
+import { SYNERGY_LIST, Synergy } from "@/data/synergy";
 import { RiotId } from "@/types/riot";
 
 export const cn = (...classNames: (string | false | undefined | null)[]) => {
@@ -103,14 +103,9 @@ export function filterNull<T>(arr: T[]): T[] {
   return result;
 }
 
-export function generateIndexdChampion(champion: Champion, index: number) {
-  const newIndexedChampion: IndexedChampion = {
-    index,
-    champion,
-    itemList: [],
-  };
-
-  return newIndexedChampion;
+export function filterUndefined<T>(arr: T[]): T[] {
+  const result = arr.filter((item) => item !== undefined);
+  return result;
 }
 
 export function setItemToindex<T>(
@@ -164,4 +159,48 @@ export function romeNumToArabNum(rome: string) {
     case "IV":
       return 4;
   }
+}
+
+export function generateIndexedChampion(
+  champion: Champion,
+  index: number,
+  itemList = []
+): IndexedChampion {
+  return { champion, index, itemList };
+}
+
+/**
+ * matchinfoRes 에 포함된 Character_id를와 champion 데이터의 Src 값을 비교해서
+ *
+ * 특정 챔피언을 찾아오는 함수
+ *
+ * character_id : TFT12_Lillia
+ *
+ * champion data.src: TFT12_Lillia.TFT_Set12.png
+ */
+export function findChampion(character_id: string) {
+  const champion = SET_12_CHAMPIONS.find(
+    (champion) => champion.src.split(".")[0] === character_id
+  );
+
+  return champion;
+}
+
+/**
+ * matchinfoRes 에 포함된 traits.name과 synergy 데이터의 name 값을 비교해서
+ *
+ * 특정 시너지(특성)을 찾아오는 함수
+ *
+ * traits.name : TFT12_Blaster
+ *
+ * synergy.name : blaster
+ */
+export function findSynergy(trait_name: string) {
+  const name = trait_name.includes("TFT")
+    ? trait_name.split("_")[1].toLowerCase()
+    : trait_name;
+
+  const synergy = SYNERGY_LIST.find((synergy) => synergy.src[0] === name);
+
+  return synergy;
 }

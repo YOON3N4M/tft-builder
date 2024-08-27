@@ -11,7 +11,7 @@ import {
   useDraggingIndexedChampion,
   useDraggingTarget,
 } from "@/store/dragStore";
-import { cn } from "@/utils";
+import { cn, generateIndexedChampion } from "@/utils";
 import Image from "next/image";
 import {
   Dispatch,
@@ -152,11 +152,10 @@ export default function Hexagon(props: HexagonProps) {
 
       const clonedChampion = structuredClone(draggingChampion);
 
-      const indexed = {
-        index,
-        champion: clonedChampion as Champion,
-        itemList: [],
-      };
+      const indexed = generateIndexedChampion(
+        clonedChampion as Champion,
+        index
+      );
 
       setPlacedChampions((prev) => {
         const cloneArray = [...prev];

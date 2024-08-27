@@ -6,10 +6,13 @@ import {
   RiotSummonerRes,
   RiotTftLeagueRes,
   RiotTftMatchListRes,
+  TacticianRes,
+  AccountDto,
 } from "@/types/riot";
 import { apiFetch } from ".";
+import { TACTICIAN_JSON_URL } from "@/constants/url";
 
-const TEMP_API_KEY = "RGAPI-1e10c90a-f737-4018-bbaa-50e2c4748a98";
+const TEMP_API_KEY = "RGAPI-50271633-fc0c-4d51-a40c-d571fc5b5bc5";
 
 const RIOT_API_KEY = TEMP_API_KEY;
 
@@ -57,7 +60,12 @@ export async function getRiotAccount(riotId: RiotId) {
   const data = (await apiFetch(url)) as RiotAccountRes;
   return data;
 }
+export async function getRiotAccountByPuuid(puuid: string) {
+  const url = `https://asia.api.riotgames.com/riot/account/v1/accounts/by-puuid/${puuid}?api_key=${RIOT_API_KEY}`;
 
+  const data = (await apiFetch(url)) as AccountDto;
+  return data;
+}
 export async function getTftSummoner(puuid: string) {
   const url = `https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-puuid/${puuid}?api_key=${RIOT_API_KEY}`;
 
@@ -73,7 +81,7 @@ export async function getTftLeague(summonerId: string) {
 }
 
 export async function getTftMatchList(puuid: string) {
-  const url = `https://asia.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${RIOT_API_KEY}`;
+  const url = `https://asia.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${RIOT_API_KEY}`;
 
   const data = (await apiFetch(url)) as RiotTftMatchListRes;
   return data;
@@ -84,4 +92,28 @@ export async function getTftMatchInfo(matchId: string) {
 
   const data = (await apiFetch(url)) as RiotMatchInfoRes;
   return data;
+}
+
+export async function getTacticianList() {
+  const data = await apiFetch(TACTICIAN_JSON_URL());
+  return data;
+}
+
+export async function fetchTacticianData(idToFind: string) {
+  try {
+    const response = await fetch(TACTICIAN_JSON_URL());
+    const jsonData = await response.json();
+
+    // 데이터가 담긴 객체에서 특정 id 값을 가진 항목 찾기
+    const tacticianData = jsonData.data[idToFind] as TacticianRes;
+
+    if (tacticianData) {
+      // console.log("Tactician Data:", tacticianData);
+      return tacticianData;
+    } else {
+      //  console.log(`No tactician found with id: ${idToFind}`);
+    }
+  } catch (error) {
+    //console.error("Error fetching data:", error);
+  }
 }

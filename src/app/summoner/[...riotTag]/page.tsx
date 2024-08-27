@@ -1,14 +1,6 @@
-import {
-  getRiotAccount,
-  getTftLeague,
-  getTftMatchInfo,
-  getTftMatchList,
-  getTftSummoner,
-  refreshRiotData,
-} from "@/app/services/riot";
+import { refreshRiotData } from "@/app/services/riot";
 import SummonerContainer from "@/containers/summoner/SummonerContainer";
 
-import { RiotAccountRes } from "@/types/riot";
 import { handleRiotId } from "@/utils";
 
 interface SummonerPageProps {

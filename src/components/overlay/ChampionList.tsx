@@ -9,7 +9,7 @@ import {
 import { useDragActions } from "@/store/dragStore";
 import {
   cn,
-  generateIndexdChampion,
+  generateIndexedChampion,
   setItemToindex,
   sortByKorean,
   sortByNumber,
@@ -108,7 +108,7 @@ function ChampionList(props: ChampionListProps) {
       setItemToindex(
         prev,
         prev.indexOf(null),
-        generateIndexdChampion(champion, prev.indexOf(null))
+        generateIndexedChampion(champion, prev.indexOf(null))
       )
     );
   }

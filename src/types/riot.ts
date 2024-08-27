@@ -1,3 +1,9 @@
+export interface AccountDto {
+  puuid: string;
+  gameName: string;
+  tagLine: string;
+}
+
 export interface SummonerData {
   account: RiotAccountRes | null;
   summoner: RiotSummonerRes | null;
@@ -69,8 +75,7 @@ export interface InfoDto {
   tft_set_number: number;
 }
 export interface ParticipanthDto {
-  //꼬마 전설이 Dto 아직 확인이 안됨
-  companion: any;
+  companion: CompanionRes;
   gold_left: number;
   last_round: number;
   level: number;
@@ -91,10 +96,26 @@ export interface TraitDto {
   tier_total: number;
 }
 export interface UnitDto {
-  items: number[];
+  itemNames: number[];
   character_id: string;
   chosen: string;
   name: string;
   rarity: number;
   tier: number;
+}
+
+export interface CompanionRes {
+  content_ID: string;
+  item_ID: number;
+  skin_ID: number;
+  species: string;
+}
+
+export interface TacticianRes {
+  id: string;
+  tier: string;
+  name: string;
+  image: {
+    full: string;
+  };
 }

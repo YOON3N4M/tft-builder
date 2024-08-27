@@ -11,3 +11,9 @@ export const CHAMPION_ICON_URL = (srcParams: string) =>
 
 export const SUMMONER_PROFILE_ICON_URL = (id: number) =>
   `https://ddragon.leagueoflegends.com/cdn/${DATA_DRAGON_VERSION}/img/profileicon/${id}.png`;
+
+export const TACTICIAN_ICON_URL = (srcParams: string) =>
+  `https://ddragon.leagueoflegends.com/cdn/${DATA_DRAGON_VERSION}/img/tft-tactician/${srcParams}`;
+
+export const TACTICIAN_JSON_URL = () =>
+  `https://ddragon.leagueoflegends.com/cdn/${DATA_DRAGON_VERSION}/data/en_US/tft-tactician.json`;
