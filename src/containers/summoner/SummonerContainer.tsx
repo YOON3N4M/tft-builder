@@ -3,6 +3,7 @@ import Match from "./Match";
 import PerformanceOverview from "./PerformanceOverview";
 import Summoner from "./Summoner";
 import RecentlyGameResult from "./RecentlyGameResult";
+import { Warning } from "@/components/svgs";
 
 interface SummonerContainerProps {
   summonerData: SummonerData;
@@ -59,8 +60,13 @@ function SummonerContainer(props: SummonerContainerProps) {
           </div>{" "}
         </>
       ) : (
-        <div>
-          <p>존재 하지 않는 소환사입</p>
+        <div className="min-h-[80dvh] flex items-center  pt-[10%] flex-col">
+          <Warning size={"40px"} />
+
+          <p className="mt-md text-xl">존재 하지 않는 소환사입니다</p>
+          <p className="mt-sm">
+            닉네임, 태그를 정확히 입력했는지 확인해주세요.
+          </p>
         </div>
       )}
     </div>

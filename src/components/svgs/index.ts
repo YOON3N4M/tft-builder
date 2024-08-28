@@ -16,3 +16,4 @@ export { PiDownloadSimple as LoadIcon } from "react-icons/pi";
 export { PiTrash as Trash } from "react-icons/pi";
 export { PiMouseLeftClickFill as LeftClick } from "react-icons/pi";
 export { PiMouseRightClickFill as RightClick } from "react-icons/pi";
+export { PiWarningCircleBold as Warning } from "react-icons/pi";
