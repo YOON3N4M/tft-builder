@@ -1,4 +1,4 @@
-import { refreshRiotData } from "@/app/services/riot";
+import { refreshRiotData } from "@/services/riot";
 import SummonerContainer from "@/containers/summoner/SummonerContainer";
 
 import { handleRiotId } from "@/utils";

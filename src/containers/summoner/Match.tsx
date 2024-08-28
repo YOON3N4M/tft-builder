@@ -1,4 +1,4 @@
-import { getRiotAccountByPuuid } from "@/app/services/riot";
+import { getRiotAccountByPuuid } from "@/services/riot";
 
 import BuildCopyButton from "@/components/BuildCopyButton";
 import AugmentPortrait from "@/components/portraits/AugmentPortrait";
