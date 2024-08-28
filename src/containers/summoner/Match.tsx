@@ -107,11 +107,11 @@ async function Match(props: MatchProps) {
   if (!searchedPlayerInfo) return;
 
   return (
-    <div className="flex rounded-md overflow-hidden">
+    <div className="flex rounded-md overflow-hidden items-stretch h-auto">
       {/* 좌측 외곽선 */}
       <div
         className={cn(
-          "h-full w-[8px]",
+          "h-auto w-[8px] self-stretch",
           bgColorStyles[searchedPlayerInfo.placement.toString()]
         )}
       ></div>
@@ -156,7 +156,7 @@ async function Match(props: MatchProps) {
             ))}
           </div>
           {/* 챔피언 */}
-          <div className="flex items-start ml-lg gap-xs baisis-[50%] flex-wrap">
+          <div className="flex items-start ml-lg gap-xs baisis-[50%] mo:basis-[40%] flex-wrap">
             {indexedChampionList.map((unit) => (
               <div
                 className="flex flex-col items-center"
@@ -181,7 +181,7 @@ async function Match(props: MatchProps) {
             ))}
           </div>
           {/* 닉네임 */}
-          <div className="ml-auto grid grid-cols-2 basis-[20%] text-xs">
+          <div className="ml-auto grid grid-cols-2 basis-[20%] text-xs mo:hidden tab:hidden">
             {playerNameList.map((account) => (
               <div
                 className="text-ellipsis overflow-hidden whitespace-nowrap"

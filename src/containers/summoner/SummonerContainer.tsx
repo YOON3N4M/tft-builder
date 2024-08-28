@@ -25,7 +25,7 @@ function SummonerContainer(props: SummonerContainerProps) {
         <>
           {" "}
           {/* 아마 상단 영역 */}
-          <div className="flex py-lg pc:gap-lg">
+          <div className="flex py-lg pc:gap-lg tab:flex-col mo:flex-col">
             {/* 소화 */}
             <div className="basis-1/5">
               {/* 컴포분리 소환사 정보? */}
@@ -40,23 +40,25 @@ function SummonerContainer(props: SummonerContainerProps) {
             />
           </div>
           {/* 전적 리스트 부분 */}
-          <div className="flex py-lg pc:gap-lg">
+          <div className="flex py-lg pc:gap-lg mo:flex-col tab:flex-col">
             <div className="basis-1/5">
               <RecentlyGameResult
                 searchedPayersInfoList={searchedPayersInfoList}
               />
             </div>
             {/* 전적리스트 */}
-            {matchInfoList && puuid && (
-              <div className="basis-4/5 max-w-[940px] flex flex-col p-[1px] gap-sm">
-                {matchInfoList.map((match, idx) => {
-                  //if (idx !== 1) return;
-                  return (
-                    <Match key={`match-${idx}`} puuid={puuid} match={match} />
-                  );
-                })}
-              </div>
-            )}
+            <div className="basis-4/5 max-w-[940px] flex flex-col p-[1px] gap-sm mo:max-w-full tab:max-w-full mo:mt-lg tab:mt-lg">
+              {matchInfoList && puuid && (
+                <>
+                  {matchInfoList.map((match, idx) => {
+                    //if (idx !== 1) return;
+                    return (
+                      <Match key={`match-${idx}`} puuid={puuid} match={match} />
+                    );
+                  })}
+                </>
+              )}
+            </div>
           </div>{" "}
         </>
       ) : (
