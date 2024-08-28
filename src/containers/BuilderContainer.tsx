@@ -89,8 +89,6 @@ export default function BuilderContainer() {
       structuredClone(indexed)
     );
 
-    //console.log(unOptimized);
-
     // 초기 로딩 상징 처리
     const processingEmblem = clonedIndexed.forEach((indexed) =>
       indexed.itemList.forEach((item) => {

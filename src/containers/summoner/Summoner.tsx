@@ -16,7 +16,6 @@ function Summoner(props: SummonerProps) {
 
   if (!summoner) return;
 
-  console.log(summoner.profileIconId);
   return (
     <div className="py-lg bg-content-bg border-[#222] border flex flex-col items-center rounded-md">
       <div className="rounded-full overflow-hidden border-tier-5 border-2">

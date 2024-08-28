@@ -79,7 +79,6 @@ function ChampionList(props: ChampionListProps) {
   }
 
   function handleIconDragStart(e: any, champion: Champion) {
-    //console.log(e, "드래그 한다잉");
     setDraggingTarget(champion);
   }
 

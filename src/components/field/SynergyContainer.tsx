@@ -31,8 +31,6 @@ const synergyBgStyles: { [key: string]: string } = {
 function SynergyContainer(props: SynergyContainerProps) {
   const { indexedChampionList } = props;
 
-  //console.log(indexedChampionList);
-
   const nullFiltered = filterNull(indexedChampionList) as IndexedChampion[];
 
   const duplicateRemoves = removeDuplicateSyenrgy(nullFiltered);

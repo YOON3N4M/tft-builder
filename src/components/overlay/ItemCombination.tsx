@@ -107,7 +107,6 @@ function ItemCombination(props: ItemCombinationProps) {
     setInventory(cloneInventory);
     setCoreInventory((prev) => [...prev, targetCoreItem]);
     //const result = combineItem(targetCoreItem, inventory);
-    //  console.log(result);
   }
 
   function handleCoreItemDrag(coreItem: CoreItem) {

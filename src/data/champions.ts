@@ -54,7 +54,7 @@ export const TRAINING_BOT = generateChampion(
   "훈련 봇",
   0,
   [],
-  "TFT_Consumable_TrainingDummy"
+  "TFT_Consumable_TrainingDummy.png"
 );
 const AHRI = generateChampion(
   1,

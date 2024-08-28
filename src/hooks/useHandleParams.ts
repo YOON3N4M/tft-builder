@@ -30,7 +30,6 @@ export default function useHandleParams() {
 
       return [...filtered, { key, data }];
     });
-    //console.log(params);
   }
 
   return { addParams };

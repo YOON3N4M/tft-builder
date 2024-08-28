@@ -93,7 +93,6 @@ function RerollPercentage(props: RerollPercentageProps) {
   }
 
   function onDragDrop() {
-    //console.log("드랍함 ");
     const draggingChampion = draggingTarget as Champion;
 
     // 훈련 봇 예외 처리

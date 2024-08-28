@@ -59,7 +59,6 @@ async function Match(props: MatchProps) {
   const { match, puuid } = props;
 
   const matchId = match.metadata.match_id;
-  //console.log(match.info.participants);
 
   const searchedPlayerInfo = match.info.participants.find(
     (parti) => parti.puuid === puuid
@@ -91,7 +90,6 @@ async function Match(props: MatchProps) {
   );
 
   if (!searchedPlayerInfo) return;
-  //console.log(traits);
 
   return (
     <div className="flex rounded-md overflow-hidden">
