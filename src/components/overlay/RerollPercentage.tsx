@@ -6,7 +6,7 @@ import {
   REROLL_PERCENTAGE,
   SHOP_PIECES_QTY_ARR,
 } from "@/data/reroll";
-import { CHAMPION_ICON_URL } from "@/constants/url";
+
 import { useDraggingTarget } from "@/store/dragStore";
 import { cn, sortByNumber } from "@/utils";
 import Image from "next/image";
@@ -22,6 +22,7 @@ import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import Tab from "../tab/Tab";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import MouseGuide from "../MouseGuide";
+import { SRC_CHAMPION } from "@/constants/src";
 
 interface RerollPercentageProps extends OverlayProps {}
 
@@ -406,7 +407,7 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
       <Image
         width={256}
         height={128}
-        src={CHAMPION_ICON_URL(champion.src)}
+        src={SRC_CHAMPION(champion.src)}
         alt={champion.name}
         className="scale-x-[-1] absolute top-0 z-[0]"
       />

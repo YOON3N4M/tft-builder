@@ -1,9 +1,5 @@
 import { Champion, TRAINING_BOT } from "@/data/champions";
-import {
-  CHAMPION_ICON_URL,
-  ITEM_ICON_URL,
-  TRAINING_BOT_ICON_URL,
-} from "@/constants/url";
+
 import useDragEvent from "@/hooks/useDragEvent";
 import {
   useDragActions,
@@ -26,6 +22,7 @@ import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { IndexedChampion } from "./Field";
 import { SYNERGY_LIST, Synergy } from "@/data/synergy";
 import ItemPortrait from "../portraits/ItemPortrait";
+import { SRC_CHAMPION } from "@/constants/src";
 
 export type PlacedChampion = IndexedChampion | null;
 
@@ -267,11 +264,7 @@ export default function Hexagon(props: HexagonProps) {
                 onDrop={handleItemDrop}
                 width={256}
                 height={128}
-                src={
-                  isTrainingBot
-                    ? TRAINING_BOT_ICON_URL()
-                    : CHAMPION_ICON_URL(placedChampion.champion.src)
-                }
+                src={SRC_CHAMPION(placedChampion.champion.src)}
                 alt={placedChampion.champion.name}
                 className={cn(
                   "absolute center w-full h-full",

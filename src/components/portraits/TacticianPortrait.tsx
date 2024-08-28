@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import tacticianJson from "@/data/tft-tactician.json";
+import { SRC_TACTICIAN } from "@/constants/src";
 
 interface TacticianPortraitProps {
   id: number;
@@ -13,7 +14,6 @@ interface Tactician {
   image: { full: string };
   name: string;
 }
-const tacticianSrc = (srcName: string) => `/images/tft-tactician/${srcName}`;
 
 function TacticianPortrait(props: TacticianPortraitProps) {
   const { id } = props;
@@ -35,7 +35,7 @@ function TacticianPortrait(props: TacticianPortraitProps) {
       <Image
         width={512}
         height={344}
-        src={tacticianSrc(tactician.image.full)}
+        src={SRC_TACTICIAN(tactician.image.full)}
         alt={tactician.name}
         className="object-cover scale-150"
       />

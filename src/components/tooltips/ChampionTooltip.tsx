@@ -3,7 +3,7 @@ import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
 import MouseGuide, { MouseGuideProps } from "../MouseGuide";
-import { CHAMPION_ICON_URL } from "@/constants/url";
+import { SRC_CHAMPION } from "@/constants/src";
 
 interface ChampionTooltipProps
   extends HTMLAttributes<HTMLDivElement>,
@@ -79,7 +79,7 @@ function ChampionTooltip(props: ChampionTooltipProps) {
             width={256}
             height={128}
             alt={champion.name}
-            src={CHAMPION_ICON_URL(champion.src)}
+            src={SRC_CHAMPION(champion.src)}
             className="object-cover"
             quality={95}
           ></Image>

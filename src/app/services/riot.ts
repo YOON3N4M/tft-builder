@@ -10,7 +10,7 @@ import {
   AccountDto,
   RiotFailedRes,
 } from "@/types/riot";
-import { TACTICIAN_JSON_URL } from "@/constants/url";
+
 import { filterNull } from "@/utils";
 
 const TEMP_API_KEY = "RGAPI-50271633-fc0c-4d51-a40c-d571fc5b5bc5";
@@ -107,30 +107,6 @@ export async function getTftMatchInfo(
 
   const data = await riotApiFetch(url);
   return data;
-}
-
-export async function getTacticianList() {
-  const data = await riotApiFetch(TACTICIAN_JSON_URL());
-  return data;
-}
-
-export async function fetchTacticianData(idToFind: string) {
-  try {
-    const response = await fetch(TACTICIAN_JSON_URL());
-    const jsonData = await response.json();
-
-    // 데이터가 담긴 객체에서 특정 id 값을 가진 항목 찾기
-    const tacticianData = jsonData.data[idToFind] as TacticianRes;
-
-    if (tacticianData) {
-      // console.log("Tactician Data:", tacticianData);
-      return tacticianData;
-    } else {
-      //  console.log(`No tactician found with id: ${idToFind}`);
-    }
-  } catch (error) {
-    //console.error("Error fetching data:", error);
-  }
 }
 
 export async function riotApiFetch(url: string, option?: RequestInit) {

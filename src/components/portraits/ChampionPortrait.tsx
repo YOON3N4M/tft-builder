@@ -1,12 +1,12 @@
 "use client";
 
 import { Champion, TRAINING_BOT } from "@/data/champions";
-import { CHAMPION_ICON_URL, TRAINING_BOT_ICON_URL } from "@/constants/url";
 import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
-import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
+import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+import { SRC_CHAMPION } from "@/constants/src";
 
 interface ChampionPortraitProps extends HTMLAttributes<HTMLDivElement> {
   champion: Champion;
@@ -39,9 +39,9 @@ function ChampionPortrait(props: ChampionPortraitProps) {
   const isTrainingBot = name === TRAINING_BOT.name;
 
   // 훈련 봇 예외 처리
-  const fixedTrainingBot = isTrainingBot
-    ? TRAINING_BOT_ICON_URL()
-    : CHAMPION_ICON_URL(src);
+  const fixedTrainingBot = SRC_CHAMPION(src).includes(".png")
+    ? SRC_CHAMPION(src)
+    : `${SRC_CHAMPION(src)}.png`;
 
   return (
     <div

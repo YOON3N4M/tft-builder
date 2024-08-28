@@ -1,13 +1,14 @@
 "use client";
 
 import { CombinationItem, CoreItem } from "@/data/item";
-import { ITEM_ICON_URL } from "@/constants/url";
+
 import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes, useState } from "react";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { LeftClick, RightClick } from "../svgs";
 import MouseGuide from "../MouseGuide";
+import { SRC_ITEM } from "@/constants/src";
 
 interface ItemPortraitProps extends HTMLAttributes<HTMLImageElement> {
   item: CoreItem | CombinationItem;
@@ -56,7 +57,7 @@ function ItemPortrait(props: ItemPortraitProps) {
     >
       <Image
         className={cn("rounded-md cursor-pointer", className)}
-        src={isEmblem ? `/images/emblem/${src}.png` : ITEM_ICON_URL(src)}
+        src={isEmblem ? `/images/emblem/${src}.png` : SRC_ITEM(src)}
         width={width}
         height={height}
         alt={name}

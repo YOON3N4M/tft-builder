@@ -15,7 +15,7 @@ import {
   SPATULA,
   TEAR_OF_THE_GADDESS,
 } from "@/data/item";
-import { ITEM_ICON_URL } from "@/constants/url";
+
 import { cn } from "@/utils";
 import { calculateAllCombinationCase } from "@/utils/item";
 import Image from "next/image";
@@ -28,6 +28,7 @@ import ItemPortrait from "../portraits/ItemPortrait";
 import Tab from "../tab/Tab";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { OverlayProps } from "./Overlay";
+import { SRC_ITEM } from "@/constants/src";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -303,7 +304,7 @@ function ItemIcon(props: ItemIconProps) {
   return (
     <Image
       className="rounded-[4px]"
-      src={ITEM_ICON_URL(src)}
+      src={SRC_ITEM(src)}
       width={30}
       height={30}
       alt={name}
