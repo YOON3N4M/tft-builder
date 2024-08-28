@@ -1,6 +1,8 @@
 import { getRiotAccountByPuuid } from "@/app/services/riot";
 
 import BuildCopyButton from "@/components/BuildCopyButton";
+import AugmentPortrait from "@/components/portraits/AugmentPortrait";
+
 import ChampionPortrait from "@/components/portraits/ChampionPortrait";
 import SynergyPortrait from "@/components/portraits/SynergyPortrait";
 
@@ -67,10 +69,11 @@ async function Match(props: MatchProps) {
 
   const traits = sortByNumber(searchedPlayerInfo.traits, "style", true);
 
+  const augments = searchedPlayerInfo.augments;
+
   const unitList = searchedPlayerInfo?.units.map((unit) =>
     findChampion(unit.character_id)
   );
-
   const filteredUndefinedUnitList = filterUndefined(unitList!) as Champion[];
 
   const indexedChampionList = filteredUndefinedUnitList.map((champion, idx) =>
@@ -117,9 +120,6 @@ async function Match(props: MatchProps) {
         <div className="border-t flex items-center border-[#222] px-sm py-xs">
           <div className="py-sm">
             <TacticianPortrait id={searchedPlayerInfo.companion.item_ID} />
-            {/* <CompanionPortrait
-              id={searchedPlayerInfo.companion.item_ID.toString()}
-            /> */}
           </div>
           {/* 시너지 */}
           <div className="flex ml-lg basis-[15%] flex-wrap gap-xxs h-min">
@@ -137,7 +137,11 @@ async function Match(props: MatchProps) {
             ))}
           </div>
           {/* 증강 */}
-          <div></div>
+          <div className="flex flex-col gap-xxs">
+            {augments.map((augment, idx) => (
+              <AugmentPortrait name={augment} key={`${match}-augment-${idx}`} />
+            ))}
+          </div>
           {/* 챔피언 */}
           <div className="flex items-center ml-lg gap-xs baisis-[50%] flex-wrap">
             {filteredUndefinedUnitList?.map((unit) => (

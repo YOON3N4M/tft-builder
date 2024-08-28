@@ -8,3 +8,6 @@ export const SRC_SUMMONER_ICON = (id: number) =>
   `/images/profileicon/${id}.png`;
 
 export const SRC_ITEM = (srcName: string) => `/images/tft-item/${srcName}`;
+
+export const SRC_AUGMENT = (srcName: string) =>
+  `/images/tft-augment/${srcName}`;

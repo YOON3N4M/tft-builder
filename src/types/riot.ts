@@ -76,7 +76,7 @@ export interface InfoDto {
 }
 export interface ParticipanthDto {
   // 증강체
-  aguments: string[];
+  augments: string[];
   companion: CompanionRes;
   gold_left: number;
   last_round: number;
