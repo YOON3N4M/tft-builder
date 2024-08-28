@@ -22,6 +22,8 @@ import {
 import { generateSaveUrl } from "@/utils/localstorage";
 import ItemPortrait from "@/components/portraits/ItemPortrait";
 import { THIEFS_GLOVES } from "@/data/item";
+import { Star } from "@/components/svgs";
+import { IndexedChampion } from "@/components/field/Field";
 
 interface MatchProps {
   puuid: string;
@@ -58,6 +60,10 @@ const synergyBgStyles: { [key: string]: string } = {
   "5": "bg-[#ad1457]",
 };
 
+interface MatchIndexedChampion extends IndexedChampion {
+  tier: number;
+}
+
 async function Match(props: MatchProps) {
   const { match, puuid } = props;
 
@@ -68,6 +74,8 @@ async function Match(props: MatchProps) {
   );
 
   if (!searchedPlayerInfo) return;
+
+  console.log(searchedPlayerInfo.units[0].tier);
 
   const traits = sortByNumber(searchedPlayerInfo.traits, "style", true);
 
@@ -90,7 +98,12 @@ async function Match(props: MatchProps) {
         itemList = [THIEFS_GLOVES];
       }
 
-      return generateIndexedChampion(champion, idx, itemList);
+      const matchIndexedChampuion = {
+        ...generateIndexedChampion(champion, idx, itemList),
+        tier: unit.tier,
+      };
+
+      return matchIndexedChampuion;
     })
   );
 
@@ -162,9 +175,16 @@ async function Match(props: MatchProps) {
                 className="flex flex-col items-center"
                 key={`${matchId}-${unit?.champion.id}`}
               >
+                <div className="flex">
+                  {Array(unit.tier)
+                    .fill(0)
+                    .map((_, idx) => (
+                      <Star key={idx} size={"11px"} />
+                    ))}
+                </div>
                 <ChampionPortrait
                   tooltip
-                  className="size-[40px]"
+                  className="size-[40px] mt-xxxs"
                   objectPosition="object-[-35px_0px]"
                   champion={unit.champion}
                 />
