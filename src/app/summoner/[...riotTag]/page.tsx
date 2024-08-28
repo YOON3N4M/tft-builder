@@ -2,10 +2,17 @@ import { refreshRiotData } from "@/services/riot";
 import SummonerContainer from "@/containers/summoner/SummonerContainer";
 
 import { handleRiotId } from "@/utils";
+import { Metadata } from "next";
 
 interface SummonerPageProps {
   params: { riotTag: string[] };
 }
+
+export const metadata: Metadata = {
+  title: "전략적 팀 전투 전적 조회",
+  description:
+    "전략적 팀 전투 전적을 조회하고, 빌드를 복사, 저장 할 수 있습니다.",
+};
 
 // 1. 라이엇 account 정보 받기
 
