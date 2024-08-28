@@ -3,9 +3,9 @@
 import { SET_12_CHAMPIONS } from "@/data/champions";
 import { cn, findSynergy, isChampionExist, sortByNumber } from "@/utils";
 import Image from "next/image";
+import { IndexedChampion } from "../field/Field";
+import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import ChampionPortrait from "./ChampionPortrait";
-import { IndexedChampion } from "./field/Field";
-import { ToolTip, useToolTip } from "./tooltips/ToolTip";
 
 const synergyBgStyles: { [key: string]: string } = {
   "1": "bg-gray-900",

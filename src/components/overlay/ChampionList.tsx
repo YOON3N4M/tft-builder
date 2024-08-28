@@ -22,7 +22,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import ChampionPortrait from "../ChampionPortrait";
+import ChampionPortrait from "../portraits/ChampionPortrait";
 import { Token } from "../svgs";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";

@@ -5,8 +5,8 @@ import { CHAMPION_ICON_URL, TRAINING_BOT_ICON_URL } from "@/constants/url";
 import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
-import { ToolTip, useToolTip } from "./tooltips/ToolTip";
-import ChampionTooltip from "./tooltips/ChampionTooltip";
+import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+import ChampionTooltip from "../tooltips/ChampionTooltip";
 
 interface ChampionPortraitProps extends HTMLAttributes<HTMLDivElement> {
   champion: Champion;

@@ -7,11 +7,12 @@ import {
   TraitDto,
   UnitDto,
 } from "@/types/riot";
-import CompanionPortrait from "./CompanionPortrait";
+
 import { findChampion, findLogestArray, findSynergy, groupBy } from "@/utils";
-import ChampionPortrait from "@/components/ChampionPortrait";
+
 import { ReactNode } from "react";
 import Image from "next/image";
+import ChampionPortrait from "@/components/portraits/ChampionPortrait";
 
 interface PerformanceOverviewProps {
   summonerData: SummonerData;

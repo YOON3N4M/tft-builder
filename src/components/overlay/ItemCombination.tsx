@@ -24,7 +24,7 @@ import { useDragActions } from "@/store/dragStore";
 import { MouseEvent, useEffect, useState } from "react";
 import { Question, Reset, WindowMaxi, WindowMini } from "../svgs";
 
-import ItemPortrait from "../ItemPortrait";
+import ItemPortrait from "../portraits/ItemPortrait";
 import Tab from "../tab/Tab";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { OverlayProps } from "./Overlay";

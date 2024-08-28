@@ -9,7 +9,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Clipboard, LoadIcon, Trash } from "./svgs";
-import ChampionPortrait from "./ChampionPortrait";
+import ChampionPortrait from "./portraits/ChampionPortrait";
 import { TRAINING_BOT } from "@/data/champions";
 
 interface LocalBuildProps {

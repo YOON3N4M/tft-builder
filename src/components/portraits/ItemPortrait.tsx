@@ -5,9 +5,9 @@ import { ITEM_ICON_URL } from "@/constants/url";
 import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes, useState } from "react";
-import { ToolTip, useToolTip } from "./tooltips/ToolTip";
-import { LeftClick, RightClick } from "./svgs";
-import MouseGuide from "./MouseGuide";
+import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+import { LeftClick, RightClick } from "../svgs";
+import MouseGuide from "../MouseGuide";
 
 interface ItemPortraitProps extends HTMLAttributes<HTMLImageElement> {
   item: CoreItem | CombinationItem;

@@ -25,7 +25,7 @@ import ChampionTooltip from "../tooltips/ChampionTooltip";
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { IndexedChampion } from "./Field";
 import { SYNERGY_LIST, Synergy } from "@/data/synergy";
-import ItemPortrait from "../ItemPortrait";
+import ItemPortrait from "../portraits/ItemPortrait";
 
 export type PlacedChampion = IndexedChampion | null;
 

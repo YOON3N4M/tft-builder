@@ -9,7 +9,7 @@ import {
   sortByNumber,
 } from "@/utils";
 import Image from "next/image";
-import ChampionPortrait from "../ChampionPortrait";
+import ChampionPortrait from "../portraits/ChampionPortrait";
 import { Arrow } from "../svgs";
 
 import { ToolTip, useToolTip } from "../tooltips/ToolTip";

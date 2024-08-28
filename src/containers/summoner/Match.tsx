@@ -1,6 +1,11 @@
 import { getRiotAccountByPuuid } from "@/app/services/riot";
-import ChampionPortrait from "@/components/ChampionPortrait";
-import SynergyPortrait from "@/components/SynergyPortrait";
+
+import BuildCopyButton from "@/components/BuildCopyButton";
+import ChampionPortrait from "@/components/portraits/ChampionPortrait";
+import SynergyPortrait from "@/components/portraits/SynergyPortrait";
+
+import TacticianPortrait from "@/components/portraits/TacticianPortrait";
+
 import { Champion } from "@/data/champions";
 import { RiotMatchInfoRes } from "@/types/riot";
 import {
@@ -11,10 +16,7 @@ import {
   generateIndexedChampion,
   sortByNumber,
 } from "@/utils";
-import CompanionPortrait from "./CompanionPortrait";
-import { Clipboard } from "@/components/svgs";
-import { copyBuild, generateSaveUrl } from "@/utils/localstorage";
-import BuildCopyButton from "@/components/BuildCopyButton";
+import { generateSaveUrl } from "@/utils/localstorage";
 
 interface MatchProps {
   puuid: string;
@@ -114,9 +116,10 @@ async function Match(props: MatchProps) {
 
         <div className="border-t flex items-center border-[#222] px-sm py-xs">
           <div className="py-sm">
-            <CompanionPortrait
+            <TacticianPortrait id={searchedPlayerInfo.companion.item_ID} />
+            {/* <CompanionPortrait
               id={searchedPlayerInfo.companion.item_ID.toString()}
-            />
+            /> */}
           </div>
           {/* 시너지 */}
           <div className="flex ml-lg basis-[15%] flex-wrap gap-xxs h-min">
