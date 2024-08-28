@@ -75,6 +75,8 @@ export interface InfoDto {
   tft_set_number: number;
 }
 export interface ParticipanthDto {
+  // 증강체
+  aguments: string[];
   companion: CompanionRes;
   gold_left: number;
   last_round: number;
