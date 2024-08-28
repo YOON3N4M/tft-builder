@@ -98,7 +98,7 @@ export interface TraitDto {
   tier_total: number;
 }
 export interface UnitDto {
-  itemNames: number[];
+  itemNames: string[];
   character_id: string;
   chosen: string;
   name: string;

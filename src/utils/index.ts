@@ -2,6 +2,8 @@ import { IndexedChampion } from "@/components/field/Field";
 import { Champion, SET_12_CHAMPIONS } from "@/data/champions";
 import { SYNERGY_LIST, Synergy } from "@/data/synergy";
 import { RiotId } from "@/types/riot";
+import itemJson from "@/data/tft-item.json";
+import { CORE_ITEM_LIST, CoreItem, EMBLEM_ITEM_LIST } from "@/data/item";
 
 export const cn = (...classNames: (string | false | undefined | null)[]) => {
   const styledClassNames = [...classNames]
@@ -171,7 +173,7 @@ export function findLogestArray<T>(arr: T[][]): T[] {
 export function generateIndexedChampion(
   champion: Champion,
   index: number,
-  itemList = []
+  itemList: CoreItem[] = []
 ): IndexedChampion {
   return { champion, index, itemList };
 }
@@ -210,6 +212,42 @@ export function findSynergy(trait_name: string) {
   const synergy = SYNERGY_LIST.find((synergy) => synergy.src[0] === name);
 
   return synergy;
+}
+
+interface JsonItemDto {
+  id: string;
+  name: string;
+  image: { full: string };
+}
+
+/**
+ * api 반환 데이터중 units의 아이템.itemNames 의 문자열로 아이템 Json을거쳐 item.ts을 조회하는 함수
+ *
+ * 현재 아이템 데이터가 혼용되고 있기때문에 일련의 과정들이 필요하며 추후 리팩토링 된다면 과정을 줄어들 것
+ */
+export function findItem(itemNames: string) {
+  const isEmblem = itemNames.includes("EmblemItem");
+
+  //json
+  const itemJsonData = itemJson.data as any;
+
+  const itemObject = itemJsonData[itemNames] as JsonItemDto;
+
+  console.log(itemNames, isEmblem, itemObject);
+  if (!itemObject) return null;
+
+  const itemSrc = itemObject.image.full;
+
+  //itme.ts
+  if (isEmblem) {
+    const emblemItem = EMBLEM_ITEM_LIST.find(
+      (emblem) => emblem.name === itemObject.name
+    );
+    return emblemItem ?? null;
+  } else {
+    const coreItem = CORE_ITEM_LIST.find((core) => core.src === itemSrc);
+    return coreItem ?? null;
+  }
 }
 
 export function isChampionExist(

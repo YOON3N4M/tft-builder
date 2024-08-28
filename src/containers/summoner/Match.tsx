@@ -15,10 +15,13 @@ import {
   filterNull,
   filterUndefined,
   findChampion,
+  findItem,
   generateIndexedChampion,
   sortByNumber,
 } from "@/utils";
 import { generateSaveUrl } from "@/utils/localstorage";
+import ItemPortrait from "@/components/portraits/ItemPortrait";
+import { THIEFS_GLOVES } from "@/data/item";
 
 interface MatchProps {
   puuid: string;
@@ -70,13 +73,25 @@ async function Match(props: MatchProps) {
 
   const augments = searchedPlayerInfo.augments;
 
-  const unitList = searchedPlayerInfo?.units.map((unit) =>
-    findChampion(unit.character_id)
-  );
-  const filteredUndefinedUnitList = filterUndefined(unitList!) as Champion[];
+  const indexedChampionList = filterNull(
+    searchedPlayerInfo.units.map((unit, idx) => {
+      const champion = findChampion(unit.character_id) as Champion;
 
-  const indexedChampionList = filteredUndefinedUnitList.map((champion, idx) =>
-    generateIndexedChampion(champion, idx)
+      if (!champion) return null;
+      let itemList = filterNull(
+        unit.itemNames.map((item) => {
+          const isEmblem = item.includes("EmblemItem");
+          const emblemQuery = `TFT12_EmblemItems/${item}`;
+          return findItem(isEmblem ? emblemQuery : item);
+        })
+      );
+
+      if (itemList.some((item) => item.name === "도적의 장갑")) {
+        itemList = [THIEFS_GLOVES];
+      }
+
+      return generateIndexedChampion(champion, idx, itemList);
+    })
   );
 
   const url = generateSaveUrl(indexedChampionList);
@@ -141,15 +156,28 @@ async function Match(props: MatchProps) {
             ))}
           </div>
           {/* 챔피언 */}
-          <div className="flex items-center ml-lg gap-xs baisis-[50%] flex-wrap">
-            {filteredUndefinedUnitList?.map((unit) => (
-              <ChampionPortrait
-                tooltip
-                className="size-[40px]"
-                objectPosition="object-[-35px_0px]"
-                key={`${matchId}-${unit?.id}`}
-                champion={unit}
-              />
+          <div className="flex items-start ml-lg gap-xs baisis-[50%] flex-wrap">
+            {indexedChampionList.map((unit) => (
+              <div
+                className="flex flex-col items-center"
+                key={`${matchId}-${unit?.champion.id}`}
+              >
+                <ChampionPortrait
+                  tooltip
+                  className="size-[40px]"
+                  objectPosition="object-[-35px_0px]"
+                  champion={unit.champion}
+                />
+                <div className="flex justify-center mt-xxxs">
+                  {unit.itemList.map((item, idx) => (
+                    <ItemPortrait
+                      className="size-[15px] !rounded-none"
+                      key={`${matchId}-item-${unit.champion.name}-${idx}`}
+                      item={item}
+                    />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
           {/* 닉네임 */}
