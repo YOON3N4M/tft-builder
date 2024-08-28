@@ -24,6 +24,8 @@ function AugmentPortrait(props: AugmentPortraitProps) {
   const augmentData = augmentJson.data as any;
   const augment = augmentData[name] as Augment;
 
+  if (!augment) return;
+
   return (
     <div
       onMouseOver={tooltipOn}

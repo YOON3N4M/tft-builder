@@ -26,6 +26,8 @@ function PerformanceOverview(props: PerformanceOverviewProps) {
 
   const noExistOverview = !matchInfoList || matchInfoList.length < 1;
 
+  if (noExistOverview) return <p className="w-full">조회된 전적이 없습니다.</p>;
+
   const puuid = account?.puuid;
 
   const placementAvg =

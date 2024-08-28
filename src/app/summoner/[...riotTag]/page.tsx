@@ -21,6 +21,14 @@ async function SummonerPage(props: SummonerPageProps) {
 
   //새로고침 동작과 같은 형태. 만약 Db가 생긴다면 우선적으로 Db조회 후 라이엇 api는 이후에 이루어 져야함
   const summonerData = await refreshRiotData(riotId);
+  //시즌 12(TFTSet12)가 아닌 기록 필터링 (필요 Aaset이 달라서 버그가 발생하기때문에)
+  if (summonerData.matchInfoList) {
+    const set12MatchInfoList = summonerData.matchInfoList.filter(
+      (match) => match.info.tft_set_number === 12
+    );
+    summonerData.matchInfoList =
+      set12MatchInfoList.length > 0 ? set12MatchInfoList : null;
+  }
 
   return <SummonerContainer summonerData={summonerData} />;
 }
