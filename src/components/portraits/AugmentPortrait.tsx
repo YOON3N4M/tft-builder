@@ -33,7 +33,12 @@ function AugmentPortrait(props: AugmentPortraitProps) {
       className="relative"
       ref={tooltipContainerRef}
     >
-      <ToolTip x={pos.x} y={pos.y} isOn={isTooltipOn}>
+      <ToolTip
+        className="text-main-text"
+        x={pos.x}
+        y={pos.y}
+        isOn={isTooltipOn}
+      >
         {augment.name}
       </ToolTip>
       <Image
