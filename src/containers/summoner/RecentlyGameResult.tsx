@@ -24,7 +24,7 @@ function RecentlyGameResult(props: RecentlyGameResultProps) {
   return (
     <div className="border border-[#222] bg-content-bg rounded-md">
       <div className="px-sm py-xs">
-        <span className="text-main-text">순위 요약</span>
+        <span className="text-main-text text-xs">순위 요약</span>
       </div>
       <div className="px-sm pb-xs flex flex-wrap gap-xxs pt-xs border-t border-[#222]">
         {searchedPayersInfoList ? (

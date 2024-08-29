@@ -90,7 +90,7 @@ function SummonerContainer(props: SummonerContainerProps) {
             <br />
             <Link href={"/summoner/Oner-KR222"}>Oner#KR222</Link>
             <br />
-            <Link href={"/summoner/hide on bush-kr1"}>역천괴#Ker10</Link>
+            <Link href={"/summoner/역천괴-ker10"}>역천괴#Ker10</Link>
             <br />
           </p>
         </div>

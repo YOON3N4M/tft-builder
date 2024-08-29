@@ -191,7 +191,7 @@ async function Match(props: MatchProps) {
                 <div className="flex justify-center mt-xxxs">
                   {unit.itemList.map((item, idx) => (
                     <ItemPortrait
-                      className="size-[15px] !rounded-none"
+                      className="size-[15px] !rounded-none !cursor-default"
                       key={`${matchId}-item-${unit.champion.name}-${idx}`}
                       item={item}
                     />
