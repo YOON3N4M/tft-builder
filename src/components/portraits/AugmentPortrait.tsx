@@ -3,7 +3,7 @@
 import { SRC_AUGMENT } from "@/constants/src";
 import augmentJson from "@/data/tft-augments.json";
 import Image from "next/image";
-import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
 interface AugmentPortraitProps {
   name: string;
@@ -19,7 +19,7 @@ function AugmentPortrait(props: AugmentPortraitProps) {
   const { name } = props;
 
   const { pos, isTooltipOn, tooltipContainerRef, tooltipOff, tooltipOn } =
-    useToolTip();
+    usePortalTooltip();
 
   const augmentData = augmentJson.data as any;
   const augment = augmentData[name] as Augment;
@@ -33,14 +33,14 @@ function AugmentPortrait(props: AugmentPortraitProps) {
       className="relative"
       ref={tooltipContainerRef}
     >
-      <ToolTip
+      <PortalTooltip
         className="text-main-text"
         x={pos.x}
         y={pos.y}
         isOn={isTooltipOn}
       >
         {augment.name}
-      </ToolTip>
+      </PortalTooltip>
       <Image
         width={24}
         height={24}

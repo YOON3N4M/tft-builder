@@ -20,7 +20,7 @@ import {
 import { Question, Reset, Token } from "../svgs";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import Tab from "../tab/Tab";
-import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 import MouseGuide from "../MouseGuide";
 import { SRC_CHAMPION } from "@/constants/src";
 
@@ -55,7 +55,7 @@ function RerollPercentage(props: RerollPercentageProps) {
   );
 
   const { isTooltipOn, tooltipOn, tooltipOff, pos, tooltipContainerRef } =
-    useToolTip();
+    usePortalTooltip();
 
   function increaseLevel() {
     if (currentLevel === 10) return;
@@ -141,7 +141,12 @@ function RerollPercentage(props: RerollPercentageProps) {
               onMouseLeave={tooltipOff}
               className="fill-[#888] hover:fill-black"
             />
-            <ToolTip position="bottom" isOn={isTooltipOn} x={pos.x} y={pos.y}>
+            <PortalTooltip
+              position="bottom"
+              isOn={isTooltipOn}
+              x={pos.x}
+              y={pos.y}
+            >
               <p className="text-sub-text">
                 <span className="font-semibold text-main-text">
                   기물 등장 확률
@@ -161,7 +166,7 @@ function RerollPercentage(props: RerollPercentageProps) {
                 <br />
                 정확한 수치의 확률표 입니다.
               </p>
-            </ToolTip>
+            </PortalTooltip>
           </div>
         }
       >
@@ -286,7 +291,7 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
 
   const [placedPiecesQty, setPlacesPieces] = useState(0);
   const { isTooltipOn, tooltipOn, tooltipOff, pos, tooltipContainerRef } =
-    useToolTip();
+    usePortalTooltip();
 
   const pieceQty = PIECES_QTY[champion.tier - 1];
 
@@ -369,7 +374,7 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
                 ref={tooltipContainerRef}
                 className="px-lg mt-lg relative flex items-center"
               >
-                <ToolTip
+                <PortalTooltip
                   className="translate-x-[50%]"
                   isOn={isTooltipOn}
                   x={pos.x}
@@ -384,7 +389,7 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
                     leftClickGuide="+"
                     rightClickGuide="-"
                   />
-                </ToolTip>
+                </PortalTooltip>
                 <button
                   onClick={increaseQty}
                   onContextMenu={decreaseQty}

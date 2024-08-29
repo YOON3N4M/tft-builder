@@ -5,8 +5,9 @@ import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
-import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+
 import { SRC_CHAMPION } from "@/constants/src";
+import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
 interface ChampionPortraitProps extends HTMLAttributes<HTMLDivElement> {
   champion: Champion;
@@ -34,7 +35,7 @@ function ChampionPortrait(props: ChampionPortraitProps) {
   const { src, name, tier } = champion;
 
   const { tooltipContainerRef, pos, isTooltipOn, tooltipOn, tooltipOff } =
-    useToolTip();
+    usePortalTooltip();
 
   const isTrainingBot = name === TRAINING_BOT.name;
 
@@ -55,14 +56,14 @@ function ChampionPortrait(props: ChampionPortraitProps) {
       onMouseLeave={tooltipOff}
     >
       {tooltip && (
-        <ToolTip
+        <PortalTooltip
           className="!p-0 !border-none !bg-[#00000000]"
           isOn={isTooltipOn}
           x={pos.x}
           y={pos.y}
         >
           <ChampionTooltip champion={champion} />
-        </ToolTip>
+        </PortalTooltip>
       )}
 
       <Image

@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+
 import tacticianJson from "@/data/tft-tactician.json";
 import { SRC_TACTICIAN } from "@/constants/src";
+import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
 interface TacticianPortraitProps {
   id: number;
@@ -19,7 +20,7 @@ function TacticianPortrait(props: TacticianPortraitProps) {
   const { id } = props;
 
   const { tooltipContainerRef, tooltipOff, tooltipOn, pos, isTooltipOn } =
-    useToolTip();
+    usePortalTooltip();
 
   const tacticianData = tacticianJson.data as any;
 
@@ -39,9 +40,9 @@ function TacticianPortrait(props: TacticianPortraitProps) {
         alt={tactician.name}
         className="object-cover scale-150"
       />
-      <ToolTip position="bottom" x={pos.x} y={pos.y} isOn={isTooltipOn}>
+      <PortalTooltip position="bottom" x={pos.x} y={pos.y} isOn={isTooltipOn}>
         {tactician.name}
-      </ToolTip>
+      </PortalTooltip>
     </div>
   );
 }

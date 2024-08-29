@@ -4,8 +4,9 @@ import { SET_12_CHAMPIONS } from "@/data/champions";
 import { cn, findSynergy, isChampionExist, sortByNumber } from "@/utils";
 import Image from "next/image";
 import { IndexedChampion } from "../field/Field";
-import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+
 import ChampionPortrait from "./ChampionPortrait";
+import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
 const synergyBgStyles: { [key: string]: string } = {
   "1": "bg-gray-900",
@@ -40,8 +41,9 @@ function SynergyPortrait(props: SynergyPortraitProps) {
     indexedChampionList,
     noActiveHide = false,
   } = props;
+
   const { tooltipContainerRef, isTooltipOn, tooltipOff, tooltipOn, pos } =
-    useToolTip();
+    usePortalTooltip();
 
   const synergy = findSynergy(name);
   if (!synergy) return;
@@ -63,7 +65,7 @@ function SynergyPortrait(props: SynergyPortraitProps) {
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
     >
-      <ToolTip
+      <PortalTooltip
         className="whitespace-pre-line max-w-[400px]"
         isOn={isTooltipOn}
         x={pos.x}
@@ -99,7 +101,7 @@ function SynergyPortrait(props: SynergyPortraitProps) {
             />
           ))}
         </div>
-      </ToolTip>
+      </PortalTooltip>
       <div
         className={cn(
           "p-xxs hexagon flex items-center justify-center",

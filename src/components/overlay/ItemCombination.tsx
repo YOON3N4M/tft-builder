@@ -26,9 +26,10 @@ import { Question, Reset, WindowMaxi, WindowMini } from "../svgs";
 
 import ItemPortrait from "../portraits/ItemPortrait";
 import Tab from "../tab/Tab";
-import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+
 import { OverlayProps } from "./Overlay";
 import { SRC_ITEM } from "@/constants/src";
+import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -56,7 +57,7 @@ function ItemCombination(props: ItemCombinationProps) {
   const { setDraggingCoreItem } = useDragActions();
 
   const { isTooltipOn, tooltipOn, tooltipOff, tooltipContainerRef, pos } =
-    useToolTip();
+    usePortalTooltip();
 
   function increaseItem(itemName: string) {
     setInventory((prev) => ({
@@ -139,7 +140,7 @@ function ItemCombination(props: ItemCombinationProps) {
             onMouseEnter={tooltipOn}
             onMouseLeave={tooltipOff}
           />
-          <ToolTip
+          <PortalTooltip
             className="min-w-[200px] text-sub-text"
             position="bottom"
             isOn={isTooltipOn}
@@ -153,7 +154,7 @@ function ItemCombination(props: ItemCombinationProps) {
               <br /> 6개 이상이 된다면 우선도가 높은 아이템을 미리 조합하며 6개
               미만을 유지하는 것을 권장합니다.
             </p>
-          </ToolTip>
+          </PortalTooltip>
         </div>
       }
     >

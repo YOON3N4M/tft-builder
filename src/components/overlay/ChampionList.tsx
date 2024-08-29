@@ -25,7 +25,7 @@ import {
 import ChampionPortrait from "../portraits/ChampionPortrait";
 import { Token } from "../svgs";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
-import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import { getChoseong } from "es-hangul";
 import { IndexedChampion } from "../field/Field";
@@ -183,7 +183,7 @@ function ChampionListItem(props: ChampionListItemProps) {
   const { champion, handleIconDragStart, addPlacedChampionViaClick } = props;
 
   const { tooltipContainerRef, pos, isTooltipOn, tooltipOn, tooltipOff } =
-    useToolTip();
+    usePortalTooltip();
 
   function drageStart(e: any, champion: any) {
     handleIconDragStart(e, champion);
@@ -198,7 +198,7 @@ function ChampionListItem(props: ChampionListItemProps) {
       className="relative cursor-pointer"
       ref={tooltipContainerRef}
     >
-      <ToolTip
+      <PortalTooltip
         className="!p-0 !border-none !bg-[#00000000]"
         isOn={isTooltipOn}
         x={pos.x}
@@ -209,7 +209,7 @@ function ChampionListItem(props: ChampionListItemProps) {
           dragGuide="배치"
           champion={champion}
         />
-      </ToolTip>
+      </PortalTooltip>
       <ChampionPortrait
         key={champion.id}
         className="pc:size-[64px] mo:size-[40px] tab:size-[56px]"

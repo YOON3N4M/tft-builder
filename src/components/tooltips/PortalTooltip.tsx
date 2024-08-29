@@ -1,12 +1,5 @@
 import { cn } from "@/utils";
-import {
-  HTMLAttributes,
-  LegacyRef,
-  MouseEvent,
-  ReactNode,
-  useRef,
-  useState,
-} from "react";
+import { HTMLAttributes, MouseEvent, ReactNode, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface ToolTipProps extends HTMLAttributes<HTMLDivElement> {
@@ -23,7 +16,13 @@ const toolTipPositionStyles = {
   bottom: "translate-y-[40px] translate-x-[-50%]",
 };
 
-export function ToolTip(props: ToolTipProps) {
+/**
+ * 일반적인 absolute 툴팁으로 표현에 장애가 있는 상황에
+ *
+ * 쓰이는 Portal 형식의 툴팁
+ */
+
+export function PortalTooltip(props: ToolTipProps) {
   const { children, isOn, x, y, className, position = "top" } = props;
 
   if (!x && !y) return;
@@ -53,7 +52,7 @@ interface Pos {
   y: number | null;
 }
 
-export function useToolTip() {
+export function usePortalTooltip() {
   const [isTooltipOn, setIsToolTipOn] = useState(false);
   const [pos, setPos] = useState<Pos>({ x: null, y: null });
 
@@ -78,7 +77,6 @@ export function useToolTip() {
 
   return {
     pos,
-
     isTooltipOn,
     tooltipOn,
     tooltipOff,

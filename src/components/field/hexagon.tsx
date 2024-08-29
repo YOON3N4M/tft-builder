@@ -18,11 +18,12 @@ import {
   useEffect,
 } from "react";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
-import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+
 import { IndexedChampion } from "./Field";
 import { SYNERGY_LIST, Synergy } from "@/data/synergy";
 import ItemPortrait from "../portraits/ItemPortrait";
 import { SRC_CHAMPION } from "@/constants/src";
+import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
 export type PlacedChampion = IndexedChampion | null;
 
@@ -51,7 +52,7 @@ export default function Hexagon(props: HexagonProps) {
     useDragActions();
 
   const { tooltipContainerRef, pos, isTooltipOn, tooltipOn, tooltipOff } =
-    useToolTip();
+    usePortalTooltip();
   const draggingChampion = useDraggingTarget();
   const draggingIndexedChampion = useDraggingIndexedChampion();
   const draggingCoreItem = useDraggingCoreItem();
@@ -245,7 +246,7 @@ export default function Hexagon(props: HexagonProps) {
         >
           {placedChampion?.champion && placedChampion && (
             <div onMouseEnter={tooltipOn} onMouseLeave={tooltipOff}>
-              <ToolTip
+              <PortalTooltip
                 className="!translate-x-0 !p-0 !border-none !bg-[#00000000] !translate-y-[100px]"
                 isOn={isTooltipOn}
                 x={pos.x}
@@ -256,7 +257,7 @@ export default function Hexagon(props: HexagonProps) {
                   dragGuide="재배치"
                   champion={placedChampion.champion}
                 />
-              </ToolTip>
+              </PortalTooltip>
               <Image
                 onDragOver={onDragOver}
                 onDragStart={handleDragStart}

@@ -5,10 +5,11 @@ import { CombinationItem, CoreItem } from "@/data/item";
 import { cn } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes, useState } from "react";
-import { ToolTip, useToolTip } from "../tooltips/ToolTip";
+
 import { LeftClick, RightClick } from "../svgs";
 import MouseGuide from "../MouseGuide";
 import { SRC_ITEM } from "@/constants/src";
+import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
 interface ItemPortraitProps extends HTMLAttributes<HTMLImageElement> {
   item: CoreItem | CombinationItem;
@@ -45,7 +46,7 @@ function ItemPortrait(props: ItemPortraitProps) {
   };
 
   const { isTooltipOn, tooltipOn, tooltipOff, tooltipContainerRef, pos } =
-    useToolTip();
+    usePortalTooltip();
 
   return (
     <div
@@ -63,7 +64,7 @@ function ItemPortrait(props: ItemPortraitProps) {
         alt={name}
       />
 
-      <ToolTip
+      <PortalTooltip
         position="bottom"
         className="!bg-none"
         x={pos.x}
@@ -89,7 +90,7 @@ function ItemPortrait(props: ItemPortraitProps) {
             dragGuide={dragGuide}
           />
         </div>
-      </ToolTip>
+      </PortalTooltip>
     </div>
   );
 }

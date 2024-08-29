@@ -12,9 +12,9 @@ import Image from "next/image";
 import ChampionPortrait from "../portraits/ChampionPortrait";
 import { Arrow } from "../svgs";
 
-import { ToolTip, useToolTip } from "../tooltips/ToolTip";
 import { IndexedChampion } from "./Field";
 import { PlacedChampion } from "./hexagon";
+import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
 interface SynergyContainerProps {
   indexedChampionList: PlacedChampion[];
@@ -103,7 +103,7 @@ interface SyenrgyListItemProps {
 function SynergyListItem(props: SyenrgyListItemProps) {
   const { indexedChampionList, synergy } = props;
   const { tooltipContainerRef, isTooltipOn, tooltipOff, tooltipOn, pos } =
-    useToolTip();
+    usePortalTooltip();
 
   const synergyItem = synergy[0];
   const synergyChampions = SET_12_CHAMPIONS.filter((champion) =>
@@ -122,7 +122,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
         "relative flex items-center p-xs text-xs text-main-text rounded-md"
       )}
     >
-      <ToolTip
+      <PortalTooltip
         className="whitespace-pre-line max-w-[400px]"
         isOn={isTooltipOn}
         x={pos.x}
@@ -153,7 +153,7 @@ function SynergyListItem(props: SyenrgyListItemProps) {
             />
           ))}
         </div>
-      </ToolTip>
+      </PortalTooltip>
       <div
         className={cn(
           "p-xxs hexagon w-[34px] h-[36px] flex items-center justify-center",
