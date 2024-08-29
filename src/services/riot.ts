@@ -11,7 +11,7 @@ import {
 
 import { filterNull } from "@/utils";
 
-const TEMP_API_KEY = "RGAPI-1983fcd5-f263-4941-8e63-dcb3b09d48bd";
+const TEMP_API_KEY = "RGAPI-27b2eaea-89ea-4a20-a816-ae42a6a91cc0";
 
 const RIOT_API_KEY = TEMP_API_KEY;
 

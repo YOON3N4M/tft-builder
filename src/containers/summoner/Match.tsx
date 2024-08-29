@@ -24,6 +24,7 @@ import ItemPortrait from "@/components/portraits/ItemPortrait";
 import { THIEFS_GLOVES } from "@/data/item";
 import { Star } from "@/components/svgs";
 import { IndexedChampion } from "@/components/field/Field";
+import Link from "next/link";
 
 interface MatchProps {
   puuid: string;
@@ -75,14 +76,13 @@ async function Match(props: MatchProps) {
 
   if (!searchedPlayerInfo) return;
 
-  console.log(searchedPlayerInfo.units[0].tier);
-
   const traits = sortByNumber(searchedPlayerInfo.traits, "style", true);
 
   const augments = searchedPlayerInfo.augments;
 
   const indexedChampionList = filterNull(
     searchedPlayerInfo.units.map((unit, idx) => {
+      console.log(unit);
       const champion = findChampion(unit.character_id) as Champion;
 
       if (!champion) return null;
@@ -207,7 +207,9 @@ async function Match(props: MatchProps) {
                 className="text-ellipsis overflow-hidden whitespace-nowrap"
                 key={`${matchId}-${account.gameName}`}
               >
-                <span>{account.gameName}</span>
+                <Link href={`/summoner/${account.gameName}-${account.tagLine}`}>
+                  {account.gameName}
+                </Link>
               </div>
             ))}
           </div>

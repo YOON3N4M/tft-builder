@@ -20,8 +20,6 @@ function SummonerContainer(props: SummonerContainerProps) {
     matchInfo.info.participants.find((parti) => parti.puuid === puuid)
   ) as ParticipanthDto[];
 
-  console.log(matchInfoList);
-
   return (
     <div className="text-sub-text inner !mt-lg bg-sub-bg text-sm">
       {account && summoner ? (
@@ -54,7 +52,7 @@ function SummonerContainer(props: SummonerContainerProps) {
               {matchInfoList && puuid && (
                 <>
                   {matchInfoList.map((match, idx) => {
-                    //if (idx !== 1) return;
+                    if (idx !== 2) return;
                     return (
                       <Match key={`match-${idx}`} puuid={puuid} match={match} />
                     );

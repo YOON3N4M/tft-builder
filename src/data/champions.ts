@@ -477,6 +477,8 @@ const ZOE = generateChampion(
   "TFT12_Zoe.TFT_Set12.png"
 );
 
+const YUUMI = generateChampion(61, "유미", 0, [], "TFT12_Yuumi.TFT_Set12.png");
+
 export const SET_12_CHAMPIONS = [
   TRAINING_BOT,
   AHRI,

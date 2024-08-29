@@ -233,7 +233,6 @@ export function findItem(itemNames: string) {
 
   const itemObject = itemJsonData[itemNames] as JsonItemDto;
 
-  console.log(itemNames, isEmblem, itemObject);
   if (!itemObject) return null;
 
   const itemSrc = itemObject.image.full;
