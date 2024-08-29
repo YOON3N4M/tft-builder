@@ -540,4 +540,5 @@ export const SET_12_CHAMPIONS = [
   ZIGGS,
   ZILEAN,
   ZOE,
+  YUUMI,
 ];

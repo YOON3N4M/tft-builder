@@ -15,15 +15,14 @@ import {
   MouseEvent,
   ReactNode,
   SetStateAction,
-  useEffect,
 } from "react";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
 
-import { IndexedChampion } from "./Field";
+import { SRC_CHAMPION_PORTRAIT } from "@/constants/src";
 import { SYNERGY_LIST, Synergy } from "@/data/synergy";
 import ItemPortrait from "../portraits/ItemPortrait";
-import { SRC_CHAMPION } from "@/constants/src";
 import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
+import { IndexedChampion } from "./Field";
 
 export type PlacedChampion = IndexedChampion | null;
 
@@ -265,12 +264,11 @@ export default function Hexagon(props: HexagonProps) {
                 onDrop={handleItemDrop}
                 width={256}
                 height={128}
-                src={SRC_CHAMPION(placedChampion.champion.src)}
+                src={SRC_CHAMPION_PORTRAIT(placedChampion.champion.src)}
                 alt={placedChampion.champion.name}
                 className={cn(
                   "absolute center w-full h-full",
-                  !isTrainingBot &&
-                    "object-cover pc:object-[-86px_0px] tab:object-[-60px_0px] mo:object-[-37px_0px]"
+                  !isTrainingBot && "object-cover"
                 )}
                 quality={90}
               />

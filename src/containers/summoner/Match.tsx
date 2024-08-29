@@ -82,7 +82,6 @@ async function Match(props: MatchProps) {
 
   const indexedChampionList = filterNull(
     searchedPlayerInfo.units.map((unit, idx) => {
-      console.log(unit);
       const champion = findChampion(unit.character_id) as Champion;
 
       if (!champion) return null;
