@@ -139,7 +139,7 @@ function ChampionList(props: ChampionListProps) {
         </SortButton>
         <input
           onChange={onChange}
-          placeholder="챔피언, 시너지..."
+          placeholder="챔피언, 특성..."
           className="bg-default-bg text-sub-text bg-inherit text-sm ml-auto border border-[#888] rounded-md pt-xxxs px-xxs"
           value={keyword}
         ></input>

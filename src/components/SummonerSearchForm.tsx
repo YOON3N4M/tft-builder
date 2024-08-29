@@ -58,9 +58,9 @@ function SummonerSearchForm(props: SummonerSearchFormProps) {
           <br />
           예시
           <br />
-          {`hideonbush => hideonbush#kr1`}
+          {`hide on bush => hide on bush#kr1`}
           <br />
-          {`opp#0pp => opp#0pp`}
+          {`Oner#KR222 => Oner#KR222`}
         </p>
       </SimpleTooltip>
     </form>

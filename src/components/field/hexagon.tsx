@@ -134,7 +134,7 @@ export default function Hexagon(props: HexagonProps) {
         (item) => item.name === synergy.name
       );
       if (isExist) {
-        alert("이미 해당 시너지를 가진 챔피언 입니다.");
+        alert("이미 해당 특성을 가진 챔피언 입니다.");
         return;
       }
 

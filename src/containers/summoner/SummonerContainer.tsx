@@ -4,6 +4,7 @@ import PerformanceOverview from "./PerformanceOverview";
 import Summoner from "./Summoner";
 import RecentlyGameResult from "./RecentlyGameResult";
 import { Warning } from "@/components/svgs";
+import Link from "next/link";
 
 interface SummonerContainerProps {
   summonerData: SummonerData;
@@ -79,6 +80,18 @@ function SummonerContainer(props: SummonerContainerProps) {
           <p className="mt-md text-xl">존재 하지 않는 소환사입니다</p>
           <p className="mt-sm">
             닉네임, 태그를 정확히 입력했는지 확인해주세요.
+            <br />
+            닉네임에 띄어쓰기가 있다면 검색어에 띄어쓰기도 포함해야 합니다.
+            <br />
+            <br />
+            검색어 예시 :
+            <br />{" "}
+            <Link href={"/summoner/hide on bush-kr1"}>hide on bush#kr1</Link>
+            <br />
+            <Link href={"/summoner/Oner-KR222"}>Oner#KR222</Link>
+            <br />
+            <Link href={"/summoner/hide on bush-kr1"}>역천괴#Ker10</Link>
+            <br />
           </p>
         </div>
       )}
