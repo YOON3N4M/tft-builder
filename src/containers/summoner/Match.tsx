@@ -120,11 +120,11 @@ async function Match(props: MatchProps) {
   if (!searchedPlayerInfo) return;
 
   return (
-    <div className="flex rounded-md overflow-hidden items-stretch h-auto">
+    <div className="flex rounded-md items-stretch h-auto">
       {/* 좌측 외곽선 */}
       <div
         className={cn(
-          "h-auto w-[8px] self-stretch",
+          "h-auto w-[8px] self-stretch rounded-l-md",
           bgColorStyles[searchedPlayerInfo.placement.toString()]
         )}
       ></div>

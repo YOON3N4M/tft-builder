@@ -23,6 +23,8 @@ import Tab from "../tab/Tab";
 import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 import MouseGuide from "../MouseGuide";
 import { SRC_CHAMPION } from "@/constants/src";
+import SimpleTooltip from "../tooltips/SimpleTooltip";
+import useDisClosure from "@/hooks/useDisClosure";
 
 interface RerollPercentageProps extends OverlayProps {}
 
@@ -53,6 +55,8 @@ function RerollPercentage(props: RerollPercentageProps) {
   const [currentPercentage, setCurrentPercentage] = useState<number[]>(
     REROLL_PERCENTAGE.find((item) => item.level === currentLevel)?.percentage!
   );
+
+  const { isOpen, onClose, onOpen } = useDisClosure();
 
   const { isTooltipOn, tooltipOn, tooltipOff, pos, tooltipContainerRef } =
     usePortalTooltip();
@@ -133,8 +137,16 @@ function RerollPercentage(props: RerollPercentageProps) {
             className="relative gap-sm items-center flex "
             ref={tooltipContainerRef}
           >
-            <button onClick={reset} className="ml-auto">
+            <button
+              onClick={reset}
+              className="ml-auto relative"
+              onMouseEnter={onOpen}
+              onMouseLeave={onClose}
+            >
               <Reset className="stroke-[#888] hover:stroke-black" />
+              <SimpleTooltip isOpen={isOpen}>
+                <span className="text-main-text">초기화</span>
+              </SimpleTooltip>
             </button>
             <Question
               onMouseEnter={tooltipOn}
@@ -149,7 +161,7 @@ function RerollPercentage(props: RerollPercentageProps) {
             >
               <p className="text-sub-text">
                 <span className="font-semibold text-main-text">
-                  기물 등장 확률
+                  상점 등장 확률
                 </span>
                 <br />
                 레벨에 따른 특정 기물의 상점 등장 확률을 제공합니다. <br />

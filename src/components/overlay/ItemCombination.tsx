@@ -30,6 +30,8 @@ import Tab from "../tab/Tab";
 import { OverlayProps } from "./Overlay";
 import { SRC_ITEM } from "@/constants/src";
 import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
+import SimpleTooltip from "../tooltips/SimpleTooltip";
+import useDisClosure from "@/hooks/useDisClosure";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -55,6 +57,7 @@ function ItemCombination(props: ItemCombinationProps) {
   const [foldCase, setFoldCase] = useState(true);
 
   const { setDraggingCoreItem } = useDragActions();
+  const { isOpen, onClose, onOpen } = useDisClosure();
 
   const { isTooltipOn, tooltipOn, tooltipOff, tooltipContainerRef, pos } =
     usePortalTooltip();
@@ -132,8 +135,16 @@ function ItemCombination(props: ItemCombinationProps) {
           ref={tooltipContainerRef}
           className="relative text-wihte flex gap-sm"
         >
-          <button onClick={resetInventory}>
+          <button
+            onClick={resetInventory}
+            onMouseEnter={onOpen}
+            onMouseLeave={onClose}
+            className="relative"
+          >
             <Reset className="stroke-[#888] hover:stroke-black" />
+            <SimpleTooltip isOpen={isOpen}>
+              <span className="text-main-text">초기화</span>
+            </SimpleTooltip>
           </button>
           <Question
             className="fill-[#888] hover:fill-black"
