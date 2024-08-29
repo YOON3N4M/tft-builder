@@ -16,10 +16,10 @@ const colorStyles: { [key: string]: string } = {
   "8": "bg-tier-1",
 };
 
+const TempArr = Array(10).fill(0);
+
 function RecentlyGameResult(props: RecentlyGameResultProps) {
   const { searchedPayersInfoList } = props;
-
-  if (!searchedPayersInfoList) return;
 
   return (
     <div className="border border-[#222] bg-content-bg rounded-md">
@@ -27,17 +27,32 @@ function RecentlyGameResult(props: RecentlyGameResultProps) {
         <span className="text-main-text">순위 요약</span>
       </div>
       <div className="px-sm pb-xs flex flex-wrap gap-xxs pt-xs border-t border-[#222]">
-        {searchedPayersInfoList.map((match, idx) => (
-          <div
-            key={`${match.placement}-{idx}`}
-            className={cn(
-              "size-[30px] text-white rounded-md flex items-center justify-center",
-              colorStyles[match.placement.toString()]
-            )}
-          >
-            {match.placement}
-          </div>
-        ))}
+        {searchedPayersInfoList ? (
+          <>
+            {searchedPayersInfoList.map((match, idx) => (
+              <div
+                key={`${match.placement}-{idx}`}
+                className={cn(
+                  "size-[30px] text-white rounded-md flex items-center justify-center",
+                  colorStyles[match.placement.toString()]
+                )}
+              >
+                {match.placement}
+              </div>
+            ))}
+          </>
+        ) : (
+          <>
+            {TempArr.map((_, idx) => (
+              <div
+                key={idx}
+                className={cn(
+                  "size-[30px] text-white rounded-md flex items-center justify-center bg-default-bg"
+                )}
+              ></div>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

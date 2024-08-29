@@ -19,6 +19,8 @@ function SummonerContainer(props: SummonerContainerProps) {
     matchInfo.info.participants.find((parti) => parti.puuid === puuid)
   ) as ParticipanthDto[];
 
+  console.log(matchInfoList);
+
   return (
     <div className="text-sub-text inner !mt-lg bg-sub-bg text-sm">
       {account && summoner ? (
@@ -57,6 +59,15 @@ function SummonerContainer(props: SummonerContainerProps) {
                     );
                   })}
                 </>
+              )}
+              {!matchInfoList && (
+                <div className="h-full flex justify-center items-center">
+                  <p>
+                    {" "}
+                    검색된 기록이 없습니다. 게임을 플레이 후 전적 갱신을
+                    시도해주세요.
+                  </p>
+                </div>
               )}
             </div>
           </div>{" "}

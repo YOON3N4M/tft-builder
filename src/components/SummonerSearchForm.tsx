@@ -48,7 +48,7 @@ function SummonerSearchForm(props: SummonerSearchFormProps) {
         placeholder="소환사 명#태그"
         className="bg-sub-bg rounded-md text-sub-text py-xxs px-sm text-sm"
       />
-      <SimpleTooltip isOpen={true} align="left">
+      <SimpleTooltip isOpen={isOpen} align="left">
         <p className="text-sub-text">
           닉네임과 태그를 정확히 입력해주세요
           <br />

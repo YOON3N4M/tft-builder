@@ -17,7 +17,7 @@ function Summoner(props: SummonerProps) {
   if (!summoner) return;
 
   return (
-    <div className="py-lg bg-content-bg border-[#222] border flex flex-col items-center rounded-md">
+    <div className="py-lg h-full bg-content-bg border-[#222] border flex flex-col items-center rounded-md">
       <div className="rounded-full overflow-hidden border-tier-5 border-2">
         <Image
           width={64}
