@@ -1,19 +1,17 @@
 import {
+  AccountDto,
   RiotAccountRes,
-  SummonerData,
   RiotId,
   RiotMatchInfoRes,
   RiotSummonerRes,
   RiotTftLeagueRes,
   RiotTftMatchListRes,
-  TacticianRes,
-  AccountDto,
-  RiotFailedRes,
+  SummonerData,
 } from "@/types/riot";
 
 import { filterNull } from "@/utils";
 
-const TEMP_API_KEY = "RGAPI-a1e149d2-d097-4d17-9ade-813c81550b2f";
+const TEMP_API_KEY = "RGAPI-1983fcd5-f263-4941-8e63-dcb3b09d48bd";
 
 const RIOT_API_KEY = TEMP_API_KEY;
 
@@ -26,6 +24,7 @@ export async function refreshRiotData(riotId: RiotId) {
   };
 
   const accountRes = await getRiotAccount(riotId);
+
   if (!accountRes) return riotData;
 
   riotData.account = accountRes;
