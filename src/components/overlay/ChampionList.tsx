@@ -214,11 +214,6 @@ function ChampionListItem(props: ChampionListItemProps) {
         key={champion.id}
         className="pc:size-[64px] mo:size-[40px] tab:size-[56px]"
         champion={champion}
-        objectPosition={
-          champion.name === TRAINING_BOT.name
-            ? ""
-            : "object-[-55px_0px] mo:object-[-32px_0px]"
-        }
       >
         <div className="z-[100] pointer-events-none absolute w-full top-0 flex justify-end ">
           <div className="mo:hidden pointer-events-none flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">

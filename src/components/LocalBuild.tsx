@@ -103,11 +103,6 @@ export default function LocalBuild(props: LocalBuildProps) {
                       key={indexed.champion.name}
                       champion={indexed.champion}
                       className={cn("size-[40px]")}
-                      objectPosition={
-                        indexed.champion.name !== TRAINING_BOT.name
-                          ? "object-[-35px_0px]"
-                          : ""
-                      }
                     />
                   ))}
                 </div>

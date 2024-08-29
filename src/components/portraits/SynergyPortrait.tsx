@@ -97,7 +97,6 @@ function SynergyPortrait(props: SynergyPortraitProps) {
                   !isChampionExist(indexedChampionList, champion) &&
                   "!opacity-50"
               )}
-              objectPosition="object-[-35px_0px]"
             />
           ))}
         </div>

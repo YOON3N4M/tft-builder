@@ -6,12 +6,11 @@ import Image from "next/image";
 import { HTMLAttributes } from "react";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
 
-import { SRC_CHAMPION } from "@/constants/src";
+import { SRC_CHAMPION, SRC_CHAMPION_PORTRAIT } from "@/constants/src";
 import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
 interface ChampionPortraitProps extends HTMLAttributes<HTMLDivElement> {
   champion: Champion;
-  objectPosition: "object-[-55px_0px]" | "object-[-35px_0px]" | string;
   tooltip?: boolean;
 }
 
@@ -29,7 +28,7 @@ function ChampionPortrait(props: ChampionPortraitProps) {
     champion,
     className,
     children,
-    objectPosition,
+
     tooltip = false,
   } = props;
   const { src, name, tier } = champion;
@@ -41,7 +40,7 @@ function ChampionPortrait(props: ChampionPortraitProps) {
 
   // 훈련 봇 예외 처리
   const fixedTrainingBot = SRC_CHAMPION(src).includes(".png")
-    ? SRC_CHAMPION(src)
+    ? SRC_CHAMPION_PORTRAIT(src)
     : `${SRC_CHAMPION(src)}.png`;
 
   return (
@@ -71,11 +70,7 @@ function ChampionPortrait(props: ChampionPortraitProps) {
         width={256}
         height={128}
         alt={name}
-        className={cn(
-          "object-cover relative",
-          !isTrainingBot && "scale-125",
-          objectPosition
-        )}
+        className={cn("object-cover relative", !isTrainingBot && "scale-125")}
       />
       {children}
     </div>

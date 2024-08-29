@@ -185,7 +185,6 @@ async function Match(props: MatchProps) {
                 <ChampionPortrait
                   tooltip
                   className="size-[40px] mt-xxxs"
-                  objectPosition="object-[-35px_0px]"
                   champion={unit.champion}
                 />
                 <div className="flex justify-center mt-xxxs">

@@ -1,6 +1,9 @@
 export const SRC_CHAMPION = (srcName: string) =>
   `/images/tft-champion/${srcName}`;
 
+export const SRC_CHAMPION_PORTRAIT = (srcName: string) =>
+  `/images/tft-champion/portrait/portrait-${srcName}`;
+
 export const SRC_TACTICIAN = (srcName: string) =>
   `/images/tft-tactician/${srcName}`;
 

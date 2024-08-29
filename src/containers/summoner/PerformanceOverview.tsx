@@ -77,7 +77,6 @@ function PerformanceOverview(props: PerformanceOverviewProps) {
             <ChampionPortrait
               tooltip
               className="!rounded-full !size-[70px]"
-              objectPosition="object-[-60px_0px]"
               champion={mostChampion}
             />
           )}

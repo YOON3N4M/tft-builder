@@ -52,7 +52,7 @@ function SummonerContainer(props: SummonerContainerProps) {
               {matchInfoList && puuid && (
                 <>
                   {matchInfoList.map((match, idx) => {
-                    if (idx !== 2) return;
+                    // if (idx !== 2) return;
                     return (
                       <Match key={`match-${idx}`} puuid={puuid} match={match} />
                     );
