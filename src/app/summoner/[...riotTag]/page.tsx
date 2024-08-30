@@ -3,6 +3,7 @@ import SummonerContainer from "@/containers/summoner/SummonerContainer";
 
 import { handleRiotId } from "@/utils";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 interface SummonerPageProps {
   params: { riotTag: string[] };
@@ -37,7 +38,11 @@ async function SummonerPage(props: SummonerPageProps) {
       set12MatchInfoList.length > 0 ? set12MatchInfoList : null;
   }
 
-  return <SummonerContainer summonerData={summonerData} />;
+  return (
+    <Suspense>
+      <SummonerContainer summonerData={summonerData} />;
+    </Suspense>
+  );
 }
 
 export default SummonerPage;
