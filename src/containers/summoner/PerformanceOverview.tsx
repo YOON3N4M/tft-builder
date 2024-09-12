@@ -8,7 +8,7 @@ import {
 	UnitDto,
 } from '@/types/riot'
 
-import { findChampion, findLogestArray, findSynergy, groupBy } from '@/utils'
+import { findChampion, findLongestArray, findSynergy, groupBy } from '@/utils'
 
 import { ReactNode } from 'react'
 import Image from 'next/image'
@@ -49,15 +49,17 @@ function PerformanceOverview(props: PerformanceOverviewProps) {
 			.flat(Infinity) as TraitDto[]
 		//시너지 중 활성화 되지 않은 시너지 필터링
 		filteredNoActive = allSynergyList.filter(
+	
 			(synergy) => synergy.tier_current !== 0,
 		)
 
 		mostChampion = findChampion(
-			findLogestArray(groupBy(allChampionList, 'character_id'))[0].character_id,
+			findLongestArray(groupBy(allChampionList, 'character_id'))[0]
+				.character_id,
 		)
 
 		mostSynergy = findSynergy(
-			findLogestArray(groupBy(filteredNoActive, 'name'))[0].name,
+			findLongestArray(groupBy(filteredNoActive, 'name'))[0].name,
 		)
 	}
 
