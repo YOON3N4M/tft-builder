@@ -168,7 +168,7 @@ async function Match(props: MatchProps) {
 						))}
 					</div>
 					{/* 챔피언 */}
-					<div className="flex items-start ml-lg gap-xs baisis-[50%] mo:basis-[40%] flex-wrap">
+					<div className="flex items-start ml-lg gap-xs basis-[50%] flex-wrap mo:flex-1">
 						{indexedChampionList.map((unit) => (
 							<div
 								className="flex flex-col items-center"
