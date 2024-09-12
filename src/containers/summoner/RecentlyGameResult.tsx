@@ -31,7 +31,7 @@ function RecentlyGameResult(props: RecentlyGameResultProps) {
           <>
             {searchedPayersInfoList.map((match, idx) => (
               <div
-                key={`${match.placement}-{idx}`}
+                key={`${match.placement}-${idx}`}
                 className={cn(
                   "size-[30px] text-white rounded-md flex items-center justify-center",
                   colorStyles[match.placement.toString()]
