@@ -5,6 +5,7 @@ import Summoner from "./Summoner";
 import RecentlyGameResult from "./RecentlyGameResult";
 import { Warning } from "@/components/svgs";
 import Link from "next/link";
+import TraitOverview from "./TraitOverview";
 
 interface SummonerContainerProps {
   summonerData: SummonerData;
@@ -46,6 +47,7 @@ function SummonerContainer(props: SummonerContainerProps) {
               <RecentlyGameResult
                 searchedPayersInfoList={searchedPayersInfoList}
               />
+              <TraitOverview />
             </div>
             {/* 전적리스트 */}
             <div className="basis-4/5 max-w-[940px] flex flex-col p-[1px] gap-sm mo:max-w-full tab:max-w-full mo:mt-lg tab:mt-lg">

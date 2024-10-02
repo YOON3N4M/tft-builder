@@ -163,7 +163,7 @@ export function romeNumToArabNum(rome: string) {
 	}
 }
 
-export function findLogestArray<T>(arr: T[][]): T[] {
+export function findLongestArray<T>(arr: T[][]): T[] {
 	const result = arr.reduce((longest, current) => {
 		return current.length > longest.length ? current : longest
 	}, [])
