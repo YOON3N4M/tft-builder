@@ -4,7 +4,6 @@ import {
   CHAMPION_TIER,
   Champion,
   SET_12_CHAMPIONS,
-  TRAINING_BOT,
 } from "@/data/set/12/champions";
 import { useDragActions } from "@/store/dragStore";
 import {
@@ -12,7 +11,6 @@ import {
   generateIndexedChampion,
   setItemToindex,
   sortByKorean,
-  sortByNumber,
 } from "@/utils";
 import {
   ChangeEvent,
@@ -22,14 +20,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import ChampionPortrait from "../portraits/ChampionPortrait";
-import { Token } from "../svgs";
-import ChampionTooltip from "../tooltips/ChampionTooltip";
-import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
-import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
-import { getChoseong } from "es-hangul";
-import { IndexedChampion } from "../field/Field";
+
 import ChampionListItem from "../ChampionList/ChampionListItem";
+import { IndexedChampion } from "../field/Field";
+import { OverlayProps, OverlayTab } from "../overlay/Overlay";
 
 interface ChampionListProps extends OverlayProps {
   setPlacedChampions: Dispatch<SetStateAction<(IndexedChampion | null)[]>>;
@@ -47,7 +41,7 @@ export const borderColorStyles: { [key: string]: string } = {
 };
 
 function ChampionList(props: ChampionListProps) {
-  const { hidden, setPlacedChampions } = props;
+  const { setPlacedChampions } = props;
 
   const { setDraggingTarget } = useDragActions();
 
