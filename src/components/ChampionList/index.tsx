@@ -24,6 +24,7 @@ import {
 import ChampionListItem from "../ChampionList/ChampionListItem";
 import { IndexedChampion } from "../field/Field";
 import { OverlayProps, OverlayTab } from "../overlay/Overlay";
+import useSetData from "@/hooks/useSetData";
 
 interface ChampionListProps extends OverlayProps {
   setPlacedChampions: Dispatch<SetStateAction<(IndexedChampion | null)[]>>;
@@ -42,6 +43,8 @@ export const borderColorStyles: { [key: string]: string } = {
 
 function ChampionList(props: ChampionListProps) {
   const { setPlacedChampions } = props;
+
+  const { championDataList, activeSet } = useSetData();
 
   const { setDraggingTarget } = useDragActions();
 
@@ -148,12 +151,10 @@ function ChampionList(props: ChampionListProps) {
               ""
             )}
           >
-            {championList.map((champion, idx) => (
+            {championDataList.map((champion, idx) => (
               <ChampionListItem
                 key={`championList-${champion.name}`}
                 champion={champion}
-                handleIconDragStart={handleIconDragStart}
-                addPlacedChampionViaClick={addPlacedChampionViaClick}
               />
             ))}
             {keyword !== "" && championList.length === 0 && (

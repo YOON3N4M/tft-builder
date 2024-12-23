@@ -30,6 +30,7 @@ import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
 import { getChoseong } from "es-hangul";
 import { IndexedChampion } from "../field/Field";
 import ChampionListItem from "../ChampionList/ChampionListItem";
+import useSetData from "@/hooks/useSetData";
 
 interface ChampionListProps extends OverlayProps {
   setPlacedChampions: Dispatch<SetStateAction<(IndexedChampion | null)[]>>;
@@ -114,6 +115,10 @@ function ChampionList(props: ChampionListProps) {
   }
 
   useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  useEffect(() => {
     if (keyword === "") {
       sortChampionList(currentSortType);
     } else {
@@ -154,14 +159,14 @@ function ChampionList(props: ChampionListProps) {
               ""
             )}
           >
-            {championList.map((champion, idx) => (
+            {/* {championList.map((champion, idx) => (
               <ChampionListItem
                 key={`championList-${champion.name}`}
                 champion={champion}
                 handleIconDragStart={handleIconDragStart}
                 addPlacedChampionViaClick={addPlacedChampionViaClick}
               />
-            ))}
+            ))} */}
             {keyword !== "" && championList.length === 0 && (
               <p className="absolute y-center x-center text-sub-text text-sm">
                 일치하는 챔피언이 없습니다.

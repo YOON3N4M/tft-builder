@@ -1,14 +1,16 @@
-import { Champion } from "@/types/data";
 import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
 import ChampionPortrait from "../portraits/ChampionPortrait";
 import { Token } from "../svgs";
 import { cn } from "@/utils";
+import { Champion } from "@/types/data";
+import ChampionPortraitNew from "../portraits/ChampionPortraitNew";
+import ChampionTooltipNew from "../tooltips/ChampionTooltipNew";
 
 interface ChampionListItemProps {
   champion: Champion;
-  handleIconDragStart: (e: any, champion: Champion) => void;
-  addPlacedChampionViaClick: (champion: Champion) => void;
+  handleIconDragStart?: (e: any, champion: Champion) => void;
+  addPlacedChampionViaClick?: (champion: Champion) => void;
 }
 
 export default function ChampionListItem(props: ChampionListItemProps) {
@@ -18,12 +20,12 @@ export default function ChampionListItem(props: ChampionListItemProps) {
     usePortalTooltip();
 
   function drageStart(e: any, champion: any) {
-    handleIconDragStart(e, champion);
+    // handleIconDragStart(e, champion);
     tooltipOff();
   }
   return (
     <div
-      onClick={() => addPlacedChampionViaClick(champion)}
+      // onClick={() => addPlacedChampionViaClick(champion)}
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
       onDragStart={(e) => drageStart(e, champion)}
@@ -36,13 +38,13 @@ export default function ChampionListItem(props: ChampionListItemProps) {
         x={pos.x}
         y={pos.y}
       >
-        <ChampionTooltip
+        <ChampionTooltipNew
           leftClickGuide="배치"
           dragGuide="배치"
           champion={champion}
         />
       </PortalTooltip>
-      <ChampionPortrait
+      <ChampionPortraitNew
         key={champion.id}
         className="pc:size-[64px] mo:size-[40px] tab:size-[56px]"
         champion={champion}
@@ -61,7 +63,7 @@ export default function ChampionListItem(props: ChampionListItemProps) {
         >
           {champion.name}
         </p>
-      </ChampionPortrait>
+      </ChampionPortraitNew>
       {/* <Image
           width={256}
           height={128}
