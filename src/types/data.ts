@@ -1,18 +1,25 @@
+export interface SetData {
+  custom: {
+    champion: Champion[];
+    trait: Trait[];
+  };
+}
+
 export interface Champion {
   id: number;
   name: string;
   tier: number;
-  synergy: Synergy[];
+  trait: Trait[];
   src: string;
 }
 
-export interface Synergy {
+export interface Trait {
   name: string;
   requirQty: number[];
-  tier: SynergyTier[];
+  tier: TraitTier[];
   src: string[];
   desc: string;
   // 단계별 효과?
   effect: string[];
 }
-export type SynergyTier = "unranked" | "bronze" | "silver" | "gold" | "prism";
+export type TraitTier = "unranked" | "bronze" | "silver" | "gold" | "prism";
