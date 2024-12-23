@@ -2,7 +2,22 @@ export interface SetData {
   custom: {
     champion: Champion[];
     trait: Trait[];
+    combinationItem: CombinationItem[];
+    coreItem: CoreItem[];
+    emblelemItem: CoreItem[];
   };
+}
+
+export interface CombinationItem {
+  id: number;
+  name: string;
+  effect: string[];
+  src: string;
+}
+
+export interface CoreItem extends CombinationItem {
+  desc: string;
+  recipe: { requireItem: CombinationItem; qty: number }[];
 }
 
 export interface Champion {

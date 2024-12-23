@@ -1,5 +1,10 @@
-import { Champion, Trait, TraitTier } from "@/types/data";
-
+import {
+  Champion,
+  Trait,
+  TraitTier,
+  CombinationItem,
+  CoreItem,
+} from "@/types/data";
 export function generateTrait(
   name: string,
   requirQty: number[],
@@ -19,4 +24,47 @@ export function generateChampion(
   src: string
 ): Champion {
   return { id, name, tier, trait, src };
+}
+
+export function generateItem(
+  id: number,
+  name: string,
+  effect: string[],
+  src: string,
+  desc: string
+): CombinationItem;
+export function generateItem(
+  id: number,
+  name: string,
+  effect: string[],
+  src: string,
+  desc: string,
+  recipe: { requireItem: CombinationItem; qty: number }[]
+): CoreItem;
+
+export function generateItem(
+  id: number,
+  name: string,
+  effect: string[],
+  src: string,
+  desc: string,
+  recipe?: any
+): CombinationItem | CoreItem {
+  if (recipe) {
+    return {
+      id,
+      name,
+      effect,
+      src,
+      desc,
+      recipe,
+    } as CoreItem;
+  } else {
+    return {
+      id,
+      name,
+      effect,
+      src,
+    } as CombinationItem;
+  }
 }

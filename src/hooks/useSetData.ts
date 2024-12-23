@@ -9,6 +9,17 @@ export default function useSetData() {
   const setData = SET_DATA_LIST[activeSet];
   const championDataList = setData.custom.champion;
   const traitDataList = setData.custom.trait;
+  const combinationItemList = setData.custom.combinationItem;
+  const coreItemList = setData.custom.coreItem;
+  const emblelemItemList = setData.custom.emblelemItem;
 
-  return { championDataList, traitDataList, activeSet, setActiveSet };
+  return {
+    championDataList,
+    traitDataList,
+    activeSet,
+    combinationItemList,
+    coreItemList,
+    emblelemItemList,
+    setActiveSet,
+  };
 }
