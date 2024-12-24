@@ -90,9 +90,9 @@ export default function BuilderContainer() {
         const synergy = SYNERGY_LIST.find(
           (synergyItem) => synergyItem.src[0] === item.src
         ) as Synergy;
-        if (indexed.champion.synergy.some((sy) => sy.name === synergy.name))
+        if (indexed.champion.trait.some((sy) => sy.name === synergy.name))
           return;
-        indexed.champion.synergy.push(synergy);
+        indexed.champion.trait.push(synergy);
       })
     );
 

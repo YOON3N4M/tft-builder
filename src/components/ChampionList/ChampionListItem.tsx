@@ -1,9 +1,9 @@
-import { Champion } from "@/data/set/12/champions";
 import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 import ChampionTooltip from "../tooltips/ChampionTooltip";
 import ChampionPortrait from "../portraits/ChampionPortrait";
 import { Token } from "../svgs";
 import { cn } from "@/utils";
+import { Champion } from "@/types/data";
 
 interface ChampionListItemProps {
   champion: Champion;

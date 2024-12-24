@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  CHAMPION_TIER,
-  Champion,
-  SET_12_CHAMPIONS,
-} from "@/data/set/12/champions";
+import { CHAMPION_TIER } from "@/data/set/12/champions";
 import { useDragActions } from "@/store/dragStore";
 import {
   cn,
@@ -12,22 +8,13 @@ import {
   setItemToindex,
   sortByKorean,
 } from "@/utils";
-import {
-  ChangeEvent,
-  Dispatch,
-  HTMLAttributes,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { IndexedChampion } from "../field/Field";
-import ChampionPortrait from "../portraits/ChampionPortrait";
-import { Token } from "../svgs";
-import ChampionTooltip from "../tooltips/ChampionTooltip";
-import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
-import { OverlayProps, OverlayTab } from "../overlay/Overlay";
+import { OverlayProps } from "../overlay/Overlay";
 import ChampionListHeader from "./ChampionListHeader";
 import ChampionListItem from "./ChampionListItem";
+import { Champion } from "@/types/data";
+import useSetData from "@/hooks/useSetData";
 
 interface ChampionListProps extends OverlayProps {
   setPlacedChampions: Dispatch<SetStateAction<(IndexedChampion | null)[]>>;
@@ -51,20 +38,9 @@ function ChampionList(props: ChampionListProps) {
 
   const [sort, setSort] = useState<SortType>("tier");
   const [keyword, setKeyword] = useState("");
+  const { championDataList } = useSetData();
 
-  const championList = filteringChampionList(SET_12_CHAMPIONS, sort, keyword);
-
-  function sortbyTierAndKorean() {
-    const result: Champion[] = [];
-    CHAMPION_TIER.forEach((tier) =>
-      sortByKorean(
-        SET_12_CHAMPIONS.filter((cham) => cham.tier === tier),
-        "name"
-      ).forEach((item) => result.push(item))
-    );
-
-    return result;
-  }
+  const championList = filteringChampionList(championDataList, sort, keyword);
 
   function handleIconDragStart(e: any, champion: Champion) {
     setDraggingTarget(champion);
@@ -140,7 +116,7 @@ function filteringChampionList(
 
     CHAMPION_TIER.forEach((tier) =>
       sortByKorean(
-        SET_12_CHAMPIONS.filter((cham) => cham.tier === tier),
+        list.filter((cham) => cham.tier === tier),
         "name"
       ).forEach((item) => sortByTier.push(item))
     );
@@ -152,7 +128,7 @@ function filteringChampionList(
     const filtered = result.filter(
       (item) =>
         item.name.includes(keyword) ||
-        item.synergy.some((synergy) => synergy.name.includes(keyword))
+        item.trait.some((trait) => trait.name.includes(keyword))
     );
 
     result = filtered;

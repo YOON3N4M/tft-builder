@@ -8,7 +8,6 @@ import SynergyPortrait from "@/components/portraits/SynergyPortrait";
 
 import TacticianPortrait from "@/components/portraits/TacticianPortrait";
 
-import { Champion } from "@/data/set/12/champions";
 import { RiotMatchInfoRes } from "@/types/riot";
 import {
   cn,
@@ -25,6 +24,7 @@ import { THIEFS_GLOVES } from "@/data/item";
 import { Star } from "@/components/svgs";
 import { IndexedChampion } from "@/components/field/Field";
 import Link from "next/link";
+import { Champion } from "@/types/data";
 
 interface MatchProps {
   puuid: string;

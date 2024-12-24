@@ -1,4 +1,3 @@
-import { SET_12_CHAMPIONS } from "@/data/set/12/champions";
 import { Synergy } from "@/data/set/12/synergy";
 import {
   checkTraitGrade,
@@ -37,7 +36,7 @@ function TraitDisplay(props: TraitDisplayProps) {
   const duplicateRemoves = removeDuplicateSyenrgy(nullFiltered);
 
   const synergyList = duplicateRemoves.flatMap(
-    (indexedChampion) => indexedChampion.champion.synergy
+    (indexedChampion) => indexedChampion.champion.trait
   );
 
   const refinedSynergyList = groupBy(synergyList, "name");

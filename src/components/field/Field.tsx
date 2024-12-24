@@ -1,8 +1,9 @@
 import { CoreItem } from "@/data/item";
-import { Champion, TRAINING_BOT } from "@/data/set/12/champions";
+import { TRAINING_BOT } from "@/data/set/12/champions";
 import { cn, filterNull } from "@/utils";
 import { Dispatch, SetStateAction } from "react";
 import Hexagon, { PlacedChampion } from "./hexagon";
+import { Champion } from "@/types/data";
 
 export interface IndexedChampion {
   index: number;

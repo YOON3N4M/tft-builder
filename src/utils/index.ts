@@ -1,9 +1,11 @@
 import { IndexedChampion } from "@/components/field/Field";
-import { Champion, SET_12_CHAMPIONS } from "@/data/set/12/champions";
+
 import { SYNERGY_LIST, Synergy } from "@/data/set/12/synergy";
 import { RiotId } from "@/types/riot";
 import itemJson from "@/data/tft-item.json";
 import { CORE_ITEM_LIST, CoreItem, EMBLEM_ITEM_LIST } from "@/data/item";
+import { Champion } from "@/types/data";
+import { SET_12_CHAMPION_LIST } from "@/dataNew/set/12/custom/champion";
 
 export const cn = (...classNames: (string | false | undefined | null)[]) => {
   const styledClassNames = [...classNames]
@@ -188,7 +190,7 @@ export function generateIndexedChampion(
  * champion data.src: TFT12_Lillia.TFT_Set12.png
  */
 export function findChampion(character_id: string) {
-  const champion = SET_12_CHAMPIONS.find(
+  const champion = SET_12_CHAMPION_LIST.find(
     (champion) => champion.src.split(".")[0] === character_id
   );
 

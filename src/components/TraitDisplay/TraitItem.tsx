@@ -1,12 +1,13 @@
 import { Synergy } from "@/data/set/12/synergy";
 import { IndexedChampion } from "../field/Field";
 import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
-import { SET_12_CHAMPIONS } from "@/data/set/12/champions";
+
 import { checkTraitGrade, cn, isChampionExist, sortByNumber } from "@/utils";
 import ChampionPortrait from "../portraits/ChampionPortrait";
 import Image from "next/image";
 import { synergyBgStyles } from ".";
 import { Arrow } from "../svgs";
+import useSetData from "@/hooks/useSetData";
 
 interface TraitItemProps {
   indexedChampionList: IndexedChampion[];
@@ -18,9 +19,11 @@ export default function TraitItem(props: TraitItemProps) {
   const { tooltipContainerRef, isTooltipOn, tooltipOff, tooltipOn, pos } =
     usePortalTooltip();
 
+  const { championDataList } = useSetData();
+
   const traitItem = synergy[0];
-  const traitChampionList = SET_12_CHAMPIONS.filter((champion) =>
-    champion.synergy.some((synergy) => synergy.name === traitItem.name)
+  const traitChampionList = championDataList.filter((champion) =>
+    champion.trait.some((trait) => trait.name === traitItem.name)
   );
 
   const sortedTraitChampionList = sortByNumber(traitChampionList, "tier");
