@@ -17,6 +17,7 @@ import {
   unOptimizedBuild,
 } from "@/utils/localstorage";
 import { useRouter, useSearchParams } from "next/navigation";
+import TraitDisplay from "@/components/TraitDisplay";
 
 export interface OptimizedIndexedChampion {
   name: string;
@@ -34,12 +35,6 @@ const HEXAGON_QTY = 28;
 const INITIAL_FIELD_ARRAY = [...Array(HEXAGON_QTY)].map((_) => null);
 
 export default function BuilderContainer() {
-  const [option, setOption] = useState<Option>({
-    item: true,
-    reroll: true,
-    champion: true,
-  });
-
   const router = useRouter();
 
   const [placedChampions, setPlacedChampions] =
@@ -136,12 +131,15 @@ export default function BuilderContainer() {
       <div className="relative pt-md pb-xxxl">
         <div className="flex pc:min-h-[450px] inner py-md tab:flex-col pc:flex-row  mo:flex-col bg-sub-bg rounded-md">
           <h2 className="blind">배치 영역</h2>
+          <div className="text-black basis-[15%] flex tab:min-w-[165px] pc:min-w-[216px]">
+            <TraitDisplay indexedChampionList={placedChampions} />
+          </div>
           <Field
             placedChampions={placedChampions}
             setPlacedChampions={setPlacedChampions}
           />
           <div className="bg-content-bg tab:mt-md pc:mt-0 mo:mt-md rounded-md basis-[20%] border-[#222] border">
-            <ItemCombination hidden={!option.item} />
+            <ItemCombination hidden={false} />
           </div>
         </div>
         {/* 하단 영역 */}
@@ -154,11 +152,11 @@ export default function BuilderContainer() {
           <div className="basis-[60%]">
             <ChampionList
               setPlacedChampions={setPlacedChampions}
-              hidden={!option.champion}
+              hidden={false}
             />
           </div>
           <div className="basis-[40%] mo:w-full">
-            <RerollPercentage hidden={!option.reroll} />
+            {/* <RerollPercentage hidden={false} /> */}
           </div>
         </div>
         {/* 빌더 사용법 */}

@@ -1,6 +1,6 @@
 "use client";
 
-import BuilderContainer from "@/containers/BuilderContainer";
+import BuilderContainer from "@/containers/builder/BuilderContainer";
 import { Suspense } from "react";
 
 interface BuilderPageProps {}
