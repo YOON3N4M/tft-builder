@@ -1,12 +1,33 @@
 import useClickOutside from "@/hooks/useOutsideEvent";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { filterNull } from "@/utils";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useState,
+} from "react";
+import { IndexedChampion } from "../field/Field";
+import {
+  getlocalBuildAll,
+  saveBuildToLocalStorage,
+} from "@/utils/localstorage";
 
 interface BuildSaveProps {
-  saveFn: (buildName: string) => void;
+  placedChampionList: (IndexedChampion | null)[];
+  setBuildList: Dispatch<
+    SetStateAction<
+      | {
+          buildName: string;
+          build: string | null;
+        }[]
+      | undefined
+    >
+  >;
 }
 
 export default function LocalBuildSave(props: BuildSaveProps) {
-  const { saveFn } = props;
+  const { setBuildList, placedChampionList } = props;
 
   const [isOpen, setIsOpen] = useState(false);
   const [buildName, setBuildName] = useState("");
@@ -15,17 +36,19 @@ export default function LocalBuildSave(props: BuildSaveProps) {
     setIsOpen(false);
   });
 
-  function onChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleChangeBuildName(event: ChangeEvent<HTMLInputElement>) {
     setBuildName(event.target.value);
   }
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSaveSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (buildName === "") {
       alert("빌드 이름을 입력해주세요.");
       return;
     }
-    saveFn(`${buildName}-tft-build`);
+
+    saveBuild(`${buildName}-tft-build`, placedChampionList);
+    setBuildList(getlocalBuildAll);
     setIsOpen(false);
     setBuildName("");
   }
@@ -41,10 +64,13 @@ export default function LocalBuildSave(props: BuildSaveProps) {
             <p className="text-sub-text">빌드 이름</p>
           </div>
           <div>
-            <form onSubmit={onSubmit} className="flex items-center mt-xs">
+            <form
+              onSubmit={handleSaveSubmit}
+              className="flex items-center mt-xs"
+            >
               <input
                 value={buildName}
-                onChange={onChange}
+                onChange={handleChangeBuildName}
                 className="bg-[#19191b] text-sub-text p-xxs"
               ></input>
               <button className="p-xxs bg-default-bg rounded-md ml-xxs text-sub-text hover:text-gray-600">
@@ -56,4 +82,17 @@ export default function LocalBuildSave(props: BuildSaveProps) {
       )}
     </div>
   );
+}
+
+function saveBuild(
+  buildName: string,
+  placedChampionList: (IndexedChampion | null)[]
+) {
+  if (placedChampionList.length === 0) {
+    alert("배치된 챔피언이 없습니다.");
+    return;
+  }
+  const filteredNull = filterNull(placedChampionList) as IndexedChampion[];
+
+  saveBuildToLocalStorage(buildName, filteredNull);
 }

@@ -7,8 +7,8 @@ import { cn, filterNull } from "@/utils";
 import { useEffect, useState } from "react";
 
 import ChampionList from "@/components/ChampionList";
-import LocalBuild from "@/components/LocalBuild";
-import LocalBuildSave from "@/components/LocalBuildSave";
+
+import LocalBuildSave from "@/components/Build/LocalBuildSave";
 import { PlacedChampion } from "@/components/field/hexagon";
 import { SYNERGY_LIST, Synergy } from "@/data/set/12/synergy";
 import {
@@ -18,6 +18,7 @@ import {
 } from "@/utils/localstorage";
 import { useRouter, useSearchParams } from "next/navigation";
 import TraitDisplay from "@/components/TraitDisplay";
+import LocalBuild from "@/components/Build/LocalBuild";
 
 export interface OptimizedIndexedChampion {
   name: string;
@@ -115,7 +116,10 @@ export default function BuilderContainer() {
       >
         <div className="flex gap-sm items-center text-sm basis-[80%]">
           <LocalBuild buildList={buildList} setBuildList={setBuildList} />
-          <LocalBuildSave saveFn={saveBuild} />
+          <LocalBuildSave
+            placedChampionList={placedChampions}
+            setBuildList={setBuildList}
+          />
           <button onClick={resetBuilder} className="button">
             배치 초기화
           </button>
