@@ -6,6 +6,7 @@ import itemJson from "@/data/tft-item.json";
 import { CORE_ITEM_LIST, CoreItem, EMBLEM_ITEM_LIST } from "@/data/item";
 import { Champion } from "@/types/data";
 import { SET_12_CHAMPION_LIST } from "@/dataNew/set/12/custom/champion";
+import { ChampionJson } from "@/hooks/useSetDataNew";
 
 export const cn = (...classNames: (string | false | undefined | null)[]) => {
   const styledClassNames = [...classNames]
@@ -256,11 +257,30 @@ export function findItem(itemNames: string) {
  */
 export function isChampionExist(
   indexedChampionList: IndexedChampion[],
-  tartgetChampion: Champion
+  tartgetChampion: ChampionJson
 ) {
   const exist = indexedChampionList.find(
     (cham) => cham.champion.name === tartgetChampion.name
   );
 
   return exist ? true : false;
+}
+
+/**
+ * "ASSETS/Characters/TFT13_Warwick/Skins/Base/Images/TFT13_Warwick.TFT_Set13_Evolved.tex"
+ *
+ * 와 같은 문자열에서 TFT13_Warwick.TFT_Set13_Evolved.tex 를 추출하고
+ *
+ * .tex 를 .png로 변환후
+ *
+ * TFT13_Warwick.TFT_Set13_Evolved.png 반환
+ *
+ */
+export function extractIconSrc(iconSrc: string) {
+  const lastSlashIndex = iconSrc.lastIndexOf("/");
+  const extracted = iconSrc.substring(lastSlashIndex + 1);
+
+  const result = extracted.replace(".tex", ".png");
+
+  return result;
 }

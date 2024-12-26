@@ -4,9 +4,10 @@ import ChampionPortrait from "../portraits/ChampionPortrait";
 import { Token } from "../svgs";
 import { cn } from "@/utils";
 import { Champion } from "@/types/data";
+import { ChampionJson } from "@/hooks/useSetDataNew";
 
 interface ChampionListItemProps {
-  champion: Champion;
+  champion: ChampionJson;
   handleIconDragStart: (e: any, champion: Champion) => void;
   addPlacedChampionViaClick: (champion: Champion) => void;
 }
@@ -23,14 +24,14 @@ export default function ChampionListItem(props: ChampionListItemProps) {
   }
   return (
     <div
-      onClick={() => addPlacedChampionViaClick(champion)}
+      // onClick={() => addPlacedChampionViaClick(champion)}
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
       onDragStart={(e) => drageStart(e, champion)}
       className="relative cursor-pointer"
       ref={tooltipContainerRef}
     >
-      <PortalTooltip
+      {/* <PortalTooltip
         className="!p-0 !border-none !bg-[#00000000]"
         isOn={isTooltipOn}
         x={pos.x}
@@ -41,16 +42,16 @@ export default function ChampionListItem(props: ChampionListItemProps) {
           dragGuide="배치"
           champion={champion}
         />
-      </PortalTooltip>
+      </PortalTooltip> */}
       <ChampionPortrait
-        key={champion.id}
+        key={champion.apiName}
         className="pc:size-[64px] mo:size-[40px] tab:size-[56px]"
         champion={champion}
       >
         <div className="z-[100] pointer-events-none absolute w-full top-0 flex justify-end ">
           <div className="mo:hidden pointer-events-none flex items-center gap-xxxs bg-[#00000099] rounded-[4px] px-[2px]">
             <Token size={10} className="fill-white" />{" "}
-            <span className="text-main-text text-[11px]">{champion.tier}</span>
+            <span className="text-main-text text-[11px]">{champion.cost}</span>
           </div>
         </div>
         <p

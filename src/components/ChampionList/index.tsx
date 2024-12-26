@@ -15,6 +15,7 @@ import ChampionListHeader from "./ChampionListHeader";
 import ChampionListItem from "./ChampionListItem";
 import { Champion } from "@/types/data";
 import useSetData from "@/hooks/useSetData";
+import useSetDataNew, { ChampionJson } from "@/hooks/useSetDataNew";
 
 interface ChampionListProps extends OverlayProps {
   setPlacedChampions: Dispatch<SetStateAction<(IndexedChampion | null)[]>>;
@@ -38,10 +39,12 @@ function ChampionList(props: ChampionListProps) {
 
   const [sort, setSort] = useState<SortType>("tier");
   const [keyword, setKeyword] = useState("");
-  const { championDataList } = useSetData();
 
+  const { championDataList, traitDataList } = useSetDataNew();
+
+  // const championList = filteringChampionList(championDataList, sort, keyword);
   const championList = filteringChampionList(championDataList, sort, keyword);
-
+  console.log(traitDataList);
   function handleIconDragStart(e: any, champion: Champion) {
     setDraggingTarget(champion);
   }
@@ -102,7 +105,7 @@ export default ChampionList;
  * 반환해주는 함수
  */
 function filteringChampionList(
-  list: Champion[],
+  list: ChampionJson[],
   sortType: SortType,
   keyword: string
 ) {
@@ -112,11 +115,11 @@ function filteringChampionList(
   if (sortType === "korean") {
     result = sortByKorean(list, "name");
   } else {
-    const sortByTier: Champion[] = [];
+    const sortByTier: ChampionJson[] = [];
 
     CHAMPION_TIER.forEach((tier) =>
       sortByKorean(
-        list.filter((cham) => cham.tier === tier),
+        list.filter((cham) => cham.cost === tier),
         "name"
       ).forEach((item) => sortByTier.push(item))
     );
@@ -128,7 +131,7 @@ function filteringChampionList(
     const filtered = result.filter(
       (item) =>
         item.name.includes(keyword) ||
-        item.trait.some((trait) => trait.name.includes(keyword))
+        item.traits.some((trait) => trait.includes(keyword))
     );
 
     result = filtered;

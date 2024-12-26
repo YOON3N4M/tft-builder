@@ -8,6 +8,7 @@ import Image from "next/image";
 import { synergyBgStyles } from ".";
 import { Arrow } from "../svgs";
 import useSetData from "@/hooks/useSetData";
+import useSetDataNew from "@/hooks/useSetDataNew";
 
 interface TraitItemProps {
   indexedChampionList: IndexedChampion[];
@@ -19,14 +20,14 @@ export default function TraitItem(props: TraitItemProps) {
   const { tooltipContainerRef, isTooltipOn, tooltipOff, tooltipOn, pos } =
     usePortalTooltip();
 
-  const { championDataList } = useSetData();
+  const { championDataList } = useSetDataNew();
 
   const traitItem = synergy[0];
   const traitChampionList = championDataList.filter((champion) =>
-    champion.trait.some((trait) => trait.name === traitItem.name)
+    champion.traits.some((trait) => trait === traitItem.name)
   );
 
-  const sortedTraitChampionList = sortByNumber(traitChampionList, "tier");
+  const sortedTraitChampionList = sortByNumber(traitChampionList, "cost");
   const traitGrade = checkTraitGrade(synergy).gradeNumber;
   const traitGradeIndex = traitItem.requirQty.findIndex(
     (num) => num === traitGrade
