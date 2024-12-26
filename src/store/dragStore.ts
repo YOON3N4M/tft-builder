@@ -1,10 +1,11 @@
 import { IndexedChampion } from "@/components/field/Field";
 
 import { CoreItem } from "@/data/item";
+import { ChampionJson } from "@/hooks/useSetDataNew";
 import { Champion } from "@/types/data";
 import { create } from "zustand";
 
-type DraggingTaget = CoreItem | Champion | null;
+type DraggingTaget = CoreItem | ChampionJson | null;
 
 interface DragStore {
   draggingTarget: DraggingTaget;

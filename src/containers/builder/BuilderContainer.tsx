@@ -19,17 +19,12 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import TraitDisplay from "@/components/TraitDisplay";
 import LocalBuild from "@/components/Build/LocalBuild";
+import Board from "@/components/Board";
 
 export interface OptimizedIndexedChampion {
   name: string;
   itemList: string[];
   index: number;
-}
-
-interface Option {
-  item: boolean;
-  reroll: boolean;
-  champion: boolean;
 }
 
 const HEXAGON_QTY = 28;
@@ -76,9 +71,11 @@ export default function BuilderContainer() {
 
     if (!fieldParams) return;
 
-    const unOptimized: IndexedChampion[] = unOptimizedBuild(
-      fieldParams
-    ) as IndexedChampion[];
+    const unOptimized: any[] = [];
+
+    // const unOptimized: IndexedChampion[] = unOptimizedBuild(
+    //   fieldParams
+    // ) as IndexedChampion[];
 
     const clonedIndexed = unOptimized.map((indexed) =>
       structuredClone(indexed)
@@ -86,14 +83,14 @@ export default function BuilderContainer() {
 
     // 초기 로딩 상징 처리
     const processingEmblem = clonedIndexed.forEach((indexed) =>
-      indexed.itemList.forEach((item) => {
+      indexed.itemList.forEach((item: any) => {
         if (!item.name.includes("상징")) return;
         const synergy = SYNERGY_LIST.find(
           (synergyItem) => synergyItem.src[0] === item.src
         ) as Synergy;
-        if (indexed.champion.trait.some((sy) => sy.name === synergy.name))
+        if (indexed.champion.traits.some((sy: any) => sy === synergy.name))
           return;
-        indexed.champion.trait.push(synergy);
+        indexed.champion.traits.push(synergy.name);
       })
     );
 
@@ -136,9 +133,9 @@ export default function BuilderContainer() {
         <div className="flex pc:min-h-[450px] inner py-md tab:flex-col pc:flex-row  mo:flex-col bg-sub-bg rounded-md">
           <h2 className="blind">배치 영역</h2>
           <div className="text-black basis-[15%] flex tab:min-w-[165px] pc:min-w-[216px]">
-            <TraitDisplay indexedChampionList={placedChampions} />
+            {/* <TraitDisplay indexedChampionList={placedChampions} /> */}
           </div>
-          <Field
+          <Board
             placedChampions={placedChampions}
             setPlacedChampions={setPlacedChampions}
           />

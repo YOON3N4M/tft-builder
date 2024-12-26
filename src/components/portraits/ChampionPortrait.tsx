@@ -54,15 +54,14 @@ function ChampionPortrait(props: ChampionPortraitProps) {
       onMouseLeave={tooltipOff}
     >
       {tooltip && (
-        <></>
-        // <PortalTooltip
-        //   className="!p-0 !border-none !bg-[#00000000]"
-        //   isOn={isTooltipOn}
-        //   x={pos.x}
-        //   y={pos.y}
-        // >
-        //   <ChampionTooltip champion={champion} />
-        // </PortalTooltip>
+        <PortalTooltip
+          className="!p-0 !border-none !bg-[#00000000]"
+          isOn={isTooltipOn}
+          x={pos.x}
+          y={pos.y}
+        >
+          <ChampionTooltip champion={champion} />
+        </PortalTooltip>
       )}
 
       <Image

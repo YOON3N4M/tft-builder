@@ -1,15 +1,16 @@
-import { cn } from "@/utils";
+import { cn, extractIconSrc } from "@/utils";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
 import MouseGuide, { MouseGuideProps } from "../MouseGuide";
-import { SRC_CHAMPION } from "@/constants/src";
+
 import { Champion } from "@/types/data";
 import useSetData from "@/hooks/useSetData";
+import useSetDataNew, { ChampionJson } from "@/hooks/useSetDataNew";
 
 interface ChampionTooltipProps
   extends HTMLAttributes<HTMLDivElement>,
     MouseGuideProps {
-  champion: Champion;
+  champion: ChampionJson;
 }
 
 const shapeStyles: { [key: string]: string } = {
@@ -38,13 +39,17 @@ function ChampionTooltip(props: ChampionTooltipProps) {
     rightClickGuide,
   } = props;
 
-  const { championDataList } = useSetData();
+  const { championDataList, traitDataList, SRC_CHAMPION, SRC_TRAIT } =
+    useSetDataNew();
 
   const champion = championDataList.find(
-    (cham) => cham.id === placedChampion.id
+    (cham) => cham.name === placedChampion.name
   );
-
   if (!champion) return;
+
+  const traitList = traitDataList.filter((trait) => {
+    return champion.traits.some((traitName) => traitName === trait.name);
+  });
 
   const noTooltipImageChampion = champion.name.includes("훈련");
 
@@ -53,7 +58,7 @@ function ChampionTooltip(props: ChampionTooltipProps) {
       <div
         className={cn(
           "relative rounded-md overflow-hidden bg-black",
-          !noTooltipImageChampion && borderStyles[champion.tier.toString()]
+          !noTooltipImageChampion && borderStyles[champion.cost.toString()]
         )}
       >
         <div className="absolute top-0 bg-gradient-to-r from-[#00000080] from-[5%] to-[#fff0] size-full z-[10]">
@@ -62,12 +67,12 @@ function ChampionTooltip(props: ChampionTooltipProps) {
               {champion.name}
             </span>
             <div className="flex flex-col  mt-auto gap-xxs">
-              {champion.trait.map((trait) => (
+              {traitList.map((trait) => (
                 <div key={trait.name} className="flex gap-xxs items-center">
                   <Image
                     width={18}
                     height={12}
-                    src={`/images/set/12/synergy/${trait.src[0]}.png`}
+                    src={SRC_TRAIT(extractIconSrc(trait.icon))}
                     alt={trait.name}
                     className=""
                   />
@@ -82,16 +87,16 @@ function ChampionTooltip(props: ChampionTooltipProps) {
             width={256}
             height={128}
             alt={champion.name}
-            src={SRC_CHAMPION(champion.src)}
+            src={SRC_CHAMPION(extractIconSrc(champion.icon))}
             className="object-cover"
             quality={95}
           ></Image>
         )}
 
         {/* <div className="flex items-center gap-xs z-[2000]">
-        <span className={cn(shapeStyles[champion.tier])} />
-        <span className="text-sm text-main-text">{champion.name}</span>
-      </div> */}
+          <span className={cn(shapeStyles[champion.cost])} />
+          <span className="text-sm text-main-text">{champion.name}</span>
+        </div> */}
         {/* <div className="flex flex-col mt-xs gap-xxs">
         {champion.synergy.map((synergy) => (
           <div key={synergy.name} className="flex gap-xxs items-center">

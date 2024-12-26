@@ -2,8 +2,8 @@ import { CoreItem } from "@/data/item";
 import { TRAINING_BOT } from "@/data/set/12/champions";
 import { cn, filterNull } from "@/utils";
 import { Dispatch, SetStateAction } from "react";
-import Hexagon, { PlacedChampion } from "./hexagon";
-import { Champion } from "@/types/data";
+
+import Hexagon, { PlacedChampion } from "./Hexagon";
 import { ChampionJson } from "@/hooks/useSetDataNew";
 
 export interface IndexedChampion {
@@ -11,12 +11,12 @@ export interface IndexedChampion {
   champion: ChampionJson;
   itemList: CoreItem[];
 }
-interface FieldProps {
+interface BoardProps {
   placedChampions: (IndexedChampion | null)[];
   setPlacedChampions: Dispatch<SetStateAction<PlacedChampion[]>>;
 }
 
-function Field(props: FieldProps) {
+function Board(props: BoardProps) {
   const { placedChampions, setPlacedChampions } = props;
 
   function isEvenRow(idx: number): boolean {
@@ -65,4 +65,4 @@ function Field(props: FieldProps) {
   );
 }
 
-export default Field;
+export default Board;

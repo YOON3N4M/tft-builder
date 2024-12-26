@@ -8,21 +8,21 @@ import Image from "next/image";
 import { synergyBgStyles } from ".";
 import { Arrow } from "../svgs";
 import useSetData from "@/hooks/useSetData";
-import useSetDataNew from "@/hooks/useSetDataNew";
+import useSetDataNew, { TraitJson } from "@/hooks/useSetDataNew";
 
 interface TraitItemProps {
   indexedChampionList: IndexedChampion[];
-  synergy: Synergy[];
+  traitList: TraitJson[];
 }
 
 export default function TraitItem(props: TraitItemProps) {
-  const { indexedChampionList, synergy } = props;
+  const { indexedChampionList, traitList } = props;
   const { tooltipContainerRef, isTooltipOn, tooltipOff, tooltipOn, pos } =
     usePortalTooltip();
 
-  const { championDataList } = useSetDataNew();
+  const { championDataList, traitDataList } = useSetDataNew();
 
-  const traitItem = synergy[0];
+  const traitItem = traitList[0];
   const traitChampionList = championDataList.filter((champion) =>
     champion.traits.some((trait) => trait === traitItem.name)
   );

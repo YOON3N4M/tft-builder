@@ -6,7 +6,7 @@ import itemJson from "@/data/tft-item.json";
 import { CORE_ITEM_LIST, CoreItem, EMBLEM_ITEM_LIST } from "@/data/item";
 import { Champion } from "@/types/data";
 import { SET_12_CHAMPION_LIST } from "@/dataNew/set/12/custom/champion";
-import { ChampionJson } from "@/hooks/useSetDataNew";
+import { ChampionJson, TraitJson } from "@/hooks/useSetDataNew";
 
 export const cn = (...classNames: (string | false | undefined | null)[]) => {
   const styledClassNames = [...classNames]
@@ -68,12 +68,12 @@ export function groupBy<T>(array: T[], key: keyof T): T[][] {
   return Object.values(grouped);
 }
 
-export function checkTraitGrade(synergy: Synergy[]): any {
-  if (!synergy) return;
+export function checkTraitGrade(traitList: TraitJson[]): any {
+  if (!traitList) return;
 
-  const synergyCount = synergy.length;
-  const requireQty = synergy[0].requirQty;
-  const grade = synergy[0].tier;
+  const synergyCount = traitList.length;
+  const requireQty = traitList[0].effects.map((effect) => effect.minUnits);
+  const grade = traitList[0];
 
   let index = 0;
   let gradeText = "unranked";
@@ -174,7 +174,7 @@ export function findLongestArray<T>(arr: T[][]): T[] {
 }
 
 export function generateIndexedChampion(
-  champion: Champion,
+  champion: ChampionJson,
   index: number,
   itemList: CoreItem[] = []
 ): IndexedChampion {

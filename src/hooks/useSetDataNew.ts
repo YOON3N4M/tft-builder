@@ -52,7 +52,7 @@ export interface ChampionJson {
   traits: string[];
 }
 
-interface TraitJson {
+export interface TraitJson {
   apiName: string;
   desc: string;
   effects: EffectJson[];
@@ -96,6 +96,8 @@ export default function useSetDataNew() {
   const SRC_CHAMPION = (srcName: string) =>
     `/images/set/${activeSet}/tft-champion/${srcName}`;
 
+  const SRC_TRAIT = (srcName: string) =>
+    `/images/set/${activeSet}/tft-trait/${srcName}`;
   // const combinationItemList = setData.custom.combinationItem;
   // const coreItemList = setData.custom.coreItem;
   // const emblelemItemList = setData.custom.emblelemItem;
@@ -105,6 +107,7 @@ export default function useSetDataNew() {
     traitDataList,
     itemDataList,
     SRC_CHAMPION,
+    SRC_TRAIT,
     // championDataList,
     // traitDataList,
     // activeSet,

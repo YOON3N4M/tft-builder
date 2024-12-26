@@ -45,11 +45,11 @@ function ChampionList(props: ChampionListProps) {
   // const championList = filteringChampionList(championDataList, sort, keyword);
   const championList = filteringChampionList(championDataList, sort, keyword);
   console.log(traitDataList);
-  function handleIconDragStart(e: any, champion: Champion) {
+  function handleIconDragStart(e: any, champion: ChampionJson) {
     setDraggingTarget(champion);
   }
 
-  function addPlacedChampionViaClick(champion: Champion) {
+  function addPlacedChampionViaClick(champion: ChampionJson) {
     setPlacedChampions((prev) =>
       setItemToindex(
         prev,

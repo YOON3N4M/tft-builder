@@ -8,8 +8,8 @@ import { ChampionJson } from "@/hooks/useSetDataNew";
 
 interface ChampionListItemProps {
   champion: ChampionJson;
-  handleIconDragStart: (e: any, champion: Champion) => void;
-  addPlacedChampionViaClick: (champion: Champion) => void;
+  handleIconDragStart: (e: any, champion: ChampionJson) => void;
+  addPlacedChampionViaClick: (champion: ChampionJson) => void;
 }
 
 export default function ChampionListItem(props: ChampionListItemProps) {
@@ -24,14 +24,14 @@ export default function ChampionListItem(props: ChampionListItemProps) {
   }
   return (
     <div
-      // onClick={() => addPlacedChampionViaClick(champion)}
+      onClick={() => addPlacedChampionViaClick(champion)}
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
       onDragStart={(e) => drageStart(e, champion)}
       className="relative cursor-pointer"
       ref={tooltipContainerRef}
     >
-      {/* <PortalTooltip
+      <PortalTooltip
         className="!p-0 !border-none !bg-[#00000000]"
         isOn={isTooltipOn}
         x={pos.x}
@@ -42,7 +42,7 @@ export default function ChampionListItem(props: ChampionListItemProps) {
           dragGuide="배치"
           champion={champion}
         />
-      </PortalTooltip> */}
+      </PortalTooltip>
       <ChampionPortrait
         key={champion.apiName}
         className="pc:size-[64px] mo:size-[40px] tab:size-[56px]"

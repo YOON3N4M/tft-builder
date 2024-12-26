@@ -36,10 +36,10 @@ function TraitDisplay(props: TraitDisplayProps) {
   const duplicateRemoves = removeDuplicateSyenrgy(nullFiltered);
 
   const synergyList = duplicateRemoves.flatMap(
-    (indexedChampion) => indexedChampion.champion.trait
+    (indexedChampion) => indexedChampion.champion.traits
   );
 
-  const refinedSynergyList = groupBy(synergyList, "name");
+  const refinedSynergyList = groupBy(synergyList, "anchor");
   const sortByLength = refinedSynergyList.sort((a, b) => b.length - a.length);
   const soltByGrade = refinedSynergyList.sort((a, b) => {
     const grade: any = {
