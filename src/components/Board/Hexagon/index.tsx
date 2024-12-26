@@ -16,16 +16,22 @@ import {
   ReactNode,
   SetStateAction,
 } from "react";
-import ChampionTooltip from "../tooltips/ChampionTooltip";
 
 import { SRC_CHAMPION_PORTRAIT } from "@/constants/src";
 import { SYNERGY_LIST, Synergy } from "@/data/set/12/synergy";
-import ItemPortrait from "../portraits/ItemPortrait";
-import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
 import { Champion } from "@/types/data";
-import { IndexedChampion } from ".";
+
 import useSetDataNew, { ChampionJson } from "@/hooks/useSetDataNew";
+import { IndexedChampion } from "..";
+import {
+  PortalTooltip,
+  usePortalTooltip,
+} from "@/components/tooltips/PortalTooltip";
+import ChampionTooltip from "@/components/tooltips/ChampionTooltip";
+import ItemPortrait from "@/components/portraits/ItemPortrait";
+import BackgroundLayer from "./BackgroundLayer";
+import ItemLayer from "./ItemLayer";
 
 export type PlacedChampion = IndexedChampion | null;
 
@@ -36,14 +42,6 @@ interface HexagonProps {
   setPlacedChampions: Dispatch<SetStateAction<PlacedChampion[]>>;
   index: number;
 }
-
-const backgroundColorStyles: { [key: string]: string } = {
-  "1": "!bg-tier-1",
-  "2": "!bg-tier-2",
-  "3": "!bg-tier-3",
-  "4": "!bg-tier-4",
-  "5": "!bg-tier-5",
-};
 
 export default function Hexagon(props: HexagonProps) {
   const { placedChampion, isEvenRow, setPlacedChampions, index } = props;
@@ -188,38 +186,6 @@ export default function Hexagon(props: HexagonProps) {
     handleIndexItem(index, null);
   }
 
-  function handleItemRightClick(
-    event: MouseEvent<HTMLImageElement>,
-    idx: number
-  ) {
-    event.stopPropagation();
-    event.preventDefault();
-
-    if (!placedChampion) return;
-
-    let ClonedPlacedChampion = structuredClone(placedChampion);
-
-    const targetItem = placedChampion.itemList[idx];
-
-    // 제거 아이템이 상징인 경우
-    // 적용된 시너지도 함께 제거
-    if (targetItem.name.includes("상징")) {
-      const newSynergyList = placedChampion.champion.traits.filter(
-        (item) => item !== targetItem.src
-      );
-      ClonedPlacedChampion.champion.traits = newSynergyList;
-    }
-
-    const newIndexedChampion = {
-      ...ClonedPlacedChampion,
-      itemList: [...ClonedPlacedChampion.itemList!].filter(
-        (_, index) => index !== idx
-      ),
-    };
-
-    handleIndexItem(index, newIndexedChampion);
-  }
-
   return (
     <div
       className={cn(
@@ -229,15 +195,9 @@ export default function Hexagon(props: HexagonProps) {
         isEvenRow && "translate-x-[55%]"
       )}
     >
-      <div
-        className={cn(
-          "hexagon pc:w-[84px] cursor-pointer pc:h-[96px] bg-[#19191b] border-[##19191b] relative flex justify-center items-center",
-          "tab:w-[60px] tab:h-[65px]",
-          "mo:w-[40px] mo:h-[45px]",
-          isDragEnter && "bg-blue-300",
-          placedChampion &&
-            backgroundColorStyles[placedChampion.champion.cost.toString()]
-        )}
+      <BackgroundLayer
+        isDragEnter={isDragEnter}
+        placedChampion={placedChampion}
       >
         <div
           onContextMenu={onChampionRightClick}
@@ -283,22 +243,8 @@ export default function Hexagon(props: HexagonProps) {
             </div>
           )}
         </div>
-      </div>
-      <div className="absolute flex w-full gap-xxxs bottom-0 justify-center">
-        {placedChampion &&
-          placedChampion.itemList.map((item, idx) => (
-            <ItemPortrait
-              noTooltip
-              item={item}
-              key={`${placedChampion}-${index}-${item.id}`}
-              onContextMenu={(event) => handleItemRightClick(event, idx)}
-              className={cn("rounded-md cursor-pointer", "mo:size-[13px]")}
-              width={20}
-              height={20}
-              rightClickGuide="해제"
-            />
-          ))}
-      </div>
+      </BackgroundLayer>
+      <ItemLayer placedChampion={placedChampion} />
     </div>
   );
 }

@@ -3,8 +3,8 @@ import { TRAINING_BOT } from "@/data/set/12/champions";
 import { cn, filterNull } from "@/utils";
 import { Dispatch, SetStateAction } from "react";
 
-import Hexagon, { PlacedChampion } from "./Hexagon";
 import { ChampionJson } from "@/hooks/useSetDataNew";
+import Hexagon, { PlacedChampion } from "./Hexagon";
 
 export interface IndexedChampion {
   index: number;
