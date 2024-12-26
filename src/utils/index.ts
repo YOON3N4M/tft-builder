@@ -1,12 +1,11 @@
-import { IndexedChampion } from "@/components/field/Field";
-
 import { SYNERGY_LIST, Synergy } from "@/data/set/12/synergy";
 import { RiotId } from "@/types/riot";
 import itemJson from "@/data/tft-item.json";
 import { CORE_ITEM_LIST, CoreItem, EMBLEM_ITEM_LIST } from "@/data/item";
 import { Champion } from "@/types/data";
 import { SET_12_CHAMPION_LIST } from "@/dataNew/set/12/custom/champion";
-import { ChampionJson, TraitJson } from "@/hooks/useSetDataNew";
+import { ChampionJson, EffectJson, TraitJson } from "@/hooks/useSetDataNew";
+import { IndexedChampion } from "@/store/BuilderStore";
 
 export const cn = (...classNames: (string | false | undefined | null)[]) => {
   const styledClassNames = [...classNames]
@@ -256,11 +255,11 @@ export function findItem(itemNames: string) {
  * 타겟 챔피언이 리스트에 있는지 검사
  */
 export function isChampionExist(
-  indexedChampionList: IndexedChampion[],
+  setChampionDataList: ChampionJson[],
   tartgetChampion: ChampionJson
 ) {
-  const exist = indexedChampionList.find(
-    (cham) => cham.champion.name === tartgetChampion.name
+  const exist = setChampionDataList.find(
+    (championData) => championData.name === tartgetChampion.name
   );
 
   return exist ? true : false;
@@ -283,4 +282,20 @@ export function extractIconSrc(iconSrc: string) {
   const result = extracted.replace(".tex", ".png");
 
   return result;
+}
+/**
+ * 해당 특성의 현재 유닛 수, effectList를 인자로 입력하면
+ *
+ * 해당하는 스타일의 number를 반환해줌
+ */
+export function checkTraitStyle(unitQty: number, effectList: EffectJson[]) {
+  const condition = effectList.find(
+    (cond) => unitQty <= cond.maxUnits && unitQty >= cond.minUnits
+  );
+
+  if (condition) {
+    return condition.style;
+  } else {
+    return 0;
+  }
 }

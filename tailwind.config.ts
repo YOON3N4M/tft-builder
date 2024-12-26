@@ -40,6 +40,7 @@ const config: Config = {
         "tier-3": "#207ac7",
         "tier-4": "#c440da",
         "tier-5": "#ffb93b",
+        "tier-6": "#e5e7eb",
       },
       zIndex: {
         layout: "100",

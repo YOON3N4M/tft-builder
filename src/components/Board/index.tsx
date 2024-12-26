@@ -5,19 +5,17 @@ import { Dispatch, SetStateAction } from "react";
 
 import { ChampionJson } from "@/hooks/useSetDataNew";
 import Hexagon, { PlacedChampion } from "./Hexagon";
+import { useIndexedChampionList } from "@/store/BuilderStore";
 
 export interface IndexedChampion {
   index: number;
   champion: ChampionJson;
   itemList: CoreItem[];
 }
-interface BoardProps {
-  placedChampions: (IndexedChampion | null)[];
-  setPlacedChampions: Dispatch<SetStateAction<PlacedChampion[]>>;
-}
+interface BoardProps {}
 
 function Board(props: BoardProps) {
-  const { placedChampions, setPlacedChampions } = props;
+  const indexedChampionList = useIndexedChampionList();
 
   function isEvenRow(idx: number): boolean {
     return (idx > 6 && idx < 14) || idx > 20;
@@ -45,16 +43,15 @@ function Board(props: BoardProps) {
           )}
         >
           {
-            filterNull(placedChampions).filter(
+            filterNull(indexedChampionList).filter(
               (item) => item?.champion.name !== TRAINING_BOT.name
             ).length
           }
         </span>
 
-        {placedChampions.map((item, idx) => (
+        {indexedChampionList.map((item, idx) => (
           <Hexagon
             placedChampion={item}
-            setPlacedChampions={setPlacedChampions}
             key={`${idx}-${item?.champion.name}`}
             index={idx}
             isEvenRow={isEvenRow(idx)}

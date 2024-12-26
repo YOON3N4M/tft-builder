@@ -29,6 +29,7 @@ const borderStyles: { [key: string]: string } = {
   "3": " border border-tier-3",
   "4": " border border-tier-4",
   "5": " border border-tier-5",
+  "6": " border border-tier-6",
 };
 
 function ChampionTooltip(props: ChampionTooltipProps) {

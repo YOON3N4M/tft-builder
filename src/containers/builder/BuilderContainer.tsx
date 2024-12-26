@@ -20,6 +20,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import TraitDisplay from "@/components/TraitDisplay";
 import LocalBuild from "@/components/Build/LocalBuild";
 import Board from "@/components/Board";
+import {
+  useBuilderActions,
+  useIndexedChampionList,
+} from "@/store/BuilderStore";
 
 export interface OptimizedIndexedChampion {
   name: string;
@@ -33,24 +37,24 @@ const INITIAL_FIELD_ARRAY = [...Array(HEXAGON_QTY)].map((_) => null);
 export default function BuilderContainer() {
   const router = useRouter();
 
-  const [placedChampions, setPlacedChampions] =
-    useState<(IndexedChampion | null)[]>(INITIAL_FIELD_ARRAY);
+  const indexedChampionList = useIndexedChampionList();
+  const { setIndexedChampionList } = useBuilderActions();
   const [buildList, setBuildList] = useState(getlocalBuildAll);
   const params = useSearchParams();
 
   function resetBuilder() {
     if (!confirm("배치된 챔피언을 모두 제거 합니다.")) return;
-    setPlacedChampions(INITIAL_FIELD_ARRAY);
+    // setPlacedChampions(INITIAL_FIELD_ARRAY);
     router.push("/");
   }
 
   // 저장
   function saveBuild(buildName: string) {
-    if (placedChampions.length === 0) {
+    if (indexedChampionList.length === 0) {
       alert("배치된 챔피언이 없습니다.");
       return;
     }
-    const filteredNull = filterNull(placedChampions) as IndexedChampion[];
+    const filteredNull = filterNull(indexedChampionList) as IndexedChampion[];
 
     saveBuildToLocalStorage(buildName, filteredNull);
     // addParams("field", fieldToString);
@@ -98,7 +102,7 @@ export default function BuilderContainer() {
 
     clonedIndexed.forEach((item) => (clonedInitial[item.index] = item));
 
-    setPlacedChampions(clonedInitial);
+    setIndexedChampionList(clonedInitial);
   }
 
   return (
@@ -114,7 +118,7 @@ export default function BuilderContainer() {
         <div className="flex gap-sm items-center text-sm basis-[80%]">
           <LocalBuild buildList={buildList} setBuildList={setBuildList} />
           <LocalBuildSave
-            placedChampionList={placedChampions}
+            placedChampionList={indexedChampionList}
             setBuildList={setBuildList}
           />
           <button onClick={resetBuilder} className="button">
@@ -133,12 +137,9 @@ export default function BuilderContainer() {
         <div className="flex pc:min-h-[450px] inner py-md tab:flex-col pc:flex-row  mo:flex-col bg-sub-bg rounded-md">
           <h2 className="blind">배치 영역</h2>
           <div className="text-black basis-[15%] flex tab:min-w-[165px] pc:min-w-[216px]">
-            {/* <TraitDisplay indexedChampionList={placedChampions} /> */}
+            <TraitDisplay />
           </div>
-          <Board
-            placedChampions={placedChampions}
-            setPlacedChampions={setPlacedChampions}
-          />
+          <Board />
           <div className="bg-content-bg tab:mt-md pc:mt-0 mo:mt-md rounded-md basis-[20%] border-[#222] border">
             <ItemCombination hidden={false} />
           </div>
@@ -151,10 +152,7 @@ export default function BuilderContainer() {
           )}
         >
           <div className="basis-[60%]">
-            <ChampionList
-              setPlacedChampions={setPlacedChampions}
-              hidden={false}
-            />
+            <ChampionList hidden={false} />
           </div>
           <div className="basis-[40%] mo:w-full">
             {/* <RerollPercentage hidden={false} /> */}

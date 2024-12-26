@@ -2,42 +2,74 @@ import { Synergy } from "@/data/set/12/synergy";
 import { IndexedChampion } from "../field/Field";
 import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
-import { checkTraitGrade, cn, isChampionExist, sortByNumber } from "@/utils";
+import {
+  checkTraitGrade,
+  checkTraitStyle,
+  cn,
+  extractIconSrc,
+  isChampionExist,
+  sortByNumber,
+} from "@/utils";
 import ChampionPortrait from "../portraits/ChampionPortrait";
 import Image from "next/image";
-import { synergyBgStyles } from ".";
+
 import { Arrow } from "../svgs";
 import useSetData from "@/hooks/useSetData";
-import useSetDataNew, { TraitJson } from "@/hooks/useSetDataNew";
+import useSetDataNew, {
+  ChampionJson,
+  EffectJson,
+  TraitJson,
+} from "@/hooks/useSetDataNew";
 
 interface TraitItemProps {
-  indexedChampionList: IndexedChampion[];
-  traitList: TraitJson[];
+  groupedTrait: {
+    traitName: string;
+    championList: ChampionJson[];
+  };
 }
 
+export const traitBgStyles: { [key: string]: string } = {
+  "0": "bg-gray-900",
+  "1": "bg-[#a0715e]",
+  "3": "bg-[#7c8f92]",
+  "5": "bg-[#bd9a38]",
+  "6": "bg-[#ad1457]",
+  // 워윅, 빅토르 등 6코스트 챔피언의 고유 특성이 '4'로 처리가 되어 있음
+  "4": "bg-[#ad1457]",
+};
+
 export default function TraitItem(props: TraitItemProps) {
-  const { indexedChampionList, traitList } = props;
+  const { groupedTrait } = props;
+  const { traitName, championList } = groupedTrait;
+
   const { tooltipContainerRef, isTooltipOn, tooltipOff, tooltipOn, pos } =
     usePortalTooltip();
 
-  const { championDataList, traitDataList } = useSetDataNew();
+  const { traitDataList, SRC_TRAIT, championDataList } = useSetDataNew();
 
-  const traitItem = traitList[0];
-  const traitChampionList = championDataList.filter((champion) =>
-    champion.traits.some((trait) => trait === traitItem.name)
+  const currentTrait = traitDataList.find((item) => item.name === traitName);
+  if (!currentTrait) return;
+
+  const { name, desc, icon, effects } = currentTrait;
+  const championListOfTrait = sortByNumber(
+    championDataList.filter((champion) =>
+      champion.traits.some((_trait) => _trait === name)
+    ),
+    "cost"
   );
 
-  const sortedTraitChampionList = sortByNumber(traitChampionList, "cost");
-  const traitGrade = checkTraitGrade(synergy).gradeNumber;
-  const traitGradeIndex = traitItem.requirQty.findIndex(
-    (num) => num === traitGrade
-  );
-  console.log(traitGradeIndex);
+  const unitQty = championList.length;
+  const styleNumber = checkTraitStyle(unitQty, effects);
+  const iconSrc = SRC_TRAIT(extractIconSrc(icon));
+  const activeEffectIndex = effects
+    .reverse()
+    .findIndex((effect) => effect.style === styleNumber);
+  const traitBgStyle = traitBgStyles[styleNumber];
 
   return (
     <div
       ref={tooltipContainerRef}
-      key={traitItem.name}
+      key={name}
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
       className={cn(
@@ -52,27 +84,32 @@ export default function TraitItem(props: TraitItemProps) {
         position="right"
       >
         <div>
-          <p className="text-main-text font-semibold">{traitItem.name}</p>
-          <p className="text-sub-text mt-sm">{traitItem.desc}</p>
+          <p className="text-main-text font-semibold">{name}</p>
+          <div
+            className="text-sub-text mt-sm"
+            // dangerouslySetInnerHTML={{ __html: desc }}
+          >
+            {desc}
+          </div>
           <ul className="mt-sm text-sub-text">
-            {traitItem.effect.map((ef, idx) => (
+            {effects.map((effect, idx) => (
               <li
-                key={`${traitItem.name}-effect-${idx}`}
-                className={cn(traitGradeIndex === idx && "text-main-text")}
+                key={`${name}-effect-${idx}`}
+                // className={cn(traitGradeIndex === idx && "text-main-text")}
               >
-                ({traitItem.requirQty[idx]}) {ef}
+                {/* ({effect.minUnits}) {desc} */}
               </li>
             ))}
           </ul>
         </div>
-        <div className="mt-sm flex gap-xxs">
-          {sortedTraitChampionList.map((champion) => (
+        <div className="mt-md flex gap-xxs">
+          {championListOfTrait.map((champion) => (
             <ChampionPortrait
               key={champion.name}
               champion={champion}
               className={cn(
                 "size-[40px]",
-                !isChampionExist(indexedChampionList, champion) && "!opacity-50"
+                !isChampionExist(championList, champion) && "!opacity-50"
               )}
             />
           ))}
@@ -80,43 +117,39 @@ export default function TraitItem(props: TraitItemProps) {
       </PortalTooltip>
       <div
         className={cn(
-          "p-xxs hexagon w-[34px] h-[36px] flex items-center justify-center",
-          synergyBgStyles[checkTraitGrade(synergy)?.gradeText]
+          "p-xxs hexagon w-[34px] h-[36px] flex items-center shrink-0 justify-center",
+          traitBgStyle
         )}
       >
         <Image
           width={22}
           height={22}
-          src={`/images/set/12/synergy/${traitItem.src[0]}.png`}
-          alt={traitItem.name}
-          className="filter pc:w-[22px] pc:h-[22px]"
+          src={iconSrc}
+          alt={name}
+          className="filter pc:w-[22px] pc:h-[22px] "
         />
       </div>
       <div
-        className={cn(
-          "px-xs py-xxxs ml-[-5px] text-main-text",
-          synergyBgStyles[checkTraitGrade(synergy)?.gradeText]
-        )}
+        className={cn("px-xs py-xxxs ml-[-5px] text-main-text", traitBgStyle)}
       >
-        {synergy.length}
+        {unitQty}
       </div>
       <div className="ml-xs flex flex-col">
         <div className="flex">
-          <span>{traitItem.name}</span>
+          <span>{name}</span>
         </div>
         <div className="flex items-center gap-xxxs">
-          {traitItem.requirQty.map((qty, idx) => (
+          {effects.map((effect, idx) => (
             <>
               <span
                 className={cn(
                   "text-sub-text text-xs",
-                  checkTraitGrade(synergy)?.gradeNumber === qty &&
-                    "!text-main-text"
+                  idx === activeEffectIndex && "!text-main-text"
                 )}
               >
-                {qty}
+                {effect.minUnits}
               </span>
-              {idx + 1 !== traitItem.requirQty.length && (
+              {idx + 1 !== effects.length && (
                 <Arrow size={10} className="inline fill-gray-600" />
               )}
             </>

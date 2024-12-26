@@ -14,6 +14,7 @@ const backgroundColorStyles: { [key: string]: string } = {
   "3": "!bg-tier-3",
   "4": "!bg-tier-4",
   "5": "!bg-tier-5",
+  "6": "!bg-tier-6",
 };
 
 function BackgroundLayer(props: BackgroundLayerProps) {

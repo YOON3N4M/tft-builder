@@ -1,62 +1,51 @@
 "use client";
 
-import { CHAMPION_TIER } from "@/data/set/12/champions";
-import { useDragActions } from "@/store/dragStore";
+import useSetDataNew, { ChampionJson } from "@/hooks/useSetDataNew";
 import {
-  cn,
-  generateIndexedChampion,
-  setItemToindex,
-  sortByKorean,
-} from "@/utils";
-import { Dispatch, SetStateAction, useState } from "react";
-import { IndexedChampion } from "../field/Field";
+  useBuilderActions,
+  useIndexedChampionList,
+} from "@/store/BuilderStore";
+import { useDragActions } from "@/store/dragStore";
+import { cn, generateIndexedChampion, sortByKorean } from "@/utils";
+import { useState } from "react";
 import { OverlayProps } from "../overlay/Overlay";
 import ChampionListHeader from "./ChampionListHeader";
 import ChampionListItem from "./ChampionListItem";
-import { Champion } from "@/types/data";
-import useSetData from "@/hooks/useSetData";
-import useSetDataNew, { ChampionJson } from "@/hooks/useSetDataNew";
 
-interface ChampionListProps extends OverlayProps {
-  setPlacedChampions: Dispatch<SetStateAction<(IndexedChampion | null)[]>>;
-}
+interface ChampionListProps extends OverlayProps {}
 
 export type SortType = "korean" | "tier";
 
-export const borderColorStyles: { [key: string]: string } = {
-  "0": "border-tier-1",
-  "1": "border-tier-1",
-  "2": "border-tier-2",
-  "3": "border-tier-3",
-  "4": "border-tier-4",
-  "5": "border-tier-5",
-};
-
 function ChampionList(props: ChampionListProps) {
-  const { hidden, setPlacedChampions } = props;
+  const { hidden } = props;
 
   const { setDraggingTarget } = useDragActions();
 
   const [sort, setSort] = useState<SortType>("tier");
   const [keyword, setKeyword] = useState("");
 
-  const { championDataList, traitDataList } = useSetDataNew();
+  const { championDataList, traitDataList, currentChampionTier } =
+    useSetDataNew();
+  const indexedChampionList = useIndexedChampionList();
+  const { setIndexedChampionList } = useBuilderActions();
 
   // const championList = filteringChampionList(championDataList, sort, keyword);
-  const championList = filteringChampionList(championDataList, sort, keyword);
+  const championList = filteringChampionList(
+    championDataList,
+    sort,
+    keyword,
+    currentChampionTier
+  );
   console.log(traitDataList);
   function handleIconDragStart(e: any, champion: ChampionJson) {
     setDraggingTarget(champion);
   }
 
   function addPlacedChampionViaClick(champion: ChampionJson) {
-    setPlacedChampions((prev) =>
-      setItemToindex(
-        prev,
-        prev.indexOf(null),
-        generateIndexedChampion(champion, prev.indexOf(null))
-      )
-    );
+    const cloneArray = [...indexedChampionList];
+    const targetIndex = indexedChampionList.indexOf(null);
+    cloneArray[targetIndex] = generateIndexedChampion(champion, targetIndex);
+    setIndexedChampionList(cloneArray);
   }
 
   return (
@@ -107,7 +96,8 @@ export default ChampionList;
 function filteringChampionList(
   list: ChampionJson[],
   sortType: SortType,
-  keyword: string
+  keyword: string,
+  currentChampionTierList: number[]
 ) {
   let result = list;
 
@@ -117,7 +107,7 @@ function filteringChampionList(
   } else {
     const sortByTier: ChampionJson[] = [];
 
-    CHAMPION_TIER.forEach((tier) =>
+    currentChampionTierList.forEach((tier) =>
       sortByKorean(
         list.filter((cham) => cham.cost === tier),
         "name"

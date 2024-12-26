@@ -47,8 +47,8 @@ function ChampionPortrait(props: ChampionPortraitProps) {
       ref={tooltipContainerRef}
       className={cn(
         "relative overflow-hidden flex rounded-md border-2",
-        className
-        // borderColorStyles[cost.toString()]
+        className,
+        borderColorStyles[cost.toString()]
       )}
       onMouseEnter={tooltipOn}
       onMouseLeave={tooltipOff}
@@ -69,7 +69,10 @@ function ChampionPortrait(props: ChampionPortraitProps) {
         width={256}
         height={128}
         alt={name}
-        className={cn("object-cover relative", !isTrainingBot && "scale-125")}
+        className={cn(
+          "object-cover relative object-[-55px_0px]",
+          !isTrainingBot && "scale-125"
+        )}
       />
       {children}
     </div>

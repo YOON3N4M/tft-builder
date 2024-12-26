@@ -9,27 +9,21 @@ import {
 } from "@/store/dragStore";
 import { cn, extractIconSrc, generateIndexedChampion } from "@/utils";
 import Image from "next/image";
-import {
-  Dispatch,
-  DragEvent,
-  MouseEvent,
-  ReactNode,
-  SetStateAction,
-} from "react";
+import { DragEvent, MouseEvent, ReactNode } from "react";
 
-import { SRC_CHAMPION_PORTRAIT } from "@/constants/src";
 import { SYNERGY_LIST, Synergy } from "@/data/set/12/synergy";
 
-import { Champion } from "@/types/data";
-
-import useSetDataNew, { ChampionJson } from "@/hooks/useSetDataNew";
-import { IndexedChampion } from "..";
+import ChampionTooltip from "@/components/tooltips/ChampionTooltip";
 import {
   PortalTooltip,
   usePortalTooltip,
 } from "@/components/tooltips/PortalTooltip";
-import ChampionTooltip from "@/components/tooltips/ChampionTooltip";
-import ItemPortrait from "@/components/portraits/ItemPortrait";
+import useSetDataNew, { ChampionJson } from "@/hooks/useSetDataNew";
+import {
+  useBuilderActions,
+  useIndexedChampionList,
+} from "@/store/BuilderStore";
+import { IndexedChampion } from "..";
 import BackgroundLayer from "./BackgroundLayer";
 import ItemLayer from "./ItemLayer";
 
@@ -39,17 +33,19 @@ interface HexagonProps {
   placedChampion: PlacedChampion;
   children?: ReactNode;
   isEvenRow: boolean;
-  setPlacedChampions: Dispatch<SetStateAction<PlacedChampion[]>>;
   index: number;
 }
 
 export default function Hexagon(props: HexagonProps) {
-  const { placedChampion, isEvenRow, setPlacedChampions, index } = props;
+  const { placedChampion, isEvenRow, index } = props;
 
   const isTrainingBot = placedChampion?.champion.name === TRAINING_BOT.name;
 
   const { setDraggingCoreItem, setDraggingTarget, setDraggingIndexedChampion } =
     useDragActions();
+
+  const indexedChampionList = useIndexedChampionList();
+  const { setIndexedChampionList } = useBuilderActions();
 
   const { SRC_CHAMPION } = useSetDataNew();
 
@@ -63,13 +59,9 @@ export default function Hexagon(props: HexagonProps) {
     useDragEvent();
 
   function handleIndexItem(idx: number, item: IndexedChampion | null) {
-    setPlacedChampions((prev) => {
-      const cloneArray = [...prev];
-
-      cloneArray[idx] = item;
-
-      return cloneArray;
-    });
+    const cloneArray = [...indexedChampionList];
+    cloneArray[idx] = item;
+    setIndexedChampionList(cloneArray);
   }
 
   function handleDragStart() {
@@ -157,13 +149,9 @@ export default function Hexagon(props: HexagonProps) {
         index
       );
 
-      setPlacedChampions((prev) => {
-        const cloneArray = [...prev];
-
-        cloneArray[index] = indexed;
-
-        return cloneArray;
-      });
+      const cloneArray = [...indexedChampionList];
+      cloneArray[index] = indexed;
+      setIndexedChampionList(cloneArray);
       setDraggingTarget(null);
     }
 
@@ -232,7 +220,7 @@ export default function Hexagon(props: HexagonProps) {
                 src={SRC_CHAMPION(extractIconSrc(placedChampion.champion.icon))}
                 alt={placedChampion.champion.name}
                 className={cn(
-                  "absolute center w-full h-full",
+                  "absolute center w-full h-full object-[-80px_0px]",
                   !isTrainingBot && "object-cover"
                 )}
                 quality={90}

@@ -60,7 +60,7 @@ export interface TraitJson {
   name: string;
 }
 
-interface EffectJson {
+export interface EffectJson {
   maxUnits: number;
   minUnits: number;
   style: number;
@@ -81,6 +81,10 @@ interface ItemJson {
   unique: boolean;
 }
 
+const CHAMPION_TIER_LIST = {
+  "13": [0, 1, 2, 3, 4, 5, 6],
+};
+
 export default function useSetDataNew() {
   //   const activeSet = useActiveSet();
   const activeSet = "13"; //임시
@@ -89,10 +93,11 @@ export default function useSetDataNew() {
   const data = datadragonJson as DatadragonJson;
   const set = data.sets["13"];
 
-  const championDataList = set.champions.filter((item) => item.role !== null);
+  const championDataList = set.champions.filter((item) => item.role);
   const traitDataList = set.traits;
   const itemDataList = data.items;
 
+  const currentChampionTier = CHAMPION_TIER_LIST[activeSet];
   const SRC_CHAMPION = (srcName: string) =>
     `/images/set/${activeSet}/tft-champion/${srcName}`;
 
@@ -108,6 +113,7 @@ export default function useSetDataNew() {
     itemDataList,
     SRC_CHAMPION,
     SRC_TRAIT,
+    currentChampionTier,
     // championDataList,
     // traitDataList,
     // activeSet,
