@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ChampionPortrait from "../portraits/ChampionPortrait";
 import { Clipboard, LoadIcon, Trash } from "../svgs";
+import useSetDataNew from "@/hooks/useSetDataNew";
 
 interface LocalBuildProps {
   buildList:
@@ -31,10 +32,11 @@ export default function LocalBuild(props: LocalBuildProps) {
   });
 
   const router = useRouter();
+  const { championDataList } = useSetDataNew();
 
   const unOptimized = buildList?.map((build) => ({
     buildName: build.buildName,
-    build: unOptimizedBuild(build.build!),
+    build: unOptimizedBuild(build.build!, championDataList),
   }));
 
   function handleOpen() {

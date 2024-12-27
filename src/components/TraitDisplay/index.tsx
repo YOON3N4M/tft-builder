@@ -1,10 +1,11 @@
 import { checkTraitStyle, cn, filterNull, sortByNumber } from "@/utils";
 
 import {
+  IndexedChampion,
   IndexedChampionList,
   useIndexedChampionList,
 } from "@/store/BuilderStore";
-import { IndexedChampion } from "../field/Field";
+
 import TraitItem from "./TraitItem";
 import useSetDataNew from "@/hooks/useSetDataNew";
 

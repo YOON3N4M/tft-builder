@@ -1,13 +1,16 @@
 "use client";
 
-import { TRAINING_BOT } from "@/data/set/12/champions";
 import {
   PIECES_QTY,
   REROLL_PERCENTAGE,
   SHOP_PIECES_QTY_ARR,
 } from "@/data/reroll";
+import { TRAINING_BOT } from "@/data/set/12/champions";
 
+import { SRC_CHAMPION } from "@/constants/src";
+import useDisClosure from "@/hooks/useDisClosure";
 import { useDraggingTarget } from "@/store/dragStore";
+import { Champion } from "@/types/data";
 import { cn, sortByNumber } from "@/utils";
 import Image from "next/image";
 import {
@@ -17,15 +20,13 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { Question, Reset, Token } from "../svgs";
-import { Overlay, OverlayProps, OverlayTab } from "./Overlay";
+import MouseGuide from "../MouseGuide";
+import { Question, Reset } from "../svgs";
 import Tab from "../tab/Tab";
 import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
-import MouseGuide from "../MouseGuide";
-import { SRC_CHAMPION } from "@/constants/src";
 import SimpleTooltip from "../tooltips/SimpleTooltip";
-import useDisClosure from "@/hooks/useDisClosure";
-import { Champion } from "@/types/data";
+import { OverlayProps } from "./Overlay";
+import { ChampionJson } from "@/hooks/useSetDataNew";
 
 interface RerollPercentageProps extends OverlayProps {}
 
@@ -51,7 +52,7 @@ function RerollPercentage(props: RerollPercentageProps) {
   const draggingTarget = useDraggingTarget();
 
   const [isDragEnter, setIsDragEnter] = useState(false);
-  const [targetChampions, setTargetChampions] = useState<Champion[]>([]);
+  const [targetChampions, setTargetChampions] = useState<ChampionJson[]>([]);
   const [currentLevel, setCurrentLevel] = useState(6);
   const [currentPercentage, setCurrentPercentage] = useState<number[]>(
     REROLL_PERCENTAGE.find((item) => item.level === currentLevel)?.percentage!
@@ -98,7 +99,7 @@ function RerollPercentage(props: RerollPercentageProps) {
   }
 
   function onDragDrop() {
-    const draggingChampion = draggingTarget as Champion;
+    const draggingChampion = draggingTarget as ChampionJson;
 
     // 훈련 봇 예외 처리
     if (draggingChampion.name === TRAINING_BOT.name) {
@@ -115,7 +116,7 @@ function RerollPercentage(props: RerollPercentageProps) {
       return;
     } else {
       setTargetChampions((prev) =>
-        sortByNumber([...prev, draggingChampion], "tier", true)
+        sortByNumber([...prev, draggingChampion], "cost", true)
       );
     }
     setIsDragEnter(false);
@@ -295,9 +296,9 @@ function RerollTable() {
 }
 
 interface RerollTargetChampionProps {
-  champion: Champion;
+  champion: ChampionJson;
   currentLevel: number;
-  setTargetChampions: Dispatch<SetStateAction<Champion[]>>;
+  setTargetChampions: Dispatch<SetStateAction<ChampionJson[]>>;
 }
 function RerollTargetChampion(props: RerollTargetChampionProps) {
   const { champion, currentLevel, setTargetChampions } = props;
@@ -306,7 +307,7 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
   const { isTooltipOn, tooltipOn, tooltipOff, pos, tooltipContainerRef } =
     usePortalTooltip();
 
-  const pieceQty = PIECES_QTY[champion.tier - 1];
+  const pieceQty = PIECES_QTY[champion.cost - 1];
 
   const currentPercentage = REROLL_PERCENTAGE.find(
     (item) => item.level === currentLevel
@@ -326,13 +327,13 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
 
   function calculateRerollPer() {
     // ex. 8렙 4코 확률
-    const basePer = currentPercentage[champion.tier - 1];
+    const basePer = currentPercentage[champion.cost - 1];
 
     // ex. 4코 총 기물 갯수
-    const targetTierQty = SHOP_PIECES_QTY_ARR[champion.tier - 1];
+    const targetTierQty = SHOP_PIECES_QTY_ARR[champion.cost - 1];
 
     // ex. 상점에 남아있는 목표 기물 갯수
-    const targetUnitQty = PIECES_QTY[champion.tier - 1] - placedPiecesQty;
+    const targetUnitQty = PIECES_QTY[champion.cost - 1] - placedPiecesQty;
 
     // ex. 목표 기물 갯수 / 전체 기물 갯수
     const per = targetUnitQty / targetTierQty;
@@ -365,19 +366,16 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
           <div className="basis-[50%] flex py-md">
             <div className="flex flex-col w-full">
               <div className="flex items-center">
-                <span className={cn(shapeStyles[champion.tier])} />
+                <span className={cn(shapeStyles[champion.cost])} />
                 <span className="font-bold ml-xs text-xl">
                   {champion.name}{" "}
                   <span className="text-sm text-sub-text">({pieceQty})</span>
                 </span>
               </div>
               <div className="flex gap-xxs text-sub-text pl-lg">
-                {champion.trait.map((trait) => (
-                  <span
-                    key={`${champion.name}-${trait.name}`}
-                    className="text-xs"
-                  >
-                    · {trait.name}
+                {champion.traits.map((trait) => (
+                  <span key={`${champion.name}-${trait}`} className="text-xs">
+                    · {trait}
                   </span>
                 ))}
               </div>
@@ -424,7 +422,7 @@ function RerollTargetChampion(props: RerollTargetChampionProps) {
       <Image
         width={256}
         height={128}
-        src={SRC_CHAMPION(champion.src)}
+        src={SRC_CHAMPION(champion.icon)}
         alt={champion.name}
         className="scale-x-[-1] absolute top-0 z-[0]"
       />

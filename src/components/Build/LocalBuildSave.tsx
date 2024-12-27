@@ -7,11 +7,12 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { IndexedChampion } from "../field/Field";
+
 import {
   getlocalBuildAll,
   saveBuildToLocalStorage,
 } from "@/utils/localstorage";
+import { IndexedChampion } from "@/store/BuilderStore";
 
 interface BuildSaveProps {
   placedChampionList: (IndexedChampion | null)[];

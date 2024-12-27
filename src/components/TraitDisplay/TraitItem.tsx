@@ -1,25 +1,17 @@
-import { Synergy } from "@/data/set/12/synergy";
-import { IndexedChampion } from "../field/Field";
 import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 
 import {
-  checkTraitGrade,
   checkTraitStyle,
   cn,
   extractIconSrc,
   isChampionExist,
   sortByNumber,
 } from "@/utils";
-import ChampionPortrait from "../portraits/ChampionPortrait";
 import Image from "next/image";
+import ChampionPortrait from "../portraits/ChampionPortrait";
 
+import useSetDataNew, { ChampionJson } from "@/hooks/useSetDataNew";
 import { Arrow } from "../svgs";
-import useSetData from "@/hooks/useSetData";
-import useSetDataNew, {
-  ChampionJson,
-  EffectJson,
-  TraitJson,
-} from "@/hooks/useSetDataNew";
 
 interface TraitItemProps {
   groupedTrait: {

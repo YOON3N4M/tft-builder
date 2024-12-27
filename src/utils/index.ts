@@ -67,37 +67,6 @@ export function groupBy<T>(array: T[], key: keyof T): T[][] {
   return Object.values(grouped);
 }
 
-export function checkTraitGrade(traitList: TraitJson[]): any {
-  if (!traitList) return;
-
-  const synergyCount = traitList.length;
-  const requireQty = traitList[0].effects.map((effect) => effect.minUnits);
-  const grade = traitList[0];
-
-  let index = 0;
-  let gradeText = "unranked";
-  let gradeNumber = 0;
-  while (index < requireQty.length) {
-    if (index === 0 && synergyCount < requireQty[index]) {
-      break;
-    } else if (synergyCount < requireQty[index]) {
-      gradeText = grade[index - 1];
-      gradeNumber = requireQty[index - 1];
-      break;
-    } else {
-      if (index === requireQty.length - 1) {
-        gradeText = grade[requireQty.length - 1];
-        gradeNumber = requireQty[requireQty.length - 1];
-        break;
-      } else {
-        index++;
-      }
-    }
-  }
-
-  return { gradeText, gradeNumber };
-}
-
 export function copyClipboard(text: string) {
   navigator.clipboard.writeText(text);
 }

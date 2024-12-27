@@ -1,5 +1,3 @@
-import Field, { IndexedChampion } from "@/components/field/Field";
-
 import ItemCombination from "@/components/overlay/ItemCombination";
 import RerollPercentage from "@/components/overlay/RerollPercentage";
 import { LeftClick, RightClick } from "@/components/svgs";
@@ -9,7 +7,7 @@ import { useEffect, useState } from "react";
 import ChampionList from "@/components/ChampionList";
 
 import LocalBuildSave from "@/components/Build/LocalBuildSave";
-import { PlacedChampion } from "@/components/field/hexagon";
+
 import { SYNERGY_LIST, Synergy } from "@/data/set/12/synergy";
 import {
   getlocalBuildAll,
@@ -21,6 +19,8 @@ import TraitDisplay from "@/components/TraitDisplay";
 import LocalBuild from "@/components/Build/LocalBuild";
 import Board from "@/components/Board";
 import {
+  IndexedChampion,
+  IndexedChampionList,
   useBuilderActions,
   useIndexedChampionList,
 } from "@/store/BuilderStore";
@@ -98,7 +98,7 @@ export default function BuilderContainer() {
       })
     );
 
-    const clonedInitial: PlacedChampion[] = [...INITIAL_FIELD_ARRAY];
+    const clonedInitial: IndexedChampionList = [...INITIAL_FIELD_ARRAY];
 
     clonedIndexed.forEach((item) => (clonedInitial[item.index] = item));
 

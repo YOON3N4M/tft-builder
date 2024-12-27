@@ -1,9 +1,8 @@
-import { IndexedChampion } from "@/components/field/Field";
-
 import { CoreItem } from "@/data/item";
 import { ChampionJson } from "@/hooks/useSetDataNew";
-import { Champion } from "@/types/data";
+
 import { create } from "zustand";
+import { IndexedChampion } from "./BuilderStore";
 
 type DraggingTaget = CoreItem | ChampionJson | null;
 

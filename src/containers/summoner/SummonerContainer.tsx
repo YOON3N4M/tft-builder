@@ -37,8 +37,8 @@ function SummonerContainer(props: SummonerContainerProps) {
             </div>
             {/* 종합 성적 */}
             <PerformanceOverview
-              summonerData={summonerData}
-              searchedPayersInfoList={searchedPayersInfoList}
+            // summonerData={summonerData}
+            // searchedPayersInfoList={searchedPayersInfoList}
             />
           </div>
           {/* 전적 리스트 부분 */}
@@ -56,7 +56,9 @@ function SummonerContainer(props: SummonerContainerProps) {
                   {matchInfoList.map((match, idx) => {
                     // if (idx !== 2) return;
                     return (
-                      <Match key={`match-${idx}`} puuid={puuid} match={match} />
+                      <Match key={`match-${idx}`} />
+                      // 임시주석
+                      // <Match key={`match-${idx}`} puuid={puuid} match={match} />
                     );
                   })}
                 </>

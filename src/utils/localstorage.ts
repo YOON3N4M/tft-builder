@@ -1,10 +1,9 @@
 import { CORE_ITEM_LIST, EMBLEM_ITEM_LIST } from "@/data/item";
 
-import { copyClipboard, filterNull } from ".";
-import { IndexedChampion } from "@/components/field/Field";
-import { PlacedChampion } from "@/components/field/hexagon";
 import { OptimizedIndexedChampion } from "@/containers/builder/BuilderContainer";
-import { SET_12_CHAMPION_LIST } from "@/dataNew/set/12/custom/champion";
+import { ChampionJson } from "@/hooks/useSetDataNew";
+import { copyClipboard, filterNull } from ".";
+import { IndexedChampion } from "@/store/BuilderStore";
 
 export function uploadToLocalstorage(key: string, data: string) {
   localStorage.setItem(key, data);
@@ -67,7 +66,10 @@ export function getlocalBuildAll() {
 }
 
 // url 길이 단축을 위해 간소화 했던 urL을 다시 유효한 데이터로 변경하는 함수
-export function unOptimizedBuild(optimizedString: string) {
+export function unOptimizedBuild(
+  optimizedString: string,
+  currentSetChampionDataList: ChampionJson[]
+) {
   if (!optimizedString) return;
 
   const decoeded = decodeURI(optimizedString);
@@ -76,7 +78,9 @@ export function unOptimizedBuild(optimizedString: string) {
 
   const unOptimized = filteredNull.map((champion) => ({
     index: champion.index,
-    champion: SET_12_CHAMPION_LIST.find((cham) => cham.name === champion.name)!,
+    champion: currentSetChampionDataList.find(
+      (cham) => cham.name === champion.name
+    )!,
     itemList: champion.itemList.map((item) => {
       if (item.includes("상징")) {
         return EMBLEM_ITEM_LIST.find((emblem) => item === emblem.name)!;
@@ -86,11 +90,11 @@ export function unOptimizedBuild(optimizedString: string) {
     })!,
   }));
 
-  const sortByTier = unOptimized.sort(
-    (indexA, indexB) => indexA.champion.tier - indexB.champion.tier
+  const sortByCost = unOptimized.sort(
+    (indexA, indexB) => indexA.champion.cost - indexB.champion.cost
   );
 
-  return sortByTier;
+  return sortByCost;
 }
 
 export function localStorageDelete(key: string) {
