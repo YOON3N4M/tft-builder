@@ -253,6 +253,20 @@ export function extractIconSrc(iconSrc: string) {
   return result;
 }
 /**
+ * 상징 아이템들의 실제 이미지 파일명이 다른 아이템 등과 형식이 달라
+ *
+ * 위 extractIconSrc로 정상적인 처리가 불가능하기에
+ *
+ * 해당 함수는 상징 이미지만을 별도로 처리하기 위한 유틸
+ */
+export function extractEmblemSrc(emblemSrc: string) {
+  const lastSlashIndex = emblemSrc.lastIndexOf("_");
+  const extracted = emblemSrc.substring(lastSlashIndex + 1);
+
+  const result = extracted.replace("EmblemItem", "");
+  return result;
+}
+/**
  * 해당 특성의 현재 유닛 수, effectList를 인자로 입력하면
  *
  * 해당하는 스타일의 number를 반환해줌

@@ -67,7 +67,7 @@ export interface EffectJson {
   variables: any;
 }
 
-interface ItemJson {
+export interface ItemJson {
   apiName: string;
   associatedTraits: any[];
   composition: any[];
@@ -85,17 +85,29 @@ const CHAMPION_TIER_LIST = {
   "13": [0, 1, 2, 3, 4, 5, 6],
 };
 
+const SET_TITLE = {
+  "13": "Hexcore",
+};
+
 export default function useSetDataNew() {
   //   const activeSet = useActiveSet();
   const activeSet = "13"; //임시
   const { setActiveSet } = useSetActions();
 
   const data = datadragonJson as DatadragonJson;
-  const set = data.sets["13"];
+  const set = data.sets[activeSet];
 
   const championDataList = set.champions.filter((item) => item.role);
   const traitDataList = set.traits;
-  const itemDataList = data.items;
+  const itemDataList = data.items.filter((item) =>
+    // 여기선 hexcore가 시즌을 구분해주는듯..?
+    item.icon.includes(`ASSETS/Maps/TFT/Icons/Items/${SET_TITLE[activeSet]}`)
+  );
+  const emblemItemDataList = data.items.filter((item) =>
+    item.icon.includes(`Set${activeSet}/TFT_Set${activeSet}_Emblem`)
+  );
+
+  console.log(emblemItemDataList);
 
   const currentChampionTier = CHAMPION_TIER_LIST[activeSet];
   const SRC_CHAMPION = (srcName: string) =>
@@ -103,6 +115,12 @@ export default function useSetDataNew() {
 
   const SRC_TRAIT = (srcName: string) =>
     `/images/set/${activeSet}/tft-trait/${srcName}`;
+
+  const SRC_ITEM = (srcName: string) =>
+    `/images/set/${activeSet}/tft-item/${srcName}`;
+
+  const SRC_EMBLEM = (srcName: string) =>
+    `/images/set/${activeSet}/tft-item/TFT13_Item_${srcName}EmblemItem.png`;
   // const combinationItemList = setData.custom.combinationItem;
   // const coreItemList = setData.custom.coreItem;
   // const emblelemItemList = setData.custom.emblelemItem;
@@ -111,9 +129,12 @@ export default function useSetDataNew() {
     championDataList,
     traitDataList,
     itemDataList,
+    emblemItemDataList,
+    currentChampionTier,
     SRC_CHAMPION,
     SRC_TRAIT,
-    currentChampionTier,
+    SRC_ITEM,
+    SRC_EMBLEM,
     // championDataList,
     // traitDataList,
     // activeSet,

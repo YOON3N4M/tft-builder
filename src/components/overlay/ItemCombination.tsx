@@ -32,6 +32,7 @@ import { SRC_ITEM } from "@/constants/src";
 import { PortalTooltip, usePortalTooltip } from "../tooltips/PortalTooltip";
 import SimpleTooltip from "../tooltips/SimpleTooltip";
 import useDisClosure from "@/hooks/useDisClosure";
+import EmblemList from "../ItemDisplay/EmblemList";
 
 interface ItemCombinationProps extends OverlayProps {}
 
@@ -113,14 +114,6 @@ function ItemCombination(props: ItemCombinationProps) {
     //const result = combineItem(targetCoreItem, inventory);
   }
 
-  function handleCoreItemDrag(coreItem: CoreItem) {
-    setDraggingCoreItem(coreItem);
-  }
-
-  function handleCoreItemDragEnd() {
-    setDraggingCoreItem(null);
-  }
-
   useEffect(() => {
     const result = calculateAllCombinationCase(inventory);
     setCombinationCase(result);
@@ -174,7 +167,7 @@ function ItemCombination(props: ItemCombinationProps) {
         <div className="px-md text-sm">
           <p className="text-[#7a7b7d]">보유 완성 아이템</p>
           <ul className="mt-sm flex bg-[#19191b] flex-wrap gap-[10px] p-xs rounded-[4px]">
-            {coreInventory.map((i, idx) => (
+            {/* {coreInventory.map((i, idx) => (
               <li
                 onDragStart={() => handleCoreItemDrag(i)}
                 onDragEnd={handleCoreItemDragEnd}
@@ -183,7 +176,7 @@ function ItemCombination(props: ItemCombinationProps) {
               >
                 <ItemPortrait dragGuide="장착" item={i} />
               </li>
-            ))}
+            ))} */}
           </ul>
         </div>
 
@@ -193,7 +186,7 @@ function ItemCombination(props: ItemCombinationProps) {
             <p className="text-[#7a7b7d]">보유 조합 아이템</p>
           </div>
           <div className="grid grid-cols-3 w-full mt-sm gap-[8px]">
-            {COMBINATION_ITEM_LIST.map((item) => (
+            {/* {COMBINATION_ITEM_LIST.map((item) => (
               <div
                 key={item.name}
                 className="flex w-full flex-col items-center"
@@ -217,7 +210,7 @@ function ItemCombination(props: ItemCombinationProps) {
                   </div>
                 </button>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
 
@@ -247,22 +240,23 @@ function ItemCombination(props: ItemCombinationProps) {
               {combinationCase[0] &&
                 combinationCase[0].length > 0 &&
                 combinationCase.map((c, idx) => (
-                  <div key={idx}>
-                    {/* <span className="text-xs text-sub-text">{idx}.</span> */}
-                    <ul className="mt-xxxs flex flex-wrap w-full gap-[10px] bg-[#19191b] p-xs rounded-[4px]">
-                      {c.map((i, idx) => (
-                        <li key={idx} className="flex items-center">
-                          <button
-                            onContextMenu={(event) =>
-                              handleCoreItemRightClick(event, i)
-                            }
-                          >
-                            <ItemPortrait rightClickGuide="조합" item={i} />
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  // <div key={idx}>
+                  //   <span className="text-xs text-sub-text">{idx}.</span>
+                  //   <ul className="mt-xxxs flex flex-wrap w-full gap-[10px] bg-[#19191b] p-xs rounded-[4px]">
+                  //     {c.map((i, idx) => (
+                  //       <li key={idx} className="flex items-center">
+                  //         <button
+                  //           onContextMenu={(event) =>
+                  //             handleCoreItemRightClick(event, i)
+                  //           }
+                  //         >
+                  //           <ItemPortrait rightClickGuide="조합" item={i} />
+                  //         </button>
+                  //       </li>
+                  //     ))}
+                  //   </ul>
+                  // </div>
+                  <></>
                 ))}
             </div>
           </div>
@@ -271,31 +265,7 @@ function ItemCombination(props: ItemCombinationProps) {
       {/* 상징 */}
       <div>
         <div className="!pt-0 p-md ">
-          <div className="mt-sm grid grid-cols-5 bg-default-bg tab:grid-cols-4 gap-[10px] p-xs max-w-[205px] rounded-[4px]">
-            {EMBLEM_ITEM_LIST.map((i, idx) => (
-              <ItemPortrait
-                key={i.name}
-                onDragStart={() => handleCoreItemDrag(i)}
-                onDragEnd={handleCoreItemDragEnd}
-                item={i}
-                dragGuide="장착"
-              />
-              // <div
-              //   onDragStart={() => handleCoreItemDrag(i)}
-              //   onDragEnd={handleCoreItemDragEnd}
-              //   key={idx}
-              //   className="flex items-center cursor-pointer"
-              // >
-              //   <Image
-              //     className="rounded-[4px]"
-              //     src={`/images/emblem/${i.src}.png`}
-              //     width={30}
-              //     height={30}
-              //     alt={i.name}
-              //   />
-              // </div>
-            ))}
-          </div>
+          <EmblemList />
         </div>
       </div>
     </Tab>
