@@ -36,7 +36,7 @@ function ChampionList(props: ChampionListProps) {
     keyword,
     currentChampionTier
   );
-  console.log(traitDataList);
+
   function handleIconDragStart(e: any, champion: ChampionJson) {
     setDraggingTarget(champion);
   }

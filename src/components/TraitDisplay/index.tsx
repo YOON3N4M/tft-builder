@@ -68,14 +68,13 @@ export default TraitDisplay;
 function grouping(indexedChampionList: IndexedChampionList) {
   const nullFiltered = filterNull(indexedChampionList) as IndexedChampion[];
   const dupleFiltered = removeDuplicateTrait(nullFiltered);
-  console.log(dupleFiltered);
   const championList = dupleFiltered.map((indexed) => indexed.champion);
 
   const traitList = dupleFiltered.flatMap(
     (indexedChampion) => indexedChampion.champion.traits
   );
   const dupleFilteredTraitList = [...new Set(traitList)];
-  console.log(dupleFilteredTraitList);
+
   const grouped = dupleFilteredTraitList.map((traitName) => {
     const res = {
       traitName: traitName,
