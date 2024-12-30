@@ -11,7 +11,9 @@ export interface IndexedChampion {
 export type IndexedChampionList = (IndexedChampion | null)[];
 
 const HEXAGON_QTY = 28;
-const INITIAL_INDEXED_NULL_LIST = [...Array(HEXAGON_QTY)].map((_) => null);
+export const INITIAL_INDEXED_NULL_LIST = [...Array(HEXAGON_QTY)].map(
+  (_) => null
+);
 
 interface BuilderStore {
   indexedChampionList: IndexedChampionList;

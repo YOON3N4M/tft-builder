@@ -19,6 +19,7 @@ import TraitDisplay from "@/components/TraitDisplay";
 import LocalBuild from "@/components/Build/LocalBuild";
 import Board from "@/components/Board";
 import {
+  INITIAL_INDEXED_NULL_LIST,
   IndexedChampion,
   IndexedChampionList,
   useBuilderActions,
@@ -44,7 +45,7 @@ export default function BuilderContainer() {
 
   function resetBuilder() {
     if (!confirm("배치된 챔피언을 모두 제거 합니다.")) return;
-    // setPlacedChampions(INITIAL_FIELD_ARRAY);
+    setIndexedChampionList(INITIAL_INDEXED_NULL_LIST);
     router.push("/");
   }
 
